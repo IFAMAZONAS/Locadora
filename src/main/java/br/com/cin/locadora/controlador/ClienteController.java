@@ -13,4 +13,9 @@ public class ClienteController {
 	public String form() {
 		return Navegacao.CADASTRAR_CLIENTE;
 	}
+	
+	@RequestMapping("/listagem")
+	public String listagemAll() {
+		return Navegacao.LISTAGEM_CLIENTES;
+	}
 }
