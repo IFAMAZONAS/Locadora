@@ -19,4 +19,9 @@ public class ControladorPrincipal {
 	public String logar() {
 		return "login";
 	}
+	
+	@RequestMapping("home")
+	public String home() {
+		return "home";
+	}
 }

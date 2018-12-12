@@ -3,6 +3,7 @@
   <groupId>br.com.cin.locadora</groupId>
   <artifactId>Locadora</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  
   <dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -15,7 +16,8 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 			<version>1.3.6.RELEASE</version>
 		</dependency>
-
+		
+		
 	
 	</dependencies>
 	

@@ -1,37 +1,79 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Sistema de Locadora</title>
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-</head>
-<body>
-	<div class="container" style="width: 50%" >
-		<div class="jumbotron" align="center" style="margin-top: 50px; border: 1">
-		<h1>Sistema de Locadora</h1>
-			<form action="login" method="post">
-				<div class="form-group">
-					<label for="email">Email</label> 
-					<input type="email"
-						class="form-control" id="email" name="email" placeholder="Email"/>
-						
-					<label for="senha">Senha</label> 
-					<input type="password"
-						class="form-control" id="email" name="senha" placeholder="Senha"/>
-						
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<div class="container">
+	<div class="row">
+		<h2>SISTEMA DE LOCADORA</h2>
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="#myNavbar">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+
 				</div>
-				<button type="submit" class="btn btn-success">Login</button>
-				<button   class="btn btn-success">Cancelar</button>
-					
+				<div class="collapse navbar-collapse" id="myNavbar">
+
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#"><span class="glyphicon glyphicon-user"></span>
+								Sair</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+								Entrar</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container" style="width: 50%">
+			
+			<form action="" method="post">
+				<h1>Entrar no Sistema</h1>
+				<div class="input-group">
+					<span class="input-group-addon"><i
+						class="glyphicon glyphicon-user"></i></span> <input id="email"
+						type="text" class="form-control" name="email" placeholder="Email"/>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon"><i
+						class="glyphicon glyphicon-lock"></i></span> <input id="password"
+						type="password" class="form-control" name="password"
+						placeholder="Password"/>
+				</div>
+				
+				<br/>
+				
+				<a  style="" href="login" class="btn btn-lg btn-primary">Entrar</a>
+				
+				
 			</form>
 			
+
 		</div>
 
 	</div>
+	
+</div>
 
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="bootstrap/js/bootstrap.min.js"></script>
-
-</body>
-</html>
+<script>
+	$(function() {
+		$(".dropdown").hover(function() {
+			$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+			$(this).toggleClass('open');
+			$('b', this).toggleClass("caret caret-up");
+		}, function() {
+			$('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+			$(this).toggleClass('open');
+			$('b', this).toggleClass("caret caret-up");
+		});
+	});
+</script>

@@ -1,55 +1,177 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Sistema de Locadora</title>
-<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-</head>
-<body>
-	
-	<div class="container" style="width: 30%">
-		
-		<div class="jumbotron" align="center" style="margin-top: 40px;">
-			<h2>Cadastro de Clientes</h2>
-			<hr/>
-			<form action="cadastrar" method="post">
-				<div class="form-group" style="text-align: left;">
-					<label  for="nome">NOME</label> 
-					<input type="text"
-						class="form-control" id="nomeCliente" name="nomeClientel" placeholder="Nome"/>
-						
-					<label for="E-mail">EMAIL</label> 
-					<input type="email"
-						class="form-control" id="email" name="email" placeholder="Email"/>
-						
-					<label for="cpf">CPF </label> 
-					<input type="cpf"
-						class="form-control" id="cpfl" name="cpf" placeholder="Cpf"/>
-						
-					<label for="txttelefone">TELEFONE CELULAR </label> 
-					<input type="tel" name="txttelefone" id="txttelefone" 
-					class="form-control" pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}" />
-					
-					<label for="nascimento">DATA NASCIMENTO</label> 
-					<input type="date"
-						class="form-control" id="Nascimento" name="nascimento" placeholder="Data de Nascimento"/>
 
-						
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<div class="container">
+	<div class="row">
+		<h2>SISTEMA DE LOCADORA</h2>
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="#myNavbar">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+
 				</div>
-				<button type="submit" class="btn btn-success">Cadastrar</button>
-				
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="../login">Home</a></li>
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">Clientes <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="cadastro">Cadastro</a></li>
+
+							</ul></li>
+						<li><a href="#">Filmes</a></li>
+
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#"><span class="glyphicon glyphicon-user"></span>
+								Sign Up</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+								Login</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+
+		<div class="container" style="width: 70%">
+			<h2>Dados Pessoais</h2>
+			<hr/>
+
+			<form class="form-horizontal" action="">
+
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="nome">Nome:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="nome"
+							placeholder="Entre com o nome" name="nome" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="email">Email:</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="email"
+							placeholder="Enter email" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="telefone">Celular:</label> 
+					<div class="col-sm-10">
+						<input type="tel"
+						class="form-control" id="celular"
+						placeholder="Entre com o celular" name="celular" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="tel_reseidencial">Telefone Residencial:</label>
+					<div class="col-sm-10">
+						 <input
+						type="tel" class="form-control" id="tel_reseidencial"
+						placeholder="Entre com o telefone residencial"
+						name="tel_reseidencial" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="tel_comercial">Telefone Comercial:</label> 
+					<div class="col-sm-10">
+						<input
+						type="tel" class="form-control" id="tel_comercial"
+						placeholder="Entre com o telefone comercial" name="tel_comercial" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="cpf">Cpf:</label> 
+					<div class="col-sm-10">
+						<input type="tel"
+						class="form-control" id="cpf" placeholder="Entre com o cpf"
+						name="cpf" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="local_trabaho">Local de Trabalho:</label> 
+					<div class="col-sm-10">
+						<input
+						type="text" class="form-control" id="local_trabaho"
+						placeholder="Local de Trabalho" name="local_trabaho" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="nascimento">Data Nascimento:</label> 
 					
+					<div class="col-sm-10">
+						<input type="date"
+						class="form-control" id="nascimento"
+						placeholder="Data de Nascimento" name="nascimento" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="sel2">Sexo:</label> 
+					<div class="col-sm-10">
+						<select
+						class="form-control input-lg" id="sel2">
+						<option>Masculino</option>
+						<option>Feminino</option>
+
+					</select>
+					</div>
+				</div>
+
+				<h2>Dados Residenciais</h2>
+				<hr />
+
+
+				<button type="submit" class="btn btn-default">Salvar</button>
+
+
+
+
 			</form>
-			
 		</div>
 
+
 	</div>
-	
-	<script type="text/javascript">$("#txttelefone").mask("(00) 0000-00009");</script>
 
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="../bootstrap/js/bootstrap.min.js"></script>
+</div>
 
-</body>
-</html>
+
+
+
+
+
+<script>
+	$(function() {
+		$(".dropdown").hover(function() {
+			$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+			$(this).toggleClass('open');
+			$('b', this).toggleClass("caret caret-up");
+		}, function() {
+			$('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+			$(this).toggleClass('open');
+			$('b', this).toggleClass("caret caret-up");
+		});
+	});
+</script>
+
+
+
+
