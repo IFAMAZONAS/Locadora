@@ -12,8 +12,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@EntityScan(basePackages="br.com.cin.locadora.*")
-@ComponentScan(basePackages= {"br.com.cin.locadora.*"})
+@EntityScan(basePackages="br.com.cin.locadora.model")
+@ComponentScan(basePackages= {"br.*"})
 @EnableJpaRepositories(basePackages= {"br.com.cin.*"})
 @EnableTransactionManagement
 public class Configuracao {
@@ -21,16 +21,8 @@ public class Configuracao {
 	public static void main(String[] args) {
 		SpringApplication.run(Configuracao.class, args);
 	}
-	/**
-	@Bean
-	public DataSource dataSource(){
-		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName("org.postgresql.Driver");
-		dataSource.setUrl("jdbc:postgresql://localhost:5432/locadora");
-		dataSource.setUsername("postgres");
-		dataSource.setPassword("root");
-		return dataSource;
-	}**/
+	
+	
 
 	
 

@@ -24,13 +24,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import br.com.cin.locadora.controlador.util.Navegacao;
-import br.com.cin.locadora.excption.QuantidadeDependenteException;
+
 import br.com.cin.locadora.model.Cliente;
 import br.com.cin.locadora.model.Dependente;
 import br.com.cin.locadora.model.repository.ClienteRepository;
@@ -40,7 +41,7 @@ import br.com.cin.locadora.servico.ClienteService;
 
 
 @Controller
-@RequestMapping("/cliente")
+@RequestMapping(value="cliente")
 public class ClienteController {
 	
 	@Autowired
@@ -61,18 +62,22 @@ public class ClienteController {
 		this.clientesAtivos = new ArrayList<Cliente>();
 	}
 	
-	@RequestMapping( "**/home")
-	public void home(HttpServletResponse response, HttpServletRequest request) throws IOException {
-		String context = request.getContextPath();
-		response.sendRedirect(context+"/home");
+	@RequestMapping(method = RequestMethod.GET, value = "home")
+	@ResponseBody
+	public ModelAndView home(HttpServletResponse response, HttpServletRequest request) throws IOException {
+			ModelAndView andView = new ModelAndView("home");
+			return  andView;
 		
 	}
 
 	
 
-	@RequestMapping("**/cadastrocliente")
+	//@RequestMapping("**/cadastrocliente")
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/cadastrocliente")
+	@ResponseBody
 	public ModelAndView form() {
-		ModelAndView andView = new ModelAndView("cliente/cadastrocliente");
+		ModelAndView andView = new ModelAndView(Navegacao.CADASTRAR_CLIENTE);
 		Iterable<Cliente> clientes = this.repository.findAll();
 		andView.addObject("clientes",clientes);
 		andView.addObject("cliente", new Cliente());
