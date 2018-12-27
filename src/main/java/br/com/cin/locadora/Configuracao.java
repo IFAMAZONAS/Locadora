@@ -21,7 +21,7 @@ public class Configuracao {
 	public static void main(String[] args) {
 		SpringApplication.run(Configuracao.class, args);
 	}
-	
+	/**
 	@Bean
 	public DataSource dataSource(){
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -30,7 +30,7 @@ public class Configuracao {
 		dataSource.setUsername("postgres");
 		dataSource.setPassword("root");
 		return dataSource;
-	}
+	}**/
 
 	
 
