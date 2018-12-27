@@ -1,0 +1,197 @@
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<div class="container" align="center">
+	<div class="row">
+		<h2>SISTEMA DE LOCADORA</h2>
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="#myNavbar">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="../login">Home</a></li>
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">Clientes <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="cadastro">Cadastro</a></li>
+								<li><a href="listar">Listar</a></li>
+
+							</ul></li>
+						<li><a href="#">Filmes</a></li>
+
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#"><span class="glyphicon glyphicon-user"></span>
+								Sign Up</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+								Login</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+
+
+		<div id="listaDeConvidados" style="width: 100%">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>Email</th>
+
+
+					</tr>
+				</thead>
+				<tr>
+					<td><span th:text="${cliente.nome}"></span></td>
+					<td><span th:text="${cliente.email}"></span></td>
+
+
+				</tr>
+
+			</table>
+
+		</div>
+
+
+
+		<div class="panel-group" style="width: 80%" align="left">
+			<div class="panel panel-default">
+				<div class="panel-heading">Dependente do Cliente</div>
+				<div class="panel-body">
+					<div id="listaDeConvidados" style="width: 100%">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Nome</th>
+									<th>Email</th>
+									<th>sexo</th>
+									<th></th>
+									<th></th>
+									<th></th>
+
+								</tr>
+							</thead>
+							<tr th:each="dependente: ${cliente.dependentes}">
+								<td><span th:text="${dependente.nome}"></span></td>
+								<td><span th:text="${dependente.email}"></span></td>
+								<td><span th:text="${dependente.sexo}"></span></td>
+								<td><a href="#"><span class="glyphicon glyphicon-edit"></span></a></td>
+								<td><a href="#"><span class="glyphicon glyphicon-trash"></span></a></td>
+
+							</tr>
+
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="panel-group" style="width: 80%" align="left">
+
+			<div class="panel panel-default">
+				<div class="panel-heading">Cadastro de Dependente</div>
+				<div class="panel-body">
+
+					<div class="container" style="width: 100%" align="center">
+
+						<form class="form-horizontal" action="salvarDependente"
+							method="post">
+
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="nome">Nome:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="nome"
+										placeholder="Entre com o nome" name="nome" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="email">Email:</label>
+								<div class="col-sm-10">
+									<input type="email" class="form-control" id="email"
+										name="email" placeholder="Enter email" />
+								</div>
+							</div>
+
+
+
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="cpf">Cpf:</label>
+								<div class="col-sm-10">
+									<input type="tel" class="form-control" id="cpf"
+										placeholder="Entre com o cpf" name="cpf" />
+								</div>
+							</div>
+
+
+
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="sel2">Sexo:</label>
+								<div class="col-sm-10">
+									<select class="form-control input-lg" id="sel2" name="sexo">
+										<option>Masculino</option>
+										<option>Feminino</option>
+
+									</select>
+								</div>
+							</div>
+
+
+							<button type="submit" class="btn btn-primary btn-md">Salvar</button>
+
+
+
+
+						</form>
+					</div>
+
+				</div>
+
+			</div>
+
+
+
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+
+
+
+<script>
+	$(function() {
+		$(".dropdown").hover(function() {
+			$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+			$(this).toggleClass('open');
+			$('b', this).toggleClass("caret caret-up");
+		}, function() {
+			$('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+			$(this).toggleClass('open');
+			$('b', this).toggleClass("caret caret-up");
+		});
+	});
+</script>

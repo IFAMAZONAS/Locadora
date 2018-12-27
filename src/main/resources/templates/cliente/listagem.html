@@ -45,20 +45,55 @@
 			</div>
 		</nav>
 
-		<div class="panel-group" style="width: 80%" align="left">
+		<br />
+		
+		<div th:each="m : ${msgs}">
+			<span th:text="${m}"> </span>
+		</div>
+		<br />
 
-			<div class="panel panel-default">
-				<div class="panel-heading">Cadastro de Clientes</div>
-				<div class="panel-body">
-				
+
+		<div class="container">
+			<h1 align="left">Listagem de Clientes</h1>
+			<hr />
+
+			<div id="listaDeConvidados" style="width: 100%">
+				<div>
+					<span class="glyphicon glyphicon-plus" /> Adicionar Dependentes
 				</div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Email</th>
+							<th>Celular</th>
+							<th></th>
+							<th></th>
+							<th></th>
 
+						</tr>
+					</thead>
+					<tr th:each="cliente : ${clientes}">
+						<td><span th:text="${cliente.nome}"></span></td>
+						<td><span th:text="${cliente.email}"></span></td>
+						<td><span th:text="${cliente.foneCelular}"></span></td>
+						<td><a
+							th:href="${'/cliente/form_dependente?id=' + cliente.id}"><span
+								class="glyphicon glyphicon-plus"></span></a></td>
+						<td><a href="#"><span class="glyphicon glyphicon-edit"></span></a></td>
+						<td><a href="#"><span class="glyphicon glyphicon-trash"></span></a></td>
+
+
+					</tr>
+
+				</table>
 			</div>
 
+
+
+
+
 		</div>
-
-
-
 
 	</div>
 
