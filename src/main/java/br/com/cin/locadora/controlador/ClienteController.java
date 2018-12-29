@@ -74,7 +74,7 @@ public class ClienteController {
 
 	//@RequestMapping("**/cadastrocliente")
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/cadastrocliente")
+	@RequestMapping(method = RequestMethod.GET, value = "**/cadastrocliente")
 	@ResponseBody
 	public ModelAndView form() {
 		ModelAndView andView = new ModelAndView(Navegacao.CADASTRAR_CLIENTE);

@@ -21,39 +21,8 @@
 <div class="container" align="center">
 	<div>
 		<h2>SISTEMA DE LOCADORA</h2>
-		<nav class="navbar navbar-inverse" th:fragment="menu">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse"
-						data-target="#myNavbar">
-						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-							class="icon-bar"></span>
-					</button>
-
-				</div>
-				<div class="collapse navbar-collapse" id="myNavbar">
-					<ul class="nav navbar-nav">
-						<li class="active"><a href="/">Home</a></li>
-						<li class="dropdown"><a class="dropdown-toggle"
-							data-toggle="dropdown" href="#">Clientes <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="cadastrocliente">Cadastro</a></li>
-								
-
-							</ul></li>
-						<li><a href="#">Filmes</a></li>
-
-					</ul>
-					
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="teste"><span
-								class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-								Login</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+		<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The Static
+			Templates</div>
 
 
 		<div class="panel-group" style="width: 80%" align="left">
@@ -64,7 +33,7 @@
 
 					<div class="container" style="width: 100%" align="center">
 
-						<form action="salvarcliente" method="post" >
+						<form action="salvarcliente" method="post">
 
 
 
@@ -195,7 +164,7 @@
 			<div class="row">
 				<div class="input-field col s12">
 					<label for="nomepesquisa" class="active">Pesquia por nome:</label>
-					<input name="nomepesquisa" id="nomepesquisa"  /> <input
+					<input name="nomepesquisa" id="nomepesquisa" /> <input
 						class="btn btn-primary" type="submit" value="Buscar" />
 
 				</div>
@@ -209,7 +178,7 @@
 <table class="table table-hover">
 	<thead>
 		<tr>
-			
+
 			<th>Nome</th>
 			<th>E-mail</th>
 			<th>Cpf</th>
@@ -218,14 +187,19 @@
 		</tr>
 	</thead>
 	<tr th:each="c : ${clientes}">
-		<td><a th:href="@{/cliente/dependentes/{idcliente}(idcliente=${c.id})}"><span th:text = "${c.nome}"></span></a></td>
-		
+		<td><a
+			th:href="@{/cliente/dependentes/{idcliente}(idcliente=${c.id})}"><span
+				th:text="${c.nome}"></span></a></td>
+
 		<td th:text="${c.email}"></td>
 		<td th:text="${c.cpf}"></td>
 		<td th:text="${c.foneCelular}"></td>
 		<td><a><span class="glyphicon glyphicon-plus"></span></a></td>
-		<td><a th:href="@{/cliente/removercliente/{idcliente}(idcliente=${c.id})}"> <span class="glyphicon glyphicon-trash"/> </a> </td>
-  
+		<td><a
+			th:href="@{/cliente/removercliente/{idcliente}(idcliente=${c.id})}">
+				<span class="glyphicon glyphicon-trash" />
+		</a></td>
+
 
 	</tr>
 </table>
