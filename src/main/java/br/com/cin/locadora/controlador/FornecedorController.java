@@ -40,7 +40,7 @@ public class FornecedorController {
 	
 	@RequestMapping("**/cadastrofornecedor")
 	public ModelAndView form() {
-		ModelAndView andView = new ModelAndView("fornecedor/cadastrofornecedor");
+		ModelAndView andView = new ModelAndView("/fornecedor/cadastrofornecedor");
 		Iterable<Fornecedor> fornecedores = this.repository.findAll();
 		andView.addObject("fornecedores",fornecedores);
 		andView.addObject("fornecedor", new Fornecedor());
