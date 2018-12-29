@@ -22,7 +22,7 @@ import br.com.cin.locadora.model.repository.FornecedorRepository;
 import br.com.cin.locadora.servico.FornecedorService;
 
 @Controller
-@RequestMapping("/fornecedor")
+@RequestMapping(value="/fornecedor")
 public class FornecedorController {
 
 	@Autowired
@@ -40,7 +40,7 @@ public class FornecedorController {
 	
 	@RequestMapping("**/cadastrofornecedor")
 	public ModelAndView form() {
-		ModelAndView andView = new ModelAndView("/fornecedor/cadastrofornecedor");
+		ModelAndView andView = new ModelAndView("fornecedor/cadastrofornecedor");
 		Iterable<Fornecedor> fornecedores = this.repository.findAll();
 		andView.addObject("fornecedores",fornecedores);
 		andView.addObject("fornecedor", new Fornecedor());
