@@ -9,4 +9,8 @@ public final class Navegacao {
 		public static final String CADASTRO_USUARIO = "usuario/cadastro";
 		public static final String PAGINA_INICIAL_USUARIOS = "";
 		
+		public static final String CADASTRAR_FORNECEDOR = "fornecedor/cadastrofornecedor";
+		public static final String LISTAGEM_FORNECEDORES = "fornecedor/listagem";
+		public static final String VISUALIZAR_FORNECEDOR = "fornecedor/resumo";
+		
 }
