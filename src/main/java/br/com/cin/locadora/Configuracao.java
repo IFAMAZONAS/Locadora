@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
@@ -19,8 +20,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class Configuracao {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Configuracao.class, args);
-	}
+		SpringApplication.run(Configuracao.class, args);}
+		
+		
+	
 	
 	
 
