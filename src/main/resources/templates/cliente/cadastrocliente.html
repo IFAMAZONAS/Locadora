@@ -1,4 +1,6 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 
+ xmls:sec="http:www.thymeleaf.org.extras/spring-security">
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 
@@ -195,7 +197,7 @@
 		<td th:text="${c.cpf}"></td>
 		<td th:text="${c.foneCelular}"></td>
 		<td><a><span class="glyphicon glyphicon-plus"></span></a></td>
-		<td><a
+		<td sec:authorize="hasRole('ROLE_ADMIN')"><a
 			th:href="@{/cliente/removercliente/{idcliente}(idcliente=${c.id})}">
 				<span class="glyphicon glyphicon-trash" />
 		</a></td>
@@ -220,3 +222,5 @@
 		});
 	});
 </script>
+
+</html>
