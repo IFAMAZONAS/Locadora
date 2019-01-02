@@ -13,38 +13,9 @@
 <div class="container" align="center">
 	<div class="row">
 		<h2>SISTEMA DE LOCADORA</h2>
-		<nav class="navbar navbar-inverse">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse"
-						data-target="#myNavbar">
-						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-							class="icon-bar"></span>
-					</button>
-
-				</div>
-				<div class="collapse navbar-collapse" id="myNavbar">
-					<ul class="nav navbar-nav">
-						<li class="active"><a href="../login">Home</a></li>
-						<li class="dropdown"><a class="dropdown-toggle"
-							data-toggle="dropdown" href="#">Clientes <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="cadastro">Cadastro</a></li>
-								<li><a href="listar">Listar</a></li>
-
-							</ul></li>
-						<li><a href="#">Filmes</a></li>
-
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="teste"><span
-								class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-								Login</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+		<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The Static
+			Templates</div>
+		
 
 		<div class="panel-group" style="width: 80%" align="left">
 
@@ -54,48 +25,44 @@
 
 					<div class="container" style="width: 100%" align="center">
 
-						<form class="form-horizontal" action="salvar" method="post">
+						<form class="form-horizontal" action="salvarusuario" method="post">
 
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="nome">Nome:</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="nome"
-										placeholder="Entre com o nome" name="nome" />
+							<div class="row">
+								<div class="form-group form-group col-sm-12 col-md-6">
+									<label class="control-label col-sm-4 text-right" for="nome">Nome:</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="nome"
+											placeholder="Entre com o nome" name="nome" />
+									</div>
+								</div>
+
+								<div class="form-group form-group col-sm-12 col-md-6">
+									<label class="control-label col-sm-4 text-right" for="email">Login:</label>
+									<div class="col-sm-8">
+										<input type="login" class="form-control" id="login"
+											name="login" placeholder="Entre com o login" />
+									</div>
 								</div>
 							</div>
 
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="email">Login:</label>
-								<div class="col-sm-10">
-									<input type="login" class="form-control" id="login"
-										name="login" placeholder="Entre com o login" />
+							<div class="row">
+								<div class="form-group form-group form-group col-sm-12 col-md-6">
+									<label class="control-label col-sm-4 text-right" for="email">Senha:</label>
+									<div class="col-sm-8">
+										<input type="password" class="form-control" id="senha"
+											name="senha" placeholder="Entre com a senha" />
+									</div>
 								</div>
-							</div>
 
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="email">Senha:</label>
-								<div class="col-sm-10">
-									<input type="password" class="form-control" id="senha"
-										name="senha" placeholder="Entre com a senha" />
-								</div>
-							</div>
-
-							<div class="form-group">
-								<select class="form-control active" id="testOrder"
-									name="testOrder">
-									<option value="">Select Test Order</option>
-									<option th:each="pessoa : ${pessoas}"
-										th:value="${pessoa.id}"
-										th:text="${pessoao.id}+' : '+${pessoa.nome}"></option>
-								</select>
+								
 							</div>
 
 
+							<hr/>
+							<button type="submit" class="btn btn-primary">Salvar</button>
+							<span><a class="btn btn-primary" href="/">Sair</a></span>
 
 
-							<button type="submit" class="btn btn-default">Salvar</button>
-
-							
 
 						</form>
 					</div>
@@ -112,6 +79,24 @@
 	</div>
 
 </div>
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>Usuário</th>
+		
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tr th:each="u : ${usuarios}">
+		<td colspan="30" th:text="${u.login}"></td>
+		<td colspan="1"><a><span class="glyphicon glyphicon-trash"></span></a></td>
+		<td colspan="1"><a><span class="glyphicon glyphicon-trash"></span></a></td>
+
+
+	</tr>
+</table>
 
 
 
