@@ -34,7 +34,7 @@
 
 					<div class="container" style="width: 100%" align="center">
 
-						<form action="salvarfornecedor" method="post" >
+						<form action="salvarfornecedor" method="post" th:object="${fornecedor}" >
 
 
 
@@ -42,7 +42,7 @@
 								<div class="form-group col-sm-12 col-md-6">
 									<label class="control-label col-sm-4 text-right" for="nome">CNPJ:</label>
 									<div class="col-sm-8">
-										<input type="text" class="form-control" id="cnpj"
+										<input type="text" class="form-control" id="cnpj" th:field="*{cnpj}"
 											placeholder="Entre com o CNPJ" name="cnpj" />
 									</div>
 								</div>
@@ -52,7 +52,7 @@
 								<div class="form-group col-sm-12 col-md-6">
 									<label class="control-label col-sm-4 text-right" for="razao_social">Razão Social:</label>
 									<div class="col-sm-8">
-										<input type="text" class="form-control" id="razao_social"
+										<input type="text" class="form-control" id="razao_social" th:field="*{razaosocial}"
 											placeholder="Entre com a Razão Social" name="razao_social"/>
 									</div>
 								</div>
@@ -62,7 +62,7 @@
 								<div class="form-group col-sm-12 col-md-6">
 									<label class="control-label col-sm-4 text-right" for="telefone">Telefone:</label>
 									<div class="col-sm-8">
-										<input type="text" class="form-control" id="telefone"
+										<input type="text" class="form-control" id="telefone" th:field="*{telefone}"
 											placeholder="Entre com o Telefone" name="telefone" />
 									</div>
 								</div>
@@ -71,7 +71,7 @@
 								<div class="form-group col-sm-12 col-md-6">
 									<label class="control-label col-sm-4 text-right" for="pessoa_contato">Pessoa de Contato:</label>
 									<div class="col-sm-8">
-										<input type="text" class="form-control" id="pessoa_contato"
+										<input type="text" class="form-control" id="pessoa_contato" th:field="*{pessoacontato}"
 											placeholder="Entre com a Pessoa de Contato" name="pessoa_contato" />
 									</div>
 								</div>
@@ -82,7 +82,7 @@
 								<div class="form-group col-sm-12 col-md-12">
 									<label class="control-label col-sm-2 text-right" for="endereco">Endereço:</label>
 									<div class="col-sm-10">
-										<textarea id="endereco" name="endereco" class="form-control"
+										<textarea id="endereco" th:field="*{endereco}" name="endereco" class="form-control"
 											rows="2"></textarea>
 									</div>
 								</div>
@@ -141,7 +141,7 @@
 		<td th:text="${f.cnpj}"></td>
 		<td th:text="${f.telefone}"></td>
 		<td th:text="${f.pessoacontato}"></td>
-		<td><a><span class="glyphicon glyphicon-plus"></span></a></td>
+		<td><a th:href="@{/fornecedor/editarfornecedor/{idfornecedor}(idfornecedor=${f.id})}"><span class="glyphicon glyphicon-pencil"></span></a></td>
 		<td><a th:href="@{/fornecedor/removerfornecedor/{idfornecedor}(idfornecedor=${f.id})}"> <span class="glyphicon glyphicon-trash"/> </a> </td>
   
 
