@@ -1,7 +1,6 @@
 package br.com.cin.locadora.controlador;
 
 import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -75,6 +74,18 @@ public class FornecedorController {
 		return modelAndView;
 	}
 	
+
+	@GetMapping("/editarfornecedor/{idfornecedor}")
+	public ModelAndView editar(@PathVariable("idfornecedor") Integer idfornecedor) {
+		
+		
+		ModelAndView modelAndView = new ModelAndView(Navegacao.CADASTRAR_FORNECEDOR);
+		/*modelAndView.addObject("fornecedor", fornecedor.get());*/
+		modelAndView.addObject("fornecedor", this.repository.findById(idfornecedor));
+		
+		return modelAndView;
+		
+	}
 	
 	@GetMapping("/removerfornecedor/{idfornecedor}")
 	public ModelAndView excluir(@PathVariable("idfornecedor") Integer idfornecedor) {	
