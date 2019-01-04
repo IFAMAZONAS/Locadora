@@ -1,0 +1,119 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+
+
+<body>
+	<div class="container" align="center">
+		<div>
+			<h2>SISTEMA DE LOCADORA</h2>
+			<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The
+				Static Templates</div>
+
+			<div class="container" align="center">
+				<table class="table table-hover">
+					<thead>
+						<th>Código</th>
+						<th>Nome</th>
+						<th>Login</th>
+
+					</thead>
+
+					<tbody>
+						<tr th:each="u : ${usuario}">
+							<td th:text="${u.id}"></td>
+							<td th:text="${u.nome}"></td>
+							<td th:text="${u.login}"></td>
+
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+			<hr />
+
+		</div>
+		
+		<div class="panel-group" style="width: 100%" align="left">
+
+			<div class="panel panel-default">
+				<div class="panel-heading">Permissões Disponíveis</div>
+				<div class="panel-body">
+
+					
+				</div>
+
+				</div>
+
+			</div>
+
+		<hr/>
+		<div class="with panel-primary">
+			<div class="panel-heading">Permissões do Usuário <span th:text="${usuario.nome}"></span></div>
+			<div class="panel-body">
+				<div id="listaDeConvidados" style="width: 100%">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Permissão</th>
+							</tr>
+						</thead>
+						<tr th:each="p: ${rolesUsuario}">
+							<td><span th:text="${p.nomeRole}"></span></td>
+							
+							<td><a th:href="@{/usuario/removerPermissao?(idpermissao=${p.id})(idusuario=${usuario.id})}"><span class="glyphicon glyphicon-minus-sign"></span></a></td>
+						</tr>
+					
+						
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<
+
+
+	</div>
+
+
+
+
+	<script>
+		$(function() {
+			$(".dropdown").hover(function() {
+				$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+				$(this).toggleClass('open');
+				$('b', this).toggleClass("caret caret-up");
+			}, function() {
+				$('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+				$(this).toggleClass('open');
+				$('b', this).toggleClass("caret caret-up");
+			});
+		});
+	</script>
+</body>
+
+
+
+
+
+
+
+
+</html>
