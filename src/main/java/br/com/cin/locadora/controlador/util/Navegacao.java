@@ -7,6 +7,7 @@ public final class Navegacao {
 		public static final String CADASTRO_DEPENDENTE = "cliente/dependentes";
 		
 		public static final String CADASTRO_USUARIO = "usuario/usuariocadastro";
+		public static final String CADASTRO_PERMISSOES = "usuario/permissoes";
 		public static final String PAGINA_INICIAL_USUARIOS = "";
 		
 		public static final String CADASTRAR_FORNECEDOR = "fornecedor/cadastrofornecedor";

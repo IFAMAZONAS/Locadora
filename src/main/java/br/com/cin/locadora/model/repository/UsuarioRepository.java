@@ -15,5 +15,8 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 	
 	@Query("select u from Usuario u where u.login = ?1")
 	Usuario findUserByLogin(String login);
+	
+	@Query("select u from Usuario u where u.login like %?1%")
+	Iterable<Usuario> ListarUsuariosPorLogin(String login);
 
 }

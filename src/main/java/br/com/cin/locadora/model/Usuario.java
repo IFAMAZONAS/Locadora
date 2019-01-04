@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -21,24 +22,37 @@ public class Usuario implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String login;
 	private String senha;
-	
+
+	private String nome;
+
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "usuarios_role", 
-	     joinColumns = @JoinColumn(name = "usuario_id", 
-	                   referencedColumnName = "id",
-	                   table = "usuario"),  // cria tabela de acesso do usuário
-			
-			inverseJoinColumns = @JoinColumn(name="role_id",
-								referencedColumnName = "id",
-								table = "role"))
-	
+	@JoinTable(name = "usuarios_role", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id", table = "usuario"), // cria
+																																		// tabela
+																																		// de
+																																		// acesso
+																																		// do
+																																		// usuário
+
+			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id", table = "role"))
+
 	private List<Role> roles;
-	
+
+	@JoinColumn(name = "id_funcao", referencedColumnName = "id_funcao")
+	@ManyToOne
+	private Funcao idFuncao;
+
+	public Funcao getIdFuncao() {
+		return idFuncao;
+	}
+
+	public void setIdFuncao(Funcao idFuncao) {
+		this.idFuncao = idFuncao;
+	}
 
 	public Long getId() {
 		return id;
@@ -84,6 +98,14 @@ public class Usuario implements UserDetails {
 		return true;
 	}
 
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
 	@Override
 	public boolean isAccountNonLocked() {
 		return true;
@@ -97,6 +119,10 @@ public class Usuario implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+	
+	public List<Role> getRoles() {
+		return roles;
 	}
 
 }
