@@ -22,61 +22,89 @@
 			<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The
 				Static Templates</div>
 
-			<div class="container" align="center">
-				<table class="table table-hover">
-					<thead>
-						<th>Código</th>
-						<th>Nome</th>
-						<th>Login</th>
+			<div style="text-align: left;" th:each="m : ${msg}">
+				<span class="row" style="color: green; font-size: 20" th:text="${m}">
+				</span>
+			</div>
+			<br/>
+			<div class="with panel-primary">
+				<div class="panel-heading">Dados do usuário</div>
+				<div class="panel-body">
+					<table class="table table-hover">
+						<thead>
+							<th>Código</th>
+							<th>Nome</th>
+							<th>Login</th>
 
-					</thead>
+						</thead>
 
-					<tbody>
-						<tr th:each="u : ${usuario}">
-							<td th:text="${u.id}"></td>
-							<td th:text="${u.nome}"></td>
-							<td th:text="${u.login}"></td>
+						<tbody>
+							<tr th:each="u : ${usuario}">
+								<td th:text="${u.id}"></td>
+								<td th:text="${u.nome}"></td>
+								<td th:text="${u.login}"></td>
 
-						</tr>
-					</tbody>
-				</table>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 
 			</div>
-			<hr />
 
 		</div>
-		
+
 		<div class="panel-group" style="width: 100%" align="left">
 
-			<div class="panel panel-default">
+			<div class="with panel-danger">
 				<div class="panel-heading">Permissões Disponíveis</div>
-				<div class="panel-body">
+				<div class="panel-body"></div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
 
-					
-				</div>
+							<th></th>
+							<th></th>
+							<th></th>
 
-				</div>
+						</tr>
+					</thead>
+					<tr th:each="r: ${allRoles}">
+						<td><span th:text="${r.nomeRole}"></span></td>
+						<td><span th:text="${r.descricao}"></span></td>
+						<td><a
+							th:href="@{/usuario/adicionarpermissao(idpermissao=${r.id},idusuario=${usuario.id})}"><span
+								class="glyphicon glyphicon-plus"></span></a></td>
+					</tr>
 
+
+
+				</table>
 			</div>
 
-		<hr/>
-		<div class="with panel-primary">
-			<div class="panel-heading">Permissões do Usuário <span th:text="${usuario.nome}"></span></div>
+		</div>
+
+		<hr />
+		<div class="with panel-success">
+			<div class="panel-heading">
+				Permissões do Usuário <span th:text="${usuario.nome}"></span>
+			</div>
 			<div class="panel-body">
 				<div id="listaDeConvidados" style="width: 100%">
 					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th>Permissão</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tr th:each="p: ${rolesUsuario}">
 							<td><span th:text="${p.nomeRole}"></span></td>
-							
-							<td><a th:href="@{/usuario/removerPermissao?(idpermissao=${p.id})(idusuario=${usuario.id})}"><span class="glyphicon glyphicon-minus-sign"></span></a></td>
+							<td><a
+								th:href="@{/usuario/removerpermissao(idpermissao=${p.id},idusuario=${usuario.id})}"><span
+									class="glyphicon glyphicon-minus-sign"></span></a></td>
 						</tr>
-					
-						
+
+
 
 					</table>
 				</div>

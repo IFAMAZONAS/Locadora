@@ -1,8 +1,10 @@
 package br.com.cin.locadora.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -30,7 +32,7 @@ public class Usuario implements UserDetails {
 
 	private String nome;
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
 	@JoinTable(name = "usuarios_role", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id", table = "usuario"), // cria
 																																		// tabela
 																																		// de
@@ -40,7 +42,7 @@ public class Usuario implements UserDetails {
 
 			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id", table = "role"))
 
-	private List<Role> roles;
+	private List<Role> roles = new ArrayList<Role>();
 
 	@JoinColumn(name = "id_funcao", referencedColumnName = "id_funcao")
 	@ManyToOne

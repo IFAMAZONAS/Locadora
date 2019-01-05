@@ -17,6 +17,8 @@ public class Role implements GrantedAuthority {
 	private Long id;
 	
 	private String nomeRole;
+	
+	private String descricao;
 
 	@Override
 	public String getAuthority() { // ROLE_ADMIN , ROLE_GERENTE, ROLE_SECRETARIO
@@ -39,4 +41,11 @@ public class Role implements GrantedAuthority {
 		this.nomeRole = nomeRole;
 	}
 
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
+	public String getDescricao() {
+		return descricao;
+	}
 }

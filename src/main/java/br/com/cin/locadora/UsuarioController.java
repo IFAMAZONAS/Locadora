@@ -84,17 +84,22 @@ public class UsuarioController {
 		public ModelAndView pesquisarUsuario(@RequestParam("usuariopesquisa") String login) {
 			ModelAndView andView = new ModelAndView(Navegacao.CADASTRO_USUARIO);
 			Iterable<Usuario> usuarios = this.usuarioRepository.ListarUsuariosPorLogin(login);
-			
+			this.funcoes = this.listarFuncoes();
 			andView.addObject("usuarios", usuarios);
+			andView.addObject("funcoes", funcoes);
 	
 			return andView;
 		}
 		
+		
+		/**
+		 * 
+		 * 
+		 */
 		@RequestMapping(value="**/salvarusuario")
 		public ModelAndView cadastrarUsuario(@RequestParam("nome") String nome, @RequestParam("login")String login, @RequestParam("senha")String senha, @RequestParam("funcao") String funcao) {
 			ModelAndView andView = new ModelAndView(Navegacao.CADASTRO_USUARIO);
-			System.out.println("FUNCAO ------------------------------------------------------>"+funcao);
-			if(this.validade(login,nome, senha)) {				
+			if(this.validateUsuario(login,nome, senha)) {				
 				Usuario novoUsuario = new Usuario();	
 				Funcao funcaoUsuario = this.funcaoRepository.findById(Integer.valueOf(funcao)).get();		
 				BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -118,6 +123,8 @@ public class UsuarioController {
 				List<Usuario> usuarios = new ArrayList<Usuario>();
 				andView.addObject("usuarios", usuarios);
 				andView.addObject("msg",msg);
+				this.funcoes = this.listarFuncoes();
+				andView.addObject("funcoes", funcoes);
 				this.msg = new ArrayList<String>();
 				return andView;
 			}
@@ -125,15 +132,18 @@ public class UsuarioController {
 		
 			
 		}
-		
+		/****
+		 * 
+		 * @param idusuario
+		 * @param httpSession
+		 * @return
+		 */
 		@GetMapping("/cadastropermissoes/{idusuario}")
-		public ModelAndView cadastroPermissao(@PathVariable("idusuario") Integer idusuario, HttpSession httpSession) {
+		public ModelAndView cadastroPermissao(@PathVariable("idusuario") Integer idusuario) {
 			ModelAndView andView = new ModelAndView(Navegacao.CADASTRO_PERMISSOES);
 			Usuario usuario = this.usuarioRepository.findById(Long.valueOf(idusuario)).get();
 			this.rolesUsuario = (List<Role>) usuario.getAuthorities();
 			this.allRoles = this.roleRepository.findAll();
-			session = httpSession;					
-		    session.setAttribute("usuario", usuario);
 			andView.addObject("rolesUsuario", rolesUsuario);
 			andView.addObject("allRoles", allRoles);
 			andView.addObject("usuario",usuario);	
@@ -141,8 +151,86 @@ public class UsuarioController {
 			return andView;
 		}
 		
+		@RequestMapping(value="**/adicionarpermissao")
+		public ModelAndView adicionarPermissao(@RequestParam("idpermissao") String idPermissao, @RequestParam("idusuario") String idUsuario ) {
+			ModelAndView andView = new ModelAndView(Navegacao.CADASTRO_PERMISSOES);	
+			this.msg = new ArrayList<String>();
+			if(this.validatePermissao(idPermissao, idUsuario)) {
+				Usuario usuario = this.usuarioRepository.findById(Long.valueOf(idUsuario)).get();
+				Role role = this.roleRepository.findById(Long.valueOf(idPermissao)).get();
+				usuario.getRoles().add(role);
+				this.rolesUsuario = (List<Role>) usuario.getAuthorities();
+				this.allRoles = this.roleRepository.findAll();		
+				this.usuarioRepository.save(usuario);
+				this.msg.add("Operação realizada com sucesso!");
+				andView.addObject("rolesUsuario", rolesUsuario);
+				andView.addObject("allRoles", allRoles);
+				andView.addObject("usuario",usuario);
+				andView.addObject("msg", this.msg);
+				return andView;
+			}else {
+				Usuario usuario = this.usuarioRepository.findById(Long.valueOf(idUsuario)).get();
+				Role role = this.roleRepository.findById(Long.valueOf(idPermissao)).get();
+				this.rolesUsuario = (List<Role>) usuario.getAuthorities();
+				this.allRoles = this.roleRepository.findAll();
+				andView.addObject("rolesUsuario", rolesUsuario);
+				andView.addObject("allRoles", allRoles);
+				andView.addObject("usuario",usuario);
+				andView.addObject("msg", this.msg);
+				return andView;
+				
+			}
+			
+			
+		}
+		
+		@RequestMapping(value="**/removerpermissao")
+		public ModelAndView removerPermissao(@RequestParam("idpermissao") String idPermissao, @RequestParam("idusuario") String idUsuario) {
+			this.msg = new ArrayList<String>();
+			ModelAndView andView = new ModelAndView(Navegacao.CADASTRO_PERMISSOES);
+			Usuario usuario = this.usuarioRepository.findById(Long.valueOf(idUsuario)).get();
+			Role role = this.roleRepository.findById(Long.valueOf(idPermissao)).get();
+			usuario.getRoles().remove(role);
+			this.usuarioRepository.save(usuario);
+			this.msg.add("A exlusão foi realizada realizada com sucesso!");
+			this.rolesUsuario = (List<Role>) usuario.getAuthorities();
+			this.allRoles = this.roleRepository.findAll();
+			andView.addObject("rolesUsuario", rolesUsuario);
+			andView.addObject("allRoles", allRoles);
+			andView.addObject("usuario",usuario);
+			andView.addObject("msg", this.msg);
+			
+			return andView;
+		}
+		
+		
+		/***
+		 * 
+		 * @param idPermissao
+		 * @param idUsuario
+		 * @return
+		 */
+		private boolean validatePermissao(String idPermissao, String idUsuario) {
+			boolean retorno = true;
+			Usuario usuario = this.usuarioRepository.findById(Long.valueOf(idUsuario)).get();
+			Role role = this.roleRepository.findById(Long.valueOf(idPermissao)).get();
+			this.msg = new ArrayList<String>();
+			
+			if(usuario.getRoles().contains(role)) {
+				retorno = false;
+				this.msg.add("Não foi possivel realizar a operação: Usuãrio já tem o papel:"+role.getNomeRole());
+			}
+			return retorno;
+		}
 
-		private boolean validade(String login, String nome, String senha) {
+		/***
+		 * 
+		 * @param login
+		 * @param nome
+		 * @param senha
+		 * @return
+		 */
+		private boolean validateUsuario(String login, String nome, String senha) {
 			boolean retorno = true;
 			this.msg = new ArrayList<String>();
 			if(login.isEmpty()) {
@@ -168,7 +256,10 @@ public class UsuarioController {
 			return retorno;
 			
 		}
-		
+		/****
+		 * 
+		 * @return
+		 */
 		public Iterable<Funcao> listarFuncoes(){
 			return this.funcaoRepository.findAll();
 		}
