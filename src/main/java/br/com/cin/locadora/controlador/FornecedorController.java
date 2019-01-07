@@ -1,6 +1,9 @@
 package br.com.cin.locadora.controlador;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,6 +33,9 @@ public class FornecedorController {
 	@Autowired
 	FornecedorService fornecedorservice;
 	
+	private List<String> msgErros;
+	private List<String> msg;
+	
 	@RequestMapping( "**/home")
 	public void home(HttpServletResponse response, HttpServletRequest request) throws IOException {
 		String context = request.getContextPath();
@@ -46,25 +52,71 @@ public class FornecedorController {
 		return andView;
 	}
 	
-	@RequestMapping(value = "salvarfornecedor", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView salvar(@RequestParam("cnpj") String cnpj, @RequestParam("razao_social") String razaosocial,
+	@RequestMapping(value = "**/salvarfornecedor", method=RequestMethod.POST)
+	public ModelAndView salvar(@RequestParam("cnpj") String cnpj, @RequestParam("razaosocial") String razaosocial,
 			@RequestParam("endereco") String endereco, @RequestParam("telefone") String telefone,
-			@RequestParam("pessoa_contato") String pessoacontato, HttpSession session) {
-
+			@RequestParam("pessoacontato") String pessoacontato, @RequestParam("id") String id) {
 		Fornecedor fornecedor = new Fornecedor();
-		fornecedor.setCnpj(cnpj);
-		fornecedor.setRazaosocial(razaosocial);
-		fornecedor.setEndereco(endereco);
-		fornecedor.setTelefone(telefone);
-		fornecedor.setPessoacontato(pessoacontato);
+		ModelAndView andView = new ModelAndView("fornecedor/cadastrofornecedor");
+		Iterable<Fornecedor> fornecedores = this.repository.findAll();
 		
 		
-		this.fornecedorservice.salvarFornecedor(fornecedor);
-
-		return this.form();
+		if(validadeFornecedor(cnpj, razaosocial, telefone, endereco)) {
+			this.msg = new ArrayList<String>();
+			try {
+				int idFornecedor = Integer.valueOf(id);
+				fornecedor.setId(idFornecedor);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+			fornecedor.setCnpj(cnpj);
+			fornecedor.setRazaosocial(razaosocial);
+			fornecedor.setEndereco(endereco);
+			fornecedor.setTelefone(telefone);
+			fornecedor.setPessoacontato(pessoacontato);
+			
+			this.fornecedorservice.salvarFornecedor(fornecedor);
+			this.msg.add("Operação realizada com sucesso!");
+			andView.addObject("fornecedores",fornecedores);
+			andView.addObject("fornecedor", new Fornecedor());
+			andView.addObject("mgs", this.msg);
+			this.msg = new ArrayList<>();
+			return andView;
+		}else {
+			andView.addObject("fornecedores",fornecedores);
+			andView.addObject("fornecedor", new Fornecedor());
+			andView.addObject("messagensErro", this.msgErros);
+			return andView;
+		}
 
 	}
 	
+	private boolean validadeFornecedor(String cnpj, String razaosocial, String telefone, String endereco) {
+		boolean retorno = true;
+		this.msgErros = new ArrayList<>();
+		if(cnpj.isEmpty()) {
+			this.msgErros.add("Camo Cnpj deve ser informado!");
+		}
+		
+		if(telefone.isEmpty()) {
+			this.msgErros.add("Camo telefone deve ser informado!");
+		}
+		
+		if(razaosocial.isEmpty()) {
+			this.msgErros.add("Camo razão social deve ser informado!");
+		}
+		
+		if(endereco.isEmpty()) {
+			this.msgErros.add("Camo razão social deve ser informado!");
+		}
+		
+		if(!this.msgErros.isEmpty()) {
+			retorno = false;
+		}
+		return retorno;
+	}
+
 	@PostMapping("**/pesquisarfornecedor")
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
 		ModelAndView modelAndView = new ModelAndView("fornecedor/cadastrofornecedor");		

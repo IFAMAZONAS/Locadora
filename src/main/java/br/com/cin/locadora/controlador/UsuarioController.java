@@ -1,4 +1,4 @@
-package br.com.cin.locadora;
+package br.com.cin.locadora.controlador;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package br.com.cin.locadora;
+package br.com.cin.locadora.controlador;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -19,8 +19,25 @@
 	<div class="container" align="center">
 		<div>
 			<h2>SISTEMA DE LOCADORA</h2>
-			<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The Static
-			Templates</div>
+			<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The
+				Static Templates</div>
+
+			<br />
+			<div style="text-align: left;" th:each="m : ${msg}">
+
+				<span class="row" style="color: green; font-size: 16; font-weight: bold;" th:text="${m}">
+				</span>
+			</div>
+
+			<br />
+			
+			<div style="text-align: left;" th:each="m : ${messagensErro}">
+
+				<span class="row" style="color: red; font-size: 16; font-weight: bold" th:text="${m}">
+				</span>
+			</div>
+
+			<br />
 
 			<div class="container" align="center">
 				<table class="table table-hover">
@@ -137,7 +154,7 @@
 							<th>Sexo</th>
 							<th></th>
 							<th></th>
-							
+
 						</tr>
 					</thead>
 					<tr th:each="d: ${dependentes}">
@@ -145,7 +162,9 @@
 						<td><span th:text="${d.email}"></span></td>
 						<td><span th:text="${d.sexo}"></span></td>
 						<td><a href="#"><span class="glyphicon glyphicon-edit"></span></a></td>
-						<td><a th:href="@{/cliente/removerdependenteCliente/{iddependente}(iddependente=${d.idDependente})}"><span class="glyphicon glyphicon-trash"></span></a></td>
+						<td><a
+							th:href="@{/cliente/removerdependenteCliente/{iddependente}(iddependente=${d.idDependente})}"><span
+								class="glyphicon glyphicon-trash"></span></a></td>
 
 
 					</tr>

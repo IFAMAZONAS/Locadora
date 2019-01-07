@@ -1,0 +1,166 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+
+
+<body>
+	<div class="container" align="center">
+		<div>
+			<h2>SISTEMA DE LOCADORA</h2>
+			<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The
+				Static Templates</div>
+
+			<div style="text-align: left;" th:each="m : ${msg}">
+
+				<span class="row" style="color: green; font-size: 20" th:text="${m}">
+				</span>
+			</div>
+			<br />
+		</div>
+
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">Cadastro de Usuários</div>
+				<div class="panel-body">
+
+					<form action="salvarcliente" method="post">
+
+
+
+						<div class="row">
+							<div class="form-group col-sm-12 col-md-6">
+								<label class="control-label col-sm-4 text-right" for="nserie">Núnero Série:</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="nserie"
+										placeholder="Entre com o nome" name="nserie" />
+								</div>
+							</div>
+
+
+
+							<div class="form-group col-sm-12 col-md-6">
+								<label class="control-label col-sm-4 text-right" for="tnacional">Título Nacional</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="tnacional"
+										name="tnacional" placeholder="Enter com Título Nacional" />
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="form-group col-sm-12 col-md-6">
+								<label class="control-label col-sm-4 text-right" for="pais">País:</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="pais"
+										placeholder="Entre com pais" name="pais" />
+								</div>
+							</div>
+
+
+
+							<div class="form-group col-sm-12 col-md-6">
+								<label class="control-label col-sm-4 text-right" for="ano">Ano</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="ano"
+										name="ano" placeholder="Entre com o ano" />
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="form-group col-sm-12 col-md-6">
+								<label class="control-label col-sm-4 text-right" for="direcao">Direção:</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="direcao"
+										placeholder="Entre com a direção" name="direcao" />
+								</div>
+							</div>
+
+							<div class="form-group col-sm-12 col-md-6">
+								<label class="control-label col-sm-4 text-right" for="duracao">Duração</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="duracao"
+										name="duracao" placeholder="Entre com o duracao" />
+								</div>
+							</div>
+							
+							
+						</div>
+						
+						<div class="row">
+								<div class="form-group col-sm-12 col-md-12">
+									<label class="control-label col-sm-2 text-right" for="sinopse">Sinopse:</label>
+									<div class="col-sm-10">
+										<textarea id="sinopse" name="sinopse" class="form-control"
+											rows="2"></textarea>
+									</div>
+								</div>
+						</div>
+						
+						<div class="row">
+							<div class="form-group col-sm-12 col-md-6">
+								<label class="control-label col-sm-4 text-right" for="dataaquisicao">Data Aquisição:</label>
+								<div class="col-sm-8">
+									<input type="date" class="form-control" id="dataaquisicao"
+										placeholder="Entre com a data aquição" name="dataaquisicao" />
+								</div>
+							</div>
+
+							
+							
+							
+						</div>
+						
+
+					</form>
+
+				</div>
+
+			</div>
+
+
+
+
+
+
+
+		</div>
+
+
+
+
+		<script>
+			$(function() {
+				$(".dropdown").hover(function() {
+					$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+					$(this).toggleClass('open');
+					$('b', this).toggleClass("caret caret-up");
+				}, function() {
+					$('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+					$(this).toggleClass('open');
+					$('b', this).toggleClass("caret caret-up");
+				});
+			});
+		</script>
+</body>
+
+
+
+
+
+
+
+
+</html>

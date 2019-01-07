@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.ws.WebServiceRef;
 
+import org.hibernate.loader.plan.exec.process.spi.ReturnReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpRequest;
@@ -34,16 +35,15 @@ import br.com.cin.locadora.controlador.util.Navegacao;
 
 import br.com.cin.locadora.model.Cliente;
 import br.com.cin.locadora.model.Dependente;
+import br.com.cin.locadora.model.Usuario;
 import br.com.cin.locadora.model.repository.ClienteRepository;
 import br.com.cin.locadora.model.repository.DependenteRepository;
 import br.com.cin.locadora.servico.ClienteService;
 
-
-
 @Controller
-@RequestMapping(value="cliente")
+@RequestMapping(value = "cliente")
 public class ClienteController {
-	
+
 	@Autowired
 	ClienteRepository repository;
 	@Autowired
@@ -54,6 +54,7 @@ public class ClienteController {
 
 	List<Dependente> listaDependentes;
 	List<Cliente> clientesAtivos;
+	List<String> msg = new ArrayList<>();
 
 	List<String> messagensErro = new ArrayList<String>();
 
@@ -61,26 +62,26 @@ public class ClienteController {
 		this.listaDependentes = new ArrayList<Dependente>();
 		this.clientesAtivos = new ArrayList<Cliente>();
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET, value = "home")
 	@ResponseBody
 	public ModelAndView home(HttpServletResponse response, HttpServletRequest request) throws IOException {
-			ModelAndView andView = new ModelAndView("home");
-			return  andView;
-		
+		ModelAndView andView = new ModelAndView("home");
+		return andView;
+
 	}
 
-	
+	// @RequestMapping("**/cadastrocliente")
 
-	//@RequestMapping("**/cadastrocliente")
-	
 	@RequestMapping(method = RequestMethod.GET, value = "**/cadastrocliente")
 	@ResponseBody
 	public ModelAndView form() {
 		ModelAndView andView = new ModelAndView(Navegacao.CADASTRAR_CLIENTE);
 		Iterable<Cliente> clientes = this.repository.findAll();
-		andView.addObject("clientes",clientes);
+		andView.addObject("clientes", new ArrayList<>());
 		andView.addObject("cliente", new Cliente());
+		andView.addObject("msg", this.msg);
+		this.msg = new ArrayList<>();
 		return andView;
 	}
 
@@ -100,59 +101,61 @@ public class ClienteController {
 			@RequestParam("celular") String celular, @RequestParam("tel_comercial") String foneComercial,
 			@RequestParam("tel_residencial") String foneResidencial, @RequestParam("sexo") String sexo,
 			@RequestParam("cpf") String cpf, @RequestParam("endereco") String endereco,
-			@RequestParam("local_trabaho") String localTrabalho, HttpSession session) {
+			@RequestParam("local_trabaho") String localTrabalho) {
 
-		Cliente cliente = new Cliente();
-		cliente.setNome(nome);
-		cliente.setEmail(email);
-		cliente.setCpf(cpf);
-		cliente.setFoneCelular(celular);
-		cliente.setFoneComercial(foneComercial);
-		cliente.setFoneResidencial(foneResidencial);
-		cliente.setSexo(sexo);
-		cliente.setCpf(cpf);
-		cliente.setEndereco(endereco);
-		cliente.setLocalTrabalho(localTrabalho);
-		
-		
-		this.clienteService.salvarCliente(cliente);
-
-		return this.form();
+		if (this.validateCliente(nome, email, celular, foneComercial, foneResidencial, cpf, endereco, localTrabalho)) {
+			this.msg = new ArrayList<String>();
+			Cliente cliente = new Cliente();
+			cliente.setNome(nome);
+			cliente.setEmail(email);
+			cliente.setCpf(cpf);
+			cliente.setFoneCelular(celular);
+			cliente.setFoneComercial(foneComercial);
+			cliente.setFoneResidencial(foneResidencial);
+			cliente.setSexo(sexo);
+			cliente.setCpf(cpf);
+			cliente.setEndereco(endereco);
+			cliente.setLocalTrabalho(localTrabalho);
+			this.msg.add("Operação realizada com sucesso!");
+			this.clienteService.salvarCliente(cliente);
+			return this.form();
+		} else {
+			return this.form();
+		}
 
 	}
-	
+
 	@PostMapping("**/pesquisarcliente")
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
-		ModelAndView modelAndView = new ModelAndView("cliente/cadastrocliente");		
+		ModelAndView modelAndView = new ModelAndView("cliente/cadastrocliente");
 		Iterable<Cliente> clientes = this.repository.findPessoaByName(nomepesquisa);
-		modelAndView.addObject("clientes",clientes );
+		modelAndView.addObject("clientes", clientes);
 		modelAndView.addObject("cliente", new Cliente());
 		return modelAndView;
 	}
-	
-	
+
 	@GetMapping("/removercliente/{idcliente}")
-	public ModelAndView excluir(@PathVariable("idcliente") Integer idcliente) {	
+	public ModelAndView excluir(@PathVariable("idcliente") Integer idcliente) {
 		this.repository.deleteById(idcliente);
 		ModelAndView view = new ModelAndView(Navegacao.CADASTRAR_CLIENTE);
 		view.addObject("clientes", this.repository.findAll());
 		view.addObject("cliente", new Cliente());
 		return this.form();
 	}
-	
-	@RequestMapping(value="removerDependente", method = {RequestMethod.GET, RequestMethod.POST})
-	public String removerDependente(@RequestParam("idDependente") String id, Model model,HttpSession session) {
+
+	@RequestMapping(value = "removerDependente", method = { RequestMethod.GET, RequestMethod.POST })
+	public String removerDependente(@RequestParam("idDependente") String id, Model model, HttpSession session) {
 		Cliente cliente = (Cliente) session.getAttribute("cliente");
 		this.removerDependente(cliente, id);
 		this.clienteService.atualizar(cliente);
-		return "redirect:/cliente/form_dependente?id="+cliente.getId().toString();
-		
+		return "redirect:/cliente/form_dependente?id=" + cliente.getId().toString();
+
 	}
 
 	private void removerDependente(Cliente cliente, String id) {
-		int idDependente =Integer.valueOf(id);
+		int idDependente = Integer.valueOf(id);
 		for (Dependente dependente : cliente.getDependentes()) {
-			if(dependente.getIdDependente()==idDependente) {
+			if (dependente.getIdDependente() == idDependente) {
 				cliente.getDependentes().remove(dependente);
 			}
 		}
@@ -161,40 +164,57 @@ public class ClienteController {
 	@GetMapping("/dependentes/{idcliente}")
 	public ModelAndView cadastroDependente(@PathVariable("idcliente") Integer idcliente) {
 		Cliente cliente = this.clienteService.buscarPorId(Integer.valueOf(idcliente.toString()));
-		
+
 		ModelAndView modelAndView = new ModelAndView(Navegacao.CADASTRO_DEPENDENTE);
 		modelAndView.addObject("cliente", cliente);
 		modelAndView.addObject("dependentes", this.dependenteRepository.getDependentes(idcliente));
 		return modelAndView;
 	}
-	
+
 	@PostMapping("**/addDependeteCliente/{idcliente}")
-	public ModelAndView addDependente(Dependente dependente, 
-									 @PathVariable("idcliente") Integer idCliente) {
-		
+	public ModelAndView addDependente(Dependente dependente, @PathVariable("idcliente") Integer idCliente) {
+
 		Cliente cliente = this.repository.findById(idCliente).get();
-       
+
 		ModelAndView modelAndView = new ModelAndView(Navegacao.CADASTRO_DEPENDENTE);
-		dependente.setIdCliente(cliente);		
-		this.dependenteRepository.save(dependente);		
-		modelAndView.addObject("cliente", cliente);
-		modelAndView.addObject("dependentes", this.dependenteRepository.getDependentes(idCliente));
-		
-		return modelAndView;
+
+		if (validadeQuantidadeDependente(cliente)) {
+			if(validadeDependente(dependente)) {
+				this.msg = new ArrayList<>();
+				this.msg.add("Operação realizada com sucesso");
+				dependente.setIdCliente(cliente);
+				this.dependenteRepository.save(dependente);
+				modelAndView.addObject("cliente", cliente);
+				modelAndView.addObject("msg", this.msg);
+				modelAndView.addObject("dependentes", this.dependenteRepository.getDependentes(idCliente));
+				return modelAndView;
+			}else {
+				
+				modelAndView.addObject("cliente", cliente);
+				modelAndView.addObject("messagensErro", this.messagensErro);
+				modelAndView.addObject("dependentes", this.dependenteRepository.getDependentes(idCliente));
+				return modelAndView;
+			}
+		} else {
+
+			modelAndView.addObject("messagensErro", this.messagensErro);
+			modelAndView.addObject("cliente", cliente);
+			modelAndView.addObject("dependentes", this.dependenteRepository.getDependentes(idCliente));
+			return modelAndView;
+		}
+
 	}
-	
+
 	@GetMapping("**/removerdependenteCliente/{iddependente}")
-	public ModelAndView removerDependente( 
-									 @PathVariable("iddependente") Integer iddependente) {
-		
+	public ModelAndView removerDependente(@PathVariable("iddependente") Integer iddependente) {
+
 		Cliente cliente = this.dependenteRepository.findById(iddependente).get().getIdCliente();
 		ModelAndView modelAndView = new ModelAndView(Navegacao.CADASTRO_DEPENDENTE);
-		this.dependenteRepository.deleteById(iddependente);			
+		this.dependenteRepository.deleteById(iddependente);
 		modelAndView.addObject("cliente", cliente);
-		modelAndView.addObject("dependentes", this.dependenteRepository.getDependentes(cliente.getId()));	
+		modelAndView.addObject("dependentes", this.dependenteRepository.getDependentes(cliente.getId()));
 		return modelAndView;
 	}
-	
 
 	/****
 	 * 
@@ -227,6 +247,84 @@ public class ClienteController {
 
 	public List<String> getMessagensErro() {
 		return messagensErro;
+	}
+
+	private boolean validateCliente(String nome, String email, String celular, String foneComercial,
+			String foneResidencial, String cpf, String endereco, String localTrabalho) {
+		this.msg = new ArrayList<>();
+		boolean retorno = true;
+
+		if (nome.isEmpty()) {
+			this.msg.add("Campo Nome deve ser informado!");
+		}
+
+		if (email.isEmpty()) {
+			this.msg.add("Campo E-mail deve ser informado!");
+		}
+
+		if (celular.isEmpty()) {
+			this.msg.add("Campo Celular deve ser informado!");
+		}
+
+		if (foneResidencial.isEmpty()) {
+			this.msg.add("Campo Telefone Residencial deve ser informado!");
+		}
+
+		if (foneComercial.isEmpty()) {
+			this.msg.add("Campo Telefone comercial deve ser informado!");
+		}
+
+		if (cpf.isEmpty()) {
+			this.msg.add("Campo Cpf deve ser informado!");
+		}
+
+		if (endereco.isEmpty()) {
+			this.msg.add("Campo Endereço deve ser informado!");
+		}
+
+		if (localTrabalho.isEmpty()) {
+			this.msg.add("Campo Local de Trabalho deve ser informado!");
+		}
+
+		if (!this.msg.isEmpty()) {
+			retorno = false;
+		}
+
+		return retorno;
+	}
+
+	public boolean validadeQuantidadeDependente(Cliente usuario) {
+		boolean retorno = true;
+		this.messagensErro = new ArrayList<String>();
+
+		if (usuario.getDependentes().size() >= 3) {
+			this.messagensErro.add("Não é possível adicionar mais de três dependentes a um cliente");
+			retorno = false;
+		}
+		return retorno;
+	}
+
+	public boolean validadeDependente(Dependente dependente) {
+
+		boolean retorno = true;
+		this.messagensErro = new ArrayList<>();
+
+		if (dependente.getNome().isEmpty()) {
+			this.messagensErro.add("Campo nome deve ser informado!");
+			retorno = false;
+		}
+
+		if (dependente.getEmail().isEmpty()) {
+			this.messagensErro.add("Campo e-mail deve ser informado!");
+			retorno = false;
+		}
+
+		if (dependente.getSexo().isEmpty()) {
+			this.messagensErro.add("Campo sexo deve ser informado!");
+			retorno = false;
+		}
+
+		return retorno;
 	}
 
 }

@@ -27,13 +27,16 @@
 			Templates</div>
 
 		<br />
-		<div th:each="m : ${msg}">
-			<span class="row" style="color: green;font-size: 14" th:text="${m}"> </span>
+		<div style="text-align: left;" th:each="m : ${msg}">
+			
+			<span class="row" style="color: green; font-size: 16" th:text="${m}">
+			</span>
 		</div>
-		<br />
+		
+		<br/>
 
 
-		<div class="panel-group" style="width: 80%" align="left">
+		<div class="panel-group" style="width: 100%" align="left">
 
 			<div class="panel panel-default">
 				<div class="panel-heading">Cadastro de Clientes</div>
@@ -155,7 +158,6 @@
 								<button type="submit" class="btn btn-primary">Listar
 									Clientes</button>
 
-
 							</div>
 
 						</form>
@@ -240,5 +242,7 @@
 	$("#tel_comercial").mask("(00) 0000-0000");
 	$("#cpf").mask('000.000.000-00');
 </script>
+
+
 
 </html>

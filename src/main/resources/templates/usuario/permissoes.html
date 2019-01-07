@@ -23,10 +23,11 @@
 				Static Templates</div>
 
 			<div style="text-align: left;" th:each="m : ${msg}">
+
 				<span class="row" style="color: green; font-size: 20" th:text="${m}">
 				</span>
 			</div>
-			<br/>
+			<br />
 			<div class="with panel-primary">
 				<div class="panel-heading">Dados do usuário</div>
 				<div class="panel-body">
@@ -62,9 +63,9 @@
 					<thead>
 						<tr>
 
-							<th></th>
-							<th></th>
-							<th></th>
+							<th>Permissão</th>
+							<th>Descrição</th>
+							<th>Ação</th>
 
 						</tr>
 					</thead>
@@ -73,7 +74,7 @@
 						<td><span th:text="${r.descricao}"></span></td>
 						<td><a
 							th:href="@{/usuario/adicionarpermissao(idpermissao=${r.id},idusuario=${usuario.id})}"><span
-								class="glyphicon glyphicon-plus"></span></a></td>
+								class="glyphicon glyphicon-plus-sign"></span></a></td>
 					</tr>
 
 
