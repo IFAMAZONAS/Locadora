@@ -96,19 +96,19 @@ public class FornecedorController {
 		boolean retorno = true;
 		this.msgErros = new ArrayList<>();
 		if(cnpj.isEmpty()) {
-			this.msgErros.add("Camo Cnpj deve ser informado!");
+			this.msgErros.add("Campo Cnpj deve ser informado!");
 		}
 		
 		if(telefone.isEmpty()) {
-			this.msgErros.add("Camo telefone deve ser informado!");
+			this.msgErros.add("Campo telefone deve ser informado!");
 		}
 		
 		if(razaosocial.isEmpty()) {
-			this.msgErros.add("Camo razão social deve ser informado!");
+			this.msgErros.add("Campo razão social deve ser informado!");
 		}
 		
 		if(endereco.isEmpty()) {
-			this.msgErros.add("Camo razão social deve ser informado!");
+			this.msgErros.add("Campo endereço deve ser informado!");
 		}
 		
 		if(!this.msgErros.isEmpty()) {
