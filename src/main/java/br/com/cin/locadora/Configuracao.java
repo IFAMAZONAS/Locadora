@@ -20,5 +20,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class Configuracao {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Configuracao.class, args);}	
+		SpringApplication.run(Configuracao.class, args);
+		 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		 String senha = encoder.encode("admin");
+		 System.out.println(senha);
+	}	
 }
