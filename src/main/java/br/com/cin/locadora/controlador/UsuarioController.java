@@ -44,9 +44,7 @@ public class UsuarioController {
 		@Autowired
 		private FuncaoRepository funcaoRepository;
 		List<String> msg;
-		
-		HttpSession session;
-		
+		private List<String> msgErros;
 		
 		Iterable<Role> rolesUsuario;
 		Iterable<Role> allRoles;
@@ -57,6 +55,7 @@ public class UsuarioController {
 		
 		public UsuarioController() {
 			this.msg = new ArrayList<String>();
+			this.msgErros = new ArrayList<String>();
 			
 		}
 	    
@@ -122,7 +121,7 @@ public class UsuarioController {
 			}else {
 				List<Usuario> usuarios = new ArrayList<Usuario>();
 				andView.addObject("usuarios", usuarios);
-				andView.addObject("msg",msg);
+				andView.addObject("messagensErro",this.msgErros);
 				this.funcoes = this.listarFuncoes();
 				andView.addObject("funcoes", funcoes);
 				this.msg = new ArrayList<String>();
@@ -176,7 +175,7 @@ public class UsuarioController {
 				andView.addObject("rolesUsuario", rolesUsuario);
 				andView.addObject("allRoles", allRoles);
 				andView.addObject("usuario",usuario);
-				andView.addObject("msg", this.msg);
+				andView.addObject("messagensErro", this.msgErros);
 				return andView;
 				
 			}
@@ -199,6 +198,7 @@ public class UsuarioController {
 			andView.addObject("allRoles", allRoles);
 			andView.addObject("usuario",usuario);
 			andView.addObject("msg", this.msg);
+			andView.addObject("messagensErro",this.msgErros);
 			
 			return andView;
 		}
@@ -214,11 +214,11 @@ public class UsuarioController {
 			boolean retorno = true;
 			Usuario usuario = this.usuarioRepository.findById(Long.valueOf(idUsuario)).get();
 			Role role = this.roleRepository.findById(Long.valueOf(idPermissao)).get();
-			this.msg = new ArrayList<String>();
+			this.msgErros = new ArrayList<String>();
 			
 			if(usuario.getRoles().contains(role)) {
 				retorno = false;
-				this.msg.add("Não foi possivel realizar a operação: Usuãrio já tem o papel:"+role.getNomeRole());
+				this.msgErros.add("Não foi possivel realizar a operação: Usuãrio já tem o papel:"+role.getNomeRole());
 			}
 			return retorno;
 		}
@@ -232,25 +232,26 @@ public class UsuarioController {
 		 */
 		private boolean validateUsuario(String login, String nome, String senha) {
 			boolean retorno = true;
-			this.msg = new ArrayList<String>();
+			this.msgErros = new ArrayList<String>();
+			
 			if(login.isEmpty()) {
 				this.msg.add("Campo login deve ser informado!");
 				retorno = false;
 			}
 			
 			if(senha.isEmpty()) {
-				this.msg.add("Campo Senha Senha deve ser informado!");
+				this.msgErros.add("Campo Senha Senha deve ser informado!");
 				retorno = false;
 			}
 			
 			if(nome.isEmpty()) {
-				this.msg.add("Campo ome deve ser informado!");
+				this.msgErros.add("Campo nome deve ser informado!");
 				retorno = false;
 			}
 			
 			
-			if(!(this.usuarioRepository.findUserByLogin(login)==null)) {
-				this.msg.add("Já existe um usuário com o login informado!");
+			if((!(this.usuarioRepository.findUserByLogin(login)==null)) && this.msgErros.isEmpty()) {
+				this.msgErros.add("Já existe um usuário com o login informado!");
 				retorno =  false;
 			}
 			return retorno;

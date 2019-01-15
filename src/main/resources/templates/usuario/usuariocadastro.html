@@ -15,15 +15,18 @@
 		<h2>SISTEMA DE LOCADORA</h2>
 		<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The Static
 			Templates</div>
-		<br />
-		
-		<div style="text-align: left;" th:each="m : ${msg}">
-			
-			<span class="row" style="color: green; font-size: 20" th:text="${m}">
-			</span>
-		</div>
-		<hr/>
-		<br />
+		<br/>
+			<div style="text-align: left;" th:each="m : ${msg}">
+
+				<span class="row" style="color: green; font-size: 16; font-weight: bold;"  th:text="${m}">
+				</span>
+			</div>
+			<div style="text-align: left;" th:each="m : ${messagensErro}">
+				
+				<span class="row" style="color: red; font-size: 16; font-weight: bold"  th:text="${m}">
+				</span>
+			</div>
+			<hr/>
 
 		<div class="panel-group" style="width: 80%" align="left">
 

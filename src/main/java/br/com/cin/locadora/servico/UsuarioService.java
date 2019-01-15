@@ -12,8 +12,27 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
-	public void salvar(Usuario usuario) {
-		this.usuarioRepository.save(usuario);
+	public boolean salvar(Usuario usuario) {
+		if(!usuario.getLogin().isEmpty() ||usuario.getPassword().isEmpty()){
+			this.usuarioRepository.save(usuario);
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
+	/*****
+	 * 
+	 * @param usuario
+	 * @return
+	 */
+	public boolean excluirUsuario(Usuario usuario) {
+		if(usuario!=null) {
+			this.usuarioRepository.delete(usuario);
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	

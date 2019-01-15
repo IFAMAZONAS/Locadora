@@ -55,6 +55,7 @@ public class ClienteController {
 	List<Dependente> listaDependentes;
 	List<Cliente> clientesAtivos;
 	List<String> msg = new ArrayList<>();
+	//List<String> msgErros = new ArrayList<>();
 
 	List<String> messagensErro = new ArrayList<String>();
 
@@ -81,6 +82,7 @@ public class ClienteController {
 		andView.addObject("clientes", new ArrayList<>());
 		andView.addObject("cliente", new Cliente());
 		andView.addObject("msg", this.msg);
+		andView.addObject("messagensErro", this.messagensErro);
 		this.msg = new ArrayList<>();
 		return andView;
 	}
@@ -126,12 +128,25 @@ public class ClienteController {
 	}
 
 	@PostMapping("**/pesquisarcliente")
-	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
+	public ModelAndView ListarPorNome(@RequestParam("nomepesquisa") String nomepesquisa) {
 		ModelAndView modelAndView = new ModelAndView("cliente/cadastrocliente");
 		Iterable<Cliente> clientes = this.repository.findPessoaByName(nomepesquisa);
-		modelAndView.addObject("clientes", clientes);
-		modelAndView.addObject("cliente", new Cliente());
-		return modelAndView;
+		List<Cliente> lista = (List<Cliente>) clientes;
+		if(!ValidadorCliente.getInstance().validatePesquisa(lista)) {
+			modelAndView.addObject("clientes", clientes);
+			modelAndView.addObject("cliente", new Cliente());
+			ValidadorCliente.getInstance().getMsgErros().add("Não foi encontrado resulatdo para os dados informados!");
+			modelAndView.addObject("msg", ValidadorCliente.getInstance().getMsg());
+			modelAndView.addObject("messagensErro", ValidadorCliente.getInstance().getMsgErros());
+			return modelAndView;
+		}else {
+			modelAndView.addObject("clientes", clientes);
+			modelAndView.addObject("cliente", new Cliente());
+			modelAndView.addObject("msg", ValidadorCliente.getInstance().getMsg());
+			modelAndView.addObject("messagensErro", ValidadorCliente.getInstance().getMsgErros());
+			return modelAndView;
+		}
+		
 	}
 
 	@GetMapping("/removercliente/{idcliente}")
@@ -221,12 +236,26 @@ public class ClienteController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/listar")
-	public String listarTodos(Model model) {
+	@RequestMapping("**/listarclientes")
+	public ModelAndView listarTodos() {
 		Iterable<Cliente> clientes = this.clienteService.listarTodos();
-		model.addAttribute("clientes", clientes);
-		return Navegacao.LISTAGEM_CLIENTES;
-	}
+		ModelAndView andView = new ModelAndView(Navegacao.LISTAGEM_CLIENTES);
+		List<Cliente> lista = (List<Cliente>) clientes;
+		
+		if(!ValidadorCliente.getInstance().validatePesquisa(lista)) {
+			 ValidadorCliente.getInstance().getMsgErros().add("Não há items cadastrados");
+			 andView.addObject("clientes", clientes);
+			 andView.addObject("msg", ValidadorCliente.getInstance().getMsg());
+			 andView.addObject("messagensErro", ValidadorCliente.getInstance().getMsgErros());
+			 return andView;
+		}else {
+			andView.addObject("clientes", clientes);
+			andView.addObject("msg", ValidadorCliente.getInstance().getMsg());
+			andView.addObject("messagensErro", ValidadorCliente.getInstance().getMsgErros());
+			return andView;
+		}
+		}
+		
 
 	@RequestMapping("/visualizar")
 	public String visualizarCliente(@RequestParam("id") String id, Model model) {
@@ -251,42 +280,42 @@ public class ClienteController {
 
 	private boolean validateCliente(String nome, String email, String celular, String foneComercial,
 			String foneResidencial, String cpf, String endereco, String localTrabalho) {
-		this.msg = new ArrayList<>();
+		this.messagensErro = new ArrayList<>();
 		boolean retorno = true;
 
 		if (nome.isEmpty()) {
-			this.msg.add("Campo Nome deve ser informado!");
+			this.messagensErro.add("Campo Nome deve ser informado!");
 		}
 
 		if (email.isEmpty()) {
-			this.msg.add("Campo E-mail deve ser informado!");
+			this.messagensErro.add("Campo E-mail deve ser informado!");
 		}
 
 		if (celular.isEmpty()) {
-			this.msg.add("Campo Celular deve ser informado!");
+			this.messagensErro.add("Campo Celular deve ser informado!");
 		}
 
 		if (foneResidencial.isEmpty()) {
-			this.msg.add("Campo Telefone Residencial deve ser informado!");
+			this.messagensErro.add("Campo Telefone Residencial deve ser informado!");
 		}
 
 		if (foneComercial.isEmpty()) {
-			this.msg.add("Campo Telefone comercial deve ser informado!");
+			this.messagensErro.add("Campo Telefone comercial deve ser informado!");
 		}
 
 		if (cpf.isEmpty()) {
-			this.msg.add("Campo Cpf deve ser informado!");
+			this.messagensErro.add("Campo Cpf deve ser informado!");
 		}
 
 		if (endereco.isEmpty()) {
-			this.msg.add("Campo Endereço deve ser informado!");
+			this.messagensErro.add("Campo Endereço deve ser informado!");
 		}
 
 		if (localTrabalho.isEmpty()) {
-			this.msg.add("Campo Local de Trabalho deve ser informado!");
+			this.messagensErro.add("Campo Local de Trabalho deve ser informado!");
 		}
 
-		if (!this.msg.isEmpty()) {
+		if (!this.messagensErro.isEmpty()) {
 			retorno = false;
 		}
 
