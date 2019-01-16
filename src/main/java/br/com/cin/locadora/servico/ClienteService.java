@@ -24,8 +24,14 @@ public class ClienteService {
 		 * 
 		 * @param cliente
 		 */
-		public void salvarCliente(Cliente cliente) {
-			clienteRepository.save(cliente);
+		public boolean salvarCliente(Cliente cliente) {
+			if(cliente.getNome().equals("")) {
+				return false;
+			}else {
+				clienteRepository.save(cliente);
+				return true;
+			}
+			
 			
 			
 		}

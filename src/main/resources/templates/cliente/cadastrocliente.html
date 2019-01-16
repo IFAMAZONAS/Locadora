@@ -27,14 +27,21 @@
 			Templates</div>
 
 		<br />
-		<div style="text-align: left;" th:each="m : ${msg}">
-			
-			<span class="row" style="color: green; font-size: 16" th:text="${m}">
-			</span>
-		</div>
-		
-		<br/>
+			<div style="text-align: left;" th:each="m : ${msg}">
 
+				<span class="row" style="color: green; font-size: 16; font-weight: bold;" th:text="${m}">
+				</span>
+			</div>
+
+			<br />
+			
+			<div style="text-align: left;" th:each="m : ${messagensErro}">
+
+				<span class="row" style="color: red; font-size: 16; font-weight: bold" th:text="${m}">
+				</span>
+			</div>
+
+			<br />
 
 		<div class="panel-group" style="width: 100%" align="left">
 
@@ -155,8 +162,7 @@
 
 							<div>
 								<button type="submit" class="btn btn-primary">Salvar</button>
-								<button type="submit" class="btn btn-primary">Listar
-									Clientes</button>
+								<a href="listarclientes" class="btn btn-primary">Listar Clientes </a>
 
 							</div>
 

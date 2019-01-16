@@ -15,14 +15,25 @@
 		<h2>SISTEMA DE LOCADORA</h2>
 		<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The Static
 			Templates</div>
-
-		<br />
+			
 		
-		<div th:each="m : ${msgs}">
-			<span th:text="${m}"> </span>
-		</div>
-		<br />
 
+		<br />
+			<div style="text-align: left;" th:each="m : ${msg}">
+
+				<span class="row" style="color: green; font-size: 16; font-weight: bold;" th:text="${m}">
+				</span>
+			</div>
+
+			<br />
+			
+			<div style="text-align: left;" th:each="m : ${messagensErro}">
+
+				<span class="row" style="color: red; font-size: 16; font-weight: bold" th:text="${m}">
+				</span>
+			</div>
+
+			<br />
 
 		<div class="container">
 			<h1 align="left">Listagem de Clientes</h1>
@@ -49,10 +60,10 @@
 						<td><span th:text="${cliente.email}"></span></td>
 						<td><span th:text="${cliente.foneCelular}"></span></td>
 						<td><a
-							th:href="${'/cliente/form_dependente?id=' + cliente.id}"><span
+							th:href="@{/cliente/dependentes/{idcliente}(idcliente=${cliente.id})}"><span
 								class="glyphicon glyphicon-plus"></span></a></td>
 						<td><a href="#"><span class="glyphicon glyphicon-edit"></span></a></td>
-						<td><a href="#"><span class="glyphicon glyphicon-trash"></span></a></td>
+						<td><a th:href="@{/cliente/removercliente/{idcliente}(idcliente=${cliente.id})}"><span class="glyphicon glyphicon-trash"></span></a></td>
 
 
 					</tr>
