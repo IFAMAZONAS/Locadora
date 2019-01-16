@@ -15,10 +15,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
-
-
-
-
+	
 
 <div class="container" align="center">
 	<div>
@@ -27,21 +24,23 @@
 			Templates</div>
 
 		<br />
-			<div style="text-align: left;" th:each="m : ${msg}">
+		<div style="text-align: left;" th:each="m : ${msg}">
 
-				<span class="row" style="color: green; font-size: 16; font-weight: bold;" th:text="${m}">
-				</span>
-			</div>
+			<span class="row"
+				style="color: green; font-size: 16; font-weight: bold;"
+				th:text="${m}"> </span>
+		</div>
 
-			<br />
-			
-			<div style="text-align: left;" th:each="m : ${messagensErro}">
+		<br />
 
-				<span class="row" style="color: red; font-size: 16; font-weight: bold" th:text="${m}">
-				</span>
-			</div>
+		<div style="text-align: left;" th:each="m : ${messagensErro}">
 
-			<br />
+			<span class="row"
+				style="color: red; font-size: 16; font-weight: bold" th:text="${m}">
+			</span>
+		</div>
+
+		<br />
 
 		<div class="panel-group" style="width: 100%" align="left">
 
@@ -148,6 +147,8 @@
 									</div>
 								</div>
 							</div>
+							
+						
 
 							<div class="row">
 								<div class="form-group col-sm-12 col-md-12">
@@ -158,11 +159,14 @@
 									</div>
 								</div>
 							</div>
+							
+							
 
-
+							
 							<div>
 								<button type="submit" class="btn btn-primary">Salvar</button>
-								<a href="listarclientes" class="btn btn-primary">Listar Clientes </a>
+								<a href="listarclientes" class="btn btn-primary">Listar
+									Clientes </a>
 
 							</div>
 

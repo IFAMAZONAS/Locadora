@@ -17,6 +17,11 @@ public class ControladorPrincipal {
 		return "home";
 	}
 	
+	@RequestMapping("/auto")
+	public String autoComplete() {
+		return "/cliente/autocomplete";
+	}
+	
 	@RequestMapping("**/login")
 	public String logar() {
 		return "login";
