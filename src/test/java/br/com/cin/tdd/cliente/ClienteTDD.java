@@ -1,4 +1,4 @@
-package br.com.cin.teste;
+package br.com.cin.tdd.cliente;
 
 import static org.junit.Assert.*;
 
@@ -25,9 +25,7 @@ import br.com.cin.locadora.servico.UsuarioService;
 
 
 @RunWith(SpringRunner.class)
-public class TesteCliente {
-
-		
+public class ClienteTDD {
 
 		ClienteService clienteService = new ClienteService();
 		
@@ -38,7 +36,7 @@ public class TesteCliente {
 		@Test
 		public void cadastroCliente() {
 				Cliente novocCliente = new Cliente();
-				novocCliente.setNome("");
+				novocCliente.setNome("jjjj");
 				boolean esperado = false;
 				
 				Assert.assertEquals(clienteService.salvarCliente(novocCliente),esperado);
