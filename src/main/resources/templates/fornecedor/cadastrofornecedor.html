@@ -7,6 +7,7 @@
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -22,25 +23,22 @@
 		<h2>SISTEMA DE LOCADORA</h2>
 		<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The Static
 			Templates</div>
-			<br/>
-			<div style="text-align: left;" th:each="m : ${msg}">
+		<br />
+		<div style="text-align: left;" th:each="m : ${msg}">
 
-				<span class="row" style="color: green; font-size: 16; font-weight: bold;" th:text="${m}">
-				</span>
-			</div>
-			<div style="text-align: left;" th:each="m : ${messagensErro}">
+			<span class="row"
+				style="color: green; font-size: 16; font-weight: bold;"
+				th:text="${m}"> </span>
+		</div>
+		<div style="text-align: left;" th:each="m : ${messagensErro}">
 
-				<span class="row" style="color: red; font-size: 16; font-weight: bold" th:text="${m}">
-				</span>
-			</div>
-			<hr/>
+			<span class="row"
+				style="color: red; font-size: 16; font-weight: bold" th:text="${m}">
+			</span>
+		</div>
+		<hr />
 
-
-		<div class="panel-group" style="width: 80%" align="left">
-
-			<div class="panel panel-default">
-				<div class="panel-heading">Cadastro de Fornecedores</div>
-				<div class="panel-body">
+		
 
 					<div class="container" style="width: 100%" align="center">
 
@@ -115,71 +113,27 @@
 									</div>
 								</div>
 							</div>
-
-
-							<div>
-								<button type="submit" class="btn btn-primary">Salvar</button>
-								<button type="submit" class="btn btn-primary">Listar
-									Fornecedores</button>
-							</div>
+							
+							<button type="submit" class="btn btn-primary" style="align-content: left">Salvar</button>
+							<a href="listarfornecedor" class="btn btn-success" style="align-content: right">Pesquisar
+							Fornecedores</a>
 
 						</form>
 					</div>
+				
+						
 
-				</div>
-
-			</div>
-
-
-
-
-		</div>
-
+					
 	</div>
 
-	<div class="row">
-		<form action="pesquisarfornecedor" method="post" class="col s12">
-			<div class="row">
-				<div class="input-field col s12">
-					<label for="nomepesquisa" class="active">Pesquia por Razão
-						Social:</label> <input name="nomepesquisa" id="nomepesquisa" /> <input
-						class="btn btn-primary" type="submit" value="Buscar" />
 
-				</div>
-			</div>
-		</form>
-	</div>
 
 
 </div>
 
-<table class="table table-hover">
-	<thead>
-		<tr>
-
-			<th>Razão Social</th>
-			<th>CNPJ</th>
-			<th>Telefone</th>
-			<th>Pessoa Contato</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tr th:each="f : ${fornecedores}">
-		<td th:text="${f.razaosocial}"></td>
-		<td th:text="${f.cnpj}"></td>
-		<td th:text="${f.telefone}"></td>
-		<td th:text="${f.pessoacontato}"></td>
-		<td><a
-			th:href="@{/fornecedor/editarfornecedor/{idfornecedor}(idfornecedor=${f.id})}"><span
-				class="glyphicon glyphicon-pencil"></span></a></td>
-		<td><a
-			th:href="@{/fornecedor/removerfornecedor/{idfornecedor}(idfornecedor=${f.id})}">
-				<span class="glyphicon glyphicon-trash" />
-		</a></td>
 
 
-	</tr>
-</table>
+
 
 
 

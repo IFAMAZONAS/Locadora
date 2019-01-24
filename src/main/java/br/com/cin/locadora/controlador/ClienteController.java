@@ -78,15 +78,19 @@ public class ClienteController {
 	@RequestMapping(method = RequestMethod.GET, value = "**/cadastrocliente")
 	@ResponseBody
 	public ModelAndView form() {
+		
 		ModelAndView andView = new ModelAndView(Navegacao.CADASTRAR_CLIENTE);
 		Iterable<Cliente> clientes = this.repository.findAll();
 		andView.addObject("clientes", new ArrayList<>());
 		andView.addObject("cliente", new Cliente());
 		andView.addObject("msg", this.msg);
 		andView.addObject("messagensErro", this.messagensErro);
+		this.messagensErro = new ArrayList<>();
 		this.msg = new ArrayList<>();
 		return andView;
 	}
+	
+	
 
 	/****
 	 * 
@@ -130,7 +134,7 @@ public class ClienteController {
 
 	@PostMapping("**/pesquisarcliente")
 	public ModelAndView ListarPorNome(@RequestParam("nomepesquisa") String nomepesquisa) {
-		ModelAndView modelAndView = new ModelAndView("cliente/cadastrocliente");
+		ModelAndView modelAndView = new ModelAndView(Navegacao.LISTAGEM_CLIENTES);
 		Iterable<Cliente> clientes = this.repository.findPessoaByName(nomepesquisa);
 		List<Cliente> lista = (List<Cliente>) clientes;
 		if(!ValidadorCliente.getInstance().validatePesquisa(lista)) {

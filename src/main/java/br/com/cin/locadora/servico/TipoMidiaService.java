@@ -15,4 +15,13 @@ public class TipoMidiaService {
 	public Iterable<TipoMidia> listarTodos(){
 		return this.midiaRepository.findAll();
 	}
+
+	/***
+	 * 
+	 * @param idTipoMidia
+	 * @return
+	 */
+	public TipoMidia buscarPorId(Integer idTipoMidia) {		
+		return this.midiaRepository.findById(idTipoMidia).get();
+	}
 }

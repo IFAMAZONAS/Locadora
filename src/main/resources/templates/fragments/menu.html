@@ -2,10 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link th:href="@{/vendor/css/materialize.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link th:href="@{/vendor/css/style.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse" th:fragment="menu">
+	<nav class="navbar navbar-inverse" style="" th:fragment="menu">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -22,7 +26,7 @@
 							data-toggle="dropdown" href="#">Cadastro <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="/cliente/cadastrocliente">Clientes</a></li>
-								<li><a href="/fornecedor/cadastrofornecedor">Fornecedor</a></li>
+								<li><a href="/fornecedor/listarfornecedor">Fornecedor</a></li>
 								<li><a href="/usuario/cadastrousuario">Usuários</a></li>
 								<li><a href="/filme/cadastrofilme">Filmes</a></li>
 								

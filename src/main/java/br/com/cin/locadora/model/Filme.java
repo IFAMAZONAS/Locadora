@@ -35,8 +35,8 @@ public class Filme implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_filme")
     private Integer idFilme;
-    @Column(name = "numero_serire")
-    private String numeroSerire;
+    @Column(name = "numero_serie")
+    private String numeroSerie;
     @Column(name = "titulo_original")
     private String tituloOriginal;
     @Column(name = "titulo_portugues")
@@ -58,14 +58,20 @@ public class Filme implements Serializable {
     @Column(name = "data_aquisicao")
     @Temporal(TemporalType.DATE)
     private Date dataAquisicao;
-    @Column(name = "id_fornecedor")
-    private Integer idFornecedor;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    
+    @JoinColumn(name = "id_fornecedor", referencedColumnName = "id_fornecedor")
+    @ManyToOne
+    private Fornecedor idFornecedor;
+   
     @Column(name = "valor")
     private Double valor;
     @JoinColumn(name = "tipo_midia", referencedColumnName = "id_tipo_midia")
     @ManyToOne
     private TipoMidia tipoMidia;
+    
+    @JoinColumn(name = "id_genero", referencedColumnName = "id_genero")
+    @ManyToOne
+    private Genero genero;
 
     public Filme() {
     }
@@ -82,12 +88,12 @@ public class Filme implements Serializable {
         this.idFilme = idFilme;
     }
 
-    public String getNumeroSerire() {
-        return numeroSerire;
+    public String getNumeroSerie() {
+        return numeroSerie;
     }
 
-    public void setNumeroSerire(String numeroSerire) {
-        this.numeroSerire = numeroSerire;
+    public void setNumeroSerie(String numeroSerie) {
+        this.numeroSerie = numeroSerie;
     }
 
     public String getTituloOriginal() {
@@ -170,14 +176,15 @@ public class Filme implements Serializable {
         this.dataAquisicao = dataAquisicao;
     }
 
-    public Integer getIdFornecedor() {
-        return idFornecedor;
-    }
-
-    public void setIdFornecedor(Integer idFornecedor) {
-        this.idFornecedor = idFornecedor;
-    }
-
+   
+    public void setIdFornecedor(Fornecedor idFornecedor) {
+		this.idFornecedor = idFornecedor;
+	}
+    
+    public Fornecedor getIdFornecedor() {
+		return idFornecedor;
+	}
+    
     public Double getValor() {
         return valor;
     }
@@ -216,7 +223,7 @@ public class Filme implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication1.Filme[ idFilme=" + idFilme + " ]";
+        return "[ idFilme=" + idFilme + " ]";
     }
     
 }

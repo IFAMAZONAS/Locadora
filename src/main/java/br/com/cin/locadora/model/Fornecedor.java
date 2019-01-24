@@ -1,12 +1,16 @@
 package br.com.cin.locadora.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 
 @Entity(name="fornecedor")
@@ -26,6 +30,9 @@ public class Fornecedor implements Serializable {
 	private String telefone;
 	@Column(name="pessoa_contato")
     private String pessoacontato;
+	
+	@OneToMany(mappedBy = "idFornecedor")
+    private List<Filme> filmeCollection = new ArrayList<Filme>();
 	
 	
 	public Integer getId() {

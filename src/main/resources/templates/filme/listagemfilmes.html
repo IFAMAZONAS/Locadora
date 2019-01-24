@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<head>
+<style>
+.btn-circle {
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	padding: 6px 0;
+	font-size: 12px;
+	line-height: 1.428571429;
+	border-radius: 15px;
+}
+
+.glyphicon {
+	position: relative;
+	top: 1px;
+	display: inline-block;
+	font-family: 'Glyphicons Halflings';
+	-webkit-font-smoothing: antialiased;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1;
+}
+</style>
+</head>
+<body>
+
+
+	<div class="container" align="center">
+
+		<h2>SISTEMA DE LOCADORA</h2>
+		<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The Static
+			Templates</div>
+		<br />
+
+
+		<div align="left">
+			<a href="cadastrofilme" class="btn btn-primary">Cadastrar Filmes</a>
+		</div>
+
+
+
+
+		<br />
+		<table class="table table-hover">
+
+			<thead class="thead-dark">
+				<tr>
+					<th>Identificador</th>
+					<th>Código</th>
+					<th>Titulo Nacional</th>
+					<th>Direção</th>
+					<th>Duração</th>
+					<th></th>
+					<th></th>
+
+				</tr>
+			</thead>
+
+			<tr th:each="f : ${page.content}">
+				<td th:text="${f.idFilme}"></td>
+				<td th:text="${f.numeroSerie}"></td>
+				<td th:text="${f.tituloPortugues}"></td>
+				<td th:text="${f.direcao}"></td>
+				<td th:text="${f.duracao}"></td>
+				<td><a th:href="@{/filme/editarfilme/{idFilme}(idFilme=${f.idFilme})}"> <span class="glyphicon glyphicon-edit" /></a>
+			
+
+
+			</tr>
+		</table>
+
+		<div class=" pagination">
+			<ul class="pagination" style="background-color: blue;">
+				<li class="page-item"><span th:if="${page.hasPrevious()}"
+					class="page-item"> <a
+						th:href="@{/filme/listarfilmes(page=${page.number-1},size=${page.size})}"><span
+							class="glyphicon glyphicon-backward"></span></a>
+				</span></li>
+
+				<li class="page-item"><th:block
+						th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+						<span th:if="${page.number == i}" class="selected ">[[${i}+1]]</span>
+						<span th:unless="${page.number == i}"> <a class="page-item"
+							th:href="@{/filme/listarfilmes(page=${i},size=${page.size})}">[[${i}+1]]</a>
+						</span>
+					</th:block></li>
+
+				<li class="page-item"><span th:if="${page.hasNext()}"
+					class="page-item"> <a
+						th:href="@{/filme/listarfilmes(page=${page.number+1},size=${page.size})}"><span
+							class="glyphicon glyphicon-forward"></a>
+				</span></li>
+			</ul>
+
+
+
+		</div>
+
+
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="filmeDetalhesModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Título do modal</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Fechar">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="panel-body">
+						<form id="modalExemplo" method="post" action="">
+							<input type="text" name="campo" id="campo">
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Fechar</button>
+					<button type="button" class="btn btn-primary">Salvar
+						mudanças</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script>
+		function setaDadosModal(valor) {
+			document.getElementById('campo').value = valor;
+		}
+	</script>
+
+
+	<script>
+		$(document).ready(function() {
+			$("#myBtn").click(function() {
+				$("#myModal").modal();
+			});
+		});
+	</script>
+</body>

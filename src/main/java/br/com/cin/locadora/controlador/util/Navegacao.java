@@ -11,9 +11,11 @@ public final class Navegacao {
 		public static final String PAGINA_INICIAL_USUARIOS = "";
 		
 		public static final String CADASTRAR_FORNECEDOR = "fornecedor/cadastrofornecedor";
-		public static final String LISTAGEM_FORNECEDORES = "fornecedor/listagem";
+		public static final String LISTAGEM_FORNECEDORES = "fornecedor/listarfornecedores";
 		public static final String VISUALIZAR_FORNECEDOR = "fornecedor/resumo";
 		
 		public static final String CADASTRAR_FILME= "filme/cadastrofilme";
+		public static final String EDITAR_FILME= "filme/editarfilme";
+		public static final String LISTAGEM_FILMES = "filme/listagemfilmes";
 		
 }

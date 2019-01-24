@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,7 +61,7 @@ public class FornecedorController {
 			@RequestParam("endereco") String endereco, @RequestParam("telefone") String telefone,
 			@RequestParam("pessoacontato") String pessoacontato, @RequestParam("id") String id) {
 		Fornecedor fornecedor = new Fornecedor();
-		ModelAndView andView = new ModelAndView("fornecedor/cadastrofornecedor");
+		ModelAndView andView = new ModelAndView(Navegacao.CADASTRAR_FORNECEDOR);
 		Iterable<Fornecedor> fornecedores = this.repository.findAll();
 		
 		
@@ -87,6 +91,7 @@ public class FornecedorController {
 			andView.addObject("fornecedores",fornecedores);
 			andView.addObject("fornecedor", new Fornecedor());
 			andView.addObject("messagensErro", this.msgErros);
+			
 			return andView;
 		}
 
@@ -147,5 +152,21 @@ public class FornecedorController {
 		view.addObject("fornecedor", new Fornecedor());
 		return this.form();
 	}
+	
+	@GetMapping(value="**/listarfornecedor")
+	public ModelAndView getEmployees(@PageableDefault(size = 8) Pageable pageable ) {
+			ModelAndView andView = new ModelAndView(Navegacao.LISTAGEM_FORNECEDORES);
+	        Page<Fornecedor> page = repository.findAll(pageable);
+	        Iterable<Fornecedor> fornecedores = this.repository.findAll();
+	       
+			andView.addObject("fornecedores",fornecedores);
+			andView.addObject("fornecedor", new Fornecedor());
+			andView.addObject("mgs", this.msg);
+			andView.addObject("messagensErro", this.msgErros);
+	        andView.addObject("page", page);
+	        return andView;
+	   }
+	
+	 
 
 }
