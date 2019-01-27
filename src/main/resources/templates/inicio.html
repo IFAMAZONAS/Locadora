@@ -1,0 +1,67 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<link
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link th:href="@{/vendor/main.js}" type="text/javascript" />
+</head>
+
+
+
+
+
+<body>
+	<div class="container" align="center">
+		<h1 align="left">Locadora Imperial</h1>
+			<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The
+				Static Templates</div>
+	</div>
+	
+	<table class="table table-hover">
+
+					<thead class="thead-dark">
+						<tr>
+							<th>Identificador</th>
+							<th>Código</th>
+							<th>Titulo Nacional</th>
+							<th>Direção</th>
+							<th>Duração</th>
+							<th></th>
+							<th></th>
+
+						</tr>
+					</thead>
+
+					<tr th:each="f : ${page.content}">
+						<td th:text="${f.idFilme}"></td>
+						<td th:text="${f.numeroSerie}"></td>
+						<td th:text="${f.tituloPortugues}"></td>
+						<td th:text="${f.direcao}"></td>
+						<td th:text="${f.duracao}"></td>
+						
+					</tr>
+			</div>
+		
+</body>
+
+
+
+
+
+
+
+
+</html>

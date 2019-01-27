@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -65,8 +66,9 @@ public class Filme implements Serializable {
    
     @Column(name = "valor")
     private Double valor;
+    
     @JoinColumn(name = "tipo_midia", referencedColumnName = "id_tipo_midia")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private TipoMidia tipoMidia;
     
     @JoinColumn(name = "id_genero", referencedColumnName = "id_genero")

@@ -1,0 +1,169 @@
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<div class="container" align="center">
+	<div class="row">
+		<h2>SISTEMA DE LOCADORA</h2>
+		<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The Static
+			Templates</div>
+		<br/>
+			<div style="text-align: left;" th:each="m : ${msg}">
+
+				<span class="row" style="color: green; font-size: 16; font-weight: bold;"  th:text="${m}">
+				</span>
+			</div>
+			<div style="text-align: left;" th:each="m : ${messagensErro}">
+				
+				<span class="row" style="color: red; font-size: 16; font-weight: bold"  th:text="${m}">
+				</span>
+			</div>
+			<hr/>
+
+		<div class="panel-group" style="width: 80%" align="left">
+
+			<div class="panel panel-default">
+				<div class="panel-heading">Cadastro de Usuários</div>
+				<div class="panel-body">
+
+					<div class="container" style="width: 100%" align="center">
+
+						<form class="form-horizontal" action="salvarusuario" method="post">
+
+							<div class="row">
+								<div class="form-group form-group col-sm-12 col-md-6">
+									<label class="control-label col-sm-4 text-right" for="nome">Nome:</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="nome"
+											placeholder="Entre com o nome" name="nome" />
+									</div>
+								</div>
+
+								<div class="form-group form-group col-sm-12 col-md-6">
+									<label class="control-label col-sm-4 text-right" for="email">Login:</label>
+									<div class="col-sm-8">
+										<input type="login" class="form-control" id="login"
+											name="login" placeholder="Entre com o login" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group form-group form-group col-sm-12 col-md-6">
+									<label class="control-label col-sm-4 text-right" for="email">Senha:</label>
+									<div class="col-sm-8">
+										<input type="password" class="form-control" id="senha"
+											name="senha" placeholder="Entre com a senha" />
+									</div>
+								</div>
+
+								<div class="form-group form-group form-group col-sm-12 col-md-6">
+									<label class="control-label col-sm-4 text-right" for="funcao">Função:</label>
+									<div class="col-sm-8">
+										<select class="form-control" id="funcao" name ="funcao">
+											<option value="funcao.idFuncao">Selecione a função</option>
+											<option th:each="funcao : ${funcoes}" th:value="${funcao.idFuncao}"
+											th:text="${funcao.idFuncao}+' : '+${funcao.descricao}"></option>
+										</select>
+									</div>
+
+								</div>
+
+
+							</div>
+
+
+							<hr />
+							<button type="submit" class="btn btn-primary">Salvar</button>
+							<button class="waves-effect waves-light btn"
+								onclick="document.getElementById('salvarusuario').reset();">Novo</button>
+							<span><a class="btn btn-primary" href="/">Sair</a></span>
+
+
+
+						</form>
+					</div>
+
+				</div>
+
+			</div>
+
+
+
+
+		</div>
+
+	</div>
+
+	<div>
+		<div class="row">
+			<form action="pesquisarusuario" method="post" class="col s12">
+				<div class="row">
+					<div class="input-field col s12">
+						<label for="usuariopesquisa" class="active">Pesquisar
+							Usuario:</label> <input name="usuariopesquisa" id="usuariopesquisa" /> <input
+							class="btn btn-primary" type="submit" value="Buscar" />
+
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
+</div>
+
+
+
+<div  width="80%">
+	<table  class="table table-hover">
+	<thead>
+		<tr>
+			<th>Usuário</th>
+			<th>Função</th>
+
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tr th:each="u : ${usuarios}">
+		<td th:text="${u.login}"></td>
+		<td  th:text="${u.idFuncao.descricao}"></td>
+		<td > <a
+			th:href="@{/usuario/cadastropermissoes/{idusuario}(idusuario=${u.id})}"> <span class="glyphicon glyphicon-plus-sign"></span>
+				
+		</a></td>
+		
+
+
+	</tr>
+</table>
+</div>
+
+
+
+
+
+
+<script>
+	$(function() {
+		$(".dropdown").hover(function() {
+			$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+			$(this).toggleClass('open');
+			$('b', this).toggleClass("caret caret-up");
+		}, function() {
+			$('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+			$(this).toggleClass('open');
+			$('b', this).toggleClass("caret caret-up");
+		});
+	});
+</script>

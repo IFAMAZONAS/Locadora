@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<head>
+
+</head>
+<body>
+
+
+	<div class="container" align="center">
+
+		<h2>SISTEMA DE LOCADORA</h2>
+		<div th:insert="~{fragments/menupublic:: menupublic}">&copy; 2017 The Static
+			Templates</div>
+		<br />
+
+
+		<div align="left">
+			<a href="/" class="btn btn-primary">Voltar </a>
+		</div>
+
+
+
+
+		<br />
+		<table class="table table-hover">
+
+			<thead class="thead-dark">
+				<tr>
+					<th></th>
+					<th></th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="f: ${filme}">
+					<td style="font-weight: bold;" align="right">Título Nacional:</td>
+					<td th:text="${f.tituloPortugues}"></td>
+					
+
+				</tr>
+				
+				<tr th:each="f: ${filme}">
+					<td style="font-weight: bold;" align="right">Título Original:</td>
+					<td th:text="${f.tituloOriginal}"></td>
+				</tr>
+				
+				<tr th:each="f: ${filme}">
+					<td style="font-weight: bold;" align="right">Duração:</td>
+					<td th:text="${f.duracao}"></td>
+				</tr>
+				
+				<tr th:each="f: ${filme}">
+					<td style="font-weight: bold;" align="right">Direção:</td>
+					<td th:text="${f.direcao}"></td>
+				</tr>
+				
+				<tr th:each="f: ${filme}">
+					<td style="font-weight: bold;" align="right">Sinopse:</td>
+					<td th:text="${f.sinopse}"></td>
+				</tr>
+				
+				
+			</tbody>
+
+
+		</table>
+</body>

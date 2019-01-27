@@ -63,16 +63,11 @@
 			<version>9.4-1200-jdbc41</version> </dependency> -->
 
 		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
-		<!-- 
-			<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>42.2.5</version>
-		    </dependency>
-		 -->
-		
-		
-		
+		<!-- <dependency> <groupId>org.postgresql</groupId> <artifactId>postgresql</artifactId> 
+			<version>42.2.5</version> </dependency> -->
+
+
+
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -103,24 +98,24 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- cucumber testing -->
 		<!-- https://mvnrepository.com/artifact/info.cukes/cucumber-java -->
 		<dependency>
-    		<groupId>info.cukes</groupId>
-    		<artifactId>cucumber-java</artifactId>
-    		<version>1.2.5</version>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>1.2.5</version>
 		</dependency>
 		<dependency>
 			<groupId>info.cukes</groupId>
@@ -128,15 +123,17 @@
 			<version>1.2.5</version>
 		</dependency>
 		<dependency>
-    		<groupId>info.cukes</groupId>
-    		<artifactId>cucumber-spring</artifactId>
-    		<version>1.2.5</version>
-    		<scope>test</scope>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-spring</artifactId>
+			<version>1.2.5</version>
+			<scope>test</scope>
 		</dependency>
 
+		
 	</dependencies>
 
 	<build>
+		
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

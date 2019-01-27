@@ -15,6 +15,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link th:href="@{/vendor/main.js}" type="text/javascript" />
 </head>
 
 
@@ -44,10 +46,10 @@
 
 		</div>
 
-		<div class="panel panel panel-default" >
+		<div class="panel panel panel-default">
 			<div class="panel-heading" align="left">
 				<h3 class="panel-title">Cadastro de Filmes</h3>
-				
+
 			</div>
 			<div class="panel-body">
 				<form id="formFilme" th:action="salvarfilme" method="post"
@@ -169,8 +171,7 @@
 							<div class="col-sm-8">
 								<select class="form-control" id="genero" name="genero">
 									<option value="genero.id">Selecione a função</option>
-									<option selected="selected" th:each="genero : ${generos}"
-										th:value="${genero.id}"
+									<option th:each="genero : ${generos}" th:value="${genero.id}"
 										th:text="${genero.id}+' --- '+${genero.descricao}"></option>
 								</select>
 							</div>
@@ -281,8 +282,12 @@
 						Editar</a>
 				<td><a class="btn btn-primary" data-toggle="tooltip"
 					title="Visualizar detalhes do filme"
-					th:href="@{/filme/editarfilme/{idFilme}(idFilme=${f.idFilme})}">
-						Visulaizar</a>
+					th:href="@{/filme/visualizar/{idFilme}(idFilme=${f.idFilme})}">
+						Visulaizar</a></td>
+
+	
+
+
 			</tr>
 		</table>
 
@@ -313,6 +318,18 @@
 
 		</div>
 
+		<script>
+			('#exampleModal').on('show.bs.modal', function(event) {
+				var button = $(event.relatedTarget) // Button that triggered the modal
+				var recipient = button.data('whatever') // Extract info from data-* attributes
+				// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+				// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+				var modal = $(this)
+				modal.find('.modal-title').text('New message to ' + recipient)
+				modal.find('.modal-body input').val(recipient)
+			})
+		</script>
+
 
 
 
@@ -336,48 +353,8 @@
 		</script>
 
 		<script>
-			$(document).on(
-					'click',
-					'.panel-heading span.clickable',
-					function(e) {
-						var $this = $(this);
-						if (!$this.hasClass('panel-collapsed')) {
-							$this.parents('.panel').find('.panel-body')
-									.slideUp();
-							$this.addClass('panel-collapsed');
-							$this.find('i').removeClass('glyphicon-minus')
-									.addClass('glyphicon-plus');
-						} else {
-							$this.parents('.panel').find('.panel-body')
-									.slideDown();
-							$this.removeClass('panel-collapsed');
-							$this.find('i').removeClass('glyphicon-plus')
-									.addClass('glyphicon-minus');
-						}
-					});
-			$(document).on(
-					'click',
-					'.panel div.clickable',
-					function(e) {
-						var $this = $(this);
-						if (!$this.hasClass('panel-collapsed')) {
-							$this.parents('.panel').find('.panel-body')
-									.slideUp();
-							$this.addClass('panel-collapsed');
-							$this.find('i').removeClass('glyphicon-minus')
-									.addClass('glyphicon-plus');
-						} else {
-							$this.parents('.panel').find('.panel-body')
-									.slideDown();
-							$this.removeClass('panel-collapsed');
-							$this.find('i').removeClass('glyphicon-plus')
-									.addClass('glyphicon-minus');
-						}
-					});
-			$(document).ready(function() {
-				$('.panel-heading span.clickable').click();
-				$('.panel div.clickable').click();
-			});
+			
+				
 		</script>
 </body>
 

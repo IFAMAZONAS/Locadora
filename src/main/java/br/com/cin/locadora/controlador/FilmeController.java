@@ -3,10 +3,13 @@ package br.com.cin.locadora.controlador;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +34,7 @@ import br.com.cin.locadora.servico.TipoMidiaService;
 import cucumber.api.java.it.Date;
 
 @Controller
-@RequestMapping(value = "/filme")
+@RequestMapping(value = "filme")
 public class FilmeController {
 	@Autowired
 	TipoMidiaService tipoMidiaService;
@@ -75,8 +78,23 @@ public class FilmeController {
 	
 	@GetMapping("**/buscarporid")
 	@ResponseBody
-	public Filme buscarPorId(@RequestParam("idFilme") String idFilme) {
+	public Filme buscarPorId(Integer idFilme) {
 		 return this.filmeRepository.findById(Integer.valueOf(idFilme)).get();
+	}
+	
+	@GetMapping("**/visualizar/{idFilme}")
+	public ModelAndView buscar(@PathVariable("idFilme") Integer idFilme, @PageableDefault(size = 5) Pageable pageable) {
+		ModelAndView andView = new ModelAndView(Navegacao.VIEW_FILME);
+		try {
+			  Filme filme = this.filmeRepository.findById(idFilme).get();
+			  
+			  
+			 andView.addObject("filme", filme);
+		} catch (NumberFormatException e) {
+			
+		}
+		return andView;
+		
 	}
 	
 	@GetMapping("/editarfilme/{idFilme}")
@@ -214,6 +232,7 @@ public class FilmeController {
 
 		return novoFilme;
 	}
+	
 
 	private Fornecedor obterFornecedor(String idFornecedor) {
 		Fornecedor fornecedor = this.fornecedorService.buscarPorId(Integer.valueOf(idFornecedor));
@@ -234,5 +253,8 @@ public class FilmeController {
 		andView.addObject("page", page);
 		return andView;
 	}
+	
+	
+	
 
 }

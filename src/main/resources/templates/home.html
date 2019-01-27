@@ -3,6 +3,10 @@
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -12,32 +16,60 @@
 <div class="container">
 	<div class="row">
 		<h2>SISTEMA DE LOCADORA</h2>
-		<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The Static Templates</div>
-		
-		
-		<div class="jumbotron" align="center" style="margin-top: 50px;">
-				
-				<div align="center">
-					
-				</div>
-				
+		<div th:insert="~{fragments/menupublic:: menupublic}">&copy;
+			2017 The Static Templates</div>
+
+
+		<div class="container" align="center" style="margin-top: 50px;">
+
+			<div align="center">
+				<br />
+				<table class="table table-hover">
+
+					<thead class="thead-dark">
+						<tr>
+							<th>Identificador</th>
+							<th>Código</th>
+							<th>Titulo Nacional</th>
+							<th>Direção</th>
+							<th>Duração</th>
+							<th>Sinopse</th>
+							<th></th>
+							<th></th>
+
+						</tr>
+					</thead>
+
+					<tr th:each="f : ${page.content}">
+						<td th:text="${f.idFilme}"></td>
+						<td th:text="${f.numeroSerie}"></td>
+						<td th:text="${f.tituloPortugues}"></td>
+						<td th:text="${f.direcao}"></td>
+						<td th:text="${f.duracao}"></td>
+						<td th:text="${f.sinopse}"></td>
+						<td><a class="btn btn-success" data-toggle="tooltip"
+							title="Visualizar detalhes do filme"
+							th:href="@{/visualizar/{idFilme}(idFilme=${f.idFilme})}">
+								Visulaizar</a></td>
+					</tr>
+					</div>
+			</div>
+
+
+
 		</div>
-		
-		
-
 	</div>
-</div>
 
-<script>
-	$(function() {
-		$(".dropdown").hover(function() {
-			$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
-			$(this).toggleClass('open');
-			$('b', this).toggleClass("caret caret-up");
-		}, function() {
-			$('.dropdown-menu', this).stop(true, true).fadeOut("fast");
-			$(this).toggleClass('open');
-			$('b', this).toggleClass("caret caret-up");
+	<script>
+		$(function() {
+			$(".dropdown").hover(function() {
+				$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+				$(this).toggleClass('open');
+				$('b', this).toggleClass("caret caret-up");
+			}, function() {
+				$('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+				$(this).toggleClass('open');
+				$('b', this).toggleClass("caret caret-up");
+			});
 		});
-	});
-</script>
+	</script>
