@@ -52,24 +52,53 @@
 							th:href="@{/visualizar/{idFilme}(idFilme=${f.idFilme})}">
 								Visulaizar</a></td>
 					</tr>
-					</div>
+				</table>
+
+				<div class=" pagination">
+					<ul class="pagination" style="background-color: white;">
+						<li class="page-item"><span th:if="${page.hasPrevious()}"
+							class="page-item"> <a
+								th:href="@{/(page=${page.number-1},size=${page.size})}"><span
+									class="glyphicon glyphicon-backward"></span></a>
+						</span></li>
+
+						<li class="page-item"><th:block
+								th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+								<span th:if="${page.number == i}" class="selected ">[[${i}+1]]</span>
+								<span th:unless="${page.number == i}"> <a
+									class="page-item"
+									th:href="@{/(page=${i},size=${page.size})}">[[${i}+1]]</a>
+								</span>
+							</th:block></li>
+
+						<li class="page-item"><span th:if="${page.hasNext()}"
+							class="page-item"> <a
+								th:href="@{/(page=${page.number+1},size=${page.size})}"><span
+									class="glyphicon glyphicon-forward"></a>
+						</span></li>
+					</ul>
+
+
+
+				</div>
 			</div>
-
-
-
 		</div>
-	</div>
 
-	<script>
-		$(function() {
-			$(".dropdown").hover(function() {
-				$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
-				$(this).toggleClass('open');
-				$('b', this).toggleClass("caret caret-up");
-			}, function() {
-				$('.dropdown-menu', this).stop(true, true).fadeOut("fast");
-				$(this).toggleClass('open');
-				$('b', this).toggleClass("caret caret-up");
-			});
+
+
+	</div>
+</div>
+
+<script>
+	$(function() {
+		$(".dropdown").hover(function() {
+			$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+			$(this).toggleClass('open');
+			$('b', this).toggleClass("caret caret-up");
+		}, function() {
+			$('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+			$(this).toggleClass('open');
+			$('b', this).toggleClass("caret caret-up");
 		});
-	</script>
+	});
+</script>

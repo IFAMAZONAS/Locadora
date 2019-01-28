@@ -26,7 +26,7 @@ public class ControladorPrincipal {
 	private FilmeRepository filmeRepository;
 	
 	@RequestMapping("/")
-	public ModelAndView index(@PageableDefault(size = 10) Pageable pageable){
+	public ModelAndView index(@PageableDefault(size = 5) Pageable pageable){
 		ModelAndView andView = new ModelAndView("home");
 		page = this.filmeRepository.findAll(pageable);
 		andView.addObject("page", page);
@@ -54,7 +54,7 @@ public class ControladorPrincipal {
 	}
 	
 	@RequestMapping("**/inicio")
-	public ModelAndView paginaIncial(@PageableDefault(size = 10) Pageable pageable) {
+	public ModelAndView paginaIncial(@PageableDefault(size = 5) Pageable pageable) {
 		
 			ModelAndView andView = new ModelAndView("inicio");
 			page = this.filmeRepository.findAll(pageable);
