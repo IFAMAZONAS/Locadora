@@ -15,6 +15,7 @@ public final class Navegacao {
 		public static final String VISUALIZAR_FORNECEDOR = "fornecedor/resumo";
 		
 		public static final String CADASTRAR_FILME= "filme/form";
+		public static final String MODAL_FILME= "filme/viewpublic";
 		public static final String VIEW_FILME= "filme/view";
 		public static final String VIEW_FILME_PUBLIC= "public";
 		public static final String LISTAGEM_FILMES = "filme/list";

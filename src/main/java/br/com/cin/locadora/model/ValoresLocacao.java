@@ -1,46 +1,45 @@
 package br.com.cin.locadora.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "genero")
-public class Genero {
-
+@Table(name="valores_locacao")
+public class ValoresLocacao {
+	
 	private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_genero")
-    private Integer idGenero;
+    @Column(name = "id")
+    private Integer id;
     @Column(name = "descricao")
     private String descricao;
-    @OneToMany(mappedBy = "idGenero", fetch = FetchType.LAZY)
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "valor")
+    private Double valor;
+    @OneToMany(mappedBy = "valor", fetch = FetchType.LAZY)
     private List<Filme> filmeList;
 
-    public Genero() {
+    public ValoresLocacao() {
     }
 
-    public Genero(Integer idGenero) {
-        this.idGenero = idGenero;
+    public ValoresLocacao(Integer id) {
+        this.id = id;
     }
 
-    public Integer getIdGenero() {
-        return idGenero;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdGenero(Integer idGenero) {
-        this.idGenero = idGenero;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDescricao() {
@@ -49,6 +48,14 @@ public class Genero {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Double getValor() {
+        return valor;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
     }
 
     public List<Filme> getFilmeList() {
@@ -62,18 +69,18 @@ public class Genero {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idGenero != null ? idGenero.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Genero)) {
+        if (!(object instanceof ValoresLocacao)) {
             return false;
         }
-        Genero other = (Genero) object;
-        if ((this.idGenero == null && other.idGenero != null) || (this.idGenero != null && !this.idGenero.equals(other.idGenero))) {
+        ValoresLocacao other = (ValoresLocacao) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -81,6 +88,6 @@ public class Genero {
 
     @Override
     public String toString() {
-        return "javaapplication1.Genero[ idGenero=" + idGenero + " ]";
+        return "javaapplication1.ValoresLocacao[ id=" + id + " ]";
     }
 }

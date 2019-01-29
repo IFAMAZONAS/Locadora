@@ -20,4 +20,10 @@ public class GeneroService {
 	public Iterable<Genero> listarTodos(){
 		return this.generoRepository.findAll();
 	}
+
+
+	public Genero buscarPorId(Integer idGenero) {
+		
+		return this.generoRepository.findById(idGenero).get();
+	}
 }

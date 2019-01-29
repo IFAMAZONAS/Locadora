@@ -25,6 +25,7 @@ public class WebConfigSecurity  extends WebSecurityConfigurerAdapter{
 		.authorizeRequests() // Pertimi restringir acessos
 		.antMatchers(HttpMethod.GET, "/").permitAll() // Qualquer usuário acessa a pagina inicial
 		.antMatchers(HttpMethod.GET, "/home").permitAll()
+		.antMatchers(HttpMethod.GET, "public").permitAll()
 		.antMatchers(HttpMethod.GET,"/cliente/cadastrocliente").hasAnyRole("CAIXA","ADMIN")
 		.antMatchers(HttpMethod.GET,"/fornecedor/cadastrofornecedor").hasAnyRole("ADMIN","CAIXA")
 		.anyRequest().authenticated()
@@ -45,7 +46,7 @@ public class WebConfigSecurity  extends WebSecurityConfigurerAdapter{
 	
 	@Override // Ignora URL especificas
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/bootstrap/**");
+		web.ignoring().antMatchers("/public/**");
 	}
 
 }

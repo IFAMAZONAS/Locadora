@@ -12,6 +12,18 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<div class="modal fade " id="exampleModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				Carregando Dados....
+			</div>
+		</div>
+	</div>
+	
+</div>
+
 
 <div class="container">
 	<div class="row">
@@ -47,10 +59,18 @@
 						<td th:text="${f.direcao}"></td>
 						<td th:text="${f.duracao}"></td>
 						<td th:text="${f.sinopse}"></td>
-						<td><a class="btn btn-success" data-toggle="tooltip"
-							title="Visualizar detalhes do filme"
-							th:href="@{/visualizar/{idFilme}(idFilme=${f.idFilme})}">
-								Visulaizar</a></td>
+
+
+
+
+						<td>
+							<button
+								th:data-href="@{/filme/modal/{idFilme}(idFilme=${f.idFilme})}"
+								type="button" class="btn-modal btn-success" data-toggle="modal"
+								data-target="#exampleModal" data-whatever="@getbootstrap">Ver Detalhes</button>
+						</td>
+
+
 					</tr>
 				</table>
 
@@ -66,8 +86,7 @@
 								th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
 								<span th:if="${page.number == i}" class="selected ">[[${i}+1]]</span>
 								<span th:unless="${page.number == i}"> <a
-									class="page-item"
-									th:href="@{/(page=${i},size=${page.size})}">[[${i}+1]]</a>
+									class="page-item" th:href="@{/(page=${i},size=${page.size})}">[[${i}+1]]</a>
 								</span>
 							</th:block></li>
 
@@ -89,8 +108,20 @@
 	</div>
 </div>
 
+
+
 <script>
 	$(function() {
+
+		$(".btn-modal").click(function() {
+			var link = $(this).attr('data-href');
+			var modal = $(this).attr('data-target');
+			$(modal).delay(50).queue(function(){
+				$(this).load(link).dequeue();
+				
+			});
+		});
+
 		$(".dropdown").hover(function() {
 			$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
 			$(this).toggleClass('open');

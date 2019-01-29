@@ -33,7 +33,7 @@ public class ControladorPrincipal {
 		return andView;
 	}
 	
-	@RequestMapping("/home")
+	@RequestMapping("home")
 	public String home(){
 		return "home";
 	}
@@ -66,7 +66,7 @@ public class ControladorPrincipal {
 	
 	@GetMapping("**/visualizar/{idFilme}")
 	public ModelAndView visaoOublica(@PathVariable("idFilme") Integer idFilme, @PageableDefault(size = 5) Pageable pageable) {
-		ModelAndView andView = new ModelAndView("public");
+		ModelAndView andView = new ModelAndView("/public");
 		try {
 			  Filme filme = this.filmeRepository.findById(idFilme).get();
 			  

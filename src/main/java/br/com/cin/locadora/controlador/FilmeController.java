@@ -26,7 +26,9 @@ import br.com.cin.locadora.model.Filme;
 import br.com.cin.locadora.model.Fornecedor;
 import br.com.cin.locadora.model.Genero;
 import br.com.cin.locadora.model.TipoMidia;
+import br.com.cin.locadora.model.ValoresLocacao;
 import br.com.cin.locadora.model.repository.FilmeRepository;
+import br.com.cin.locadora.model.repository.ValorLocacaoRepository;
 import br.com.cin.locadora.servico.FilmeService;
 import br.com.cin.locadora.servico.FornecedorService;
 import br.com.cin.locadora.servico.GeneroService;
@@ -48,6 +50,9 @@ public class FilmeController {
 	private FilmeRepository filmeRepository;
 	@Autowired
 	private FornecedorService fornecedorService;
+	
+	@Autowired
+	private ValorLocacaoRepository valorLocacaoRepository;
 
 	Iterable<TipoMidia> tipoMidiaLista;
 	Iterable<Fornecedor> fornecedorLista;
@@ -97,6 +102,21 @@ public class FilmeController {
 		
 	}
 	
+	@GetMapping("**/modal/{idFilme}")
+	public ModelAndView modal(@PathVariable("idFilme") Integer idFilme) {
+		 ModelAndView andView = new ModelAndView(Navegacao.MODAL_FILME);
+		  Filme filme = this.filmeRepository.findById(idFilme).get();
+		  
+		  TipoMidia midia = filme.getTipoMidia();
+		  
+		  andView.addObject("filme", filme);
+		  andView.addObject("midia", midia);
+		  andView.addObject("fornecedor", this.fornecedorService.buscarPorId(filme.getIdFornecedor().getId()));
+		 
+		 return andView;
+	}
+
+	
 	@GetMapping("/editarfilme/{idFilme}")
 	public ModelAndView editar(@PathVariable("idFilme") Integer idFilme, @PageableDefault(size = 5) Pageable pageable) {
 		ModelAndView andView = new ModelAndView(Navegacao.CADASTRAR_FILME);
@@ -121,12 +141,32 @@ public class FilmeController {
 
 	
 	@RequestMapping(value = "**/salvarfilme", method = {RequestMethod.POST, RequestMethod.GET} )
-	public ModelAndView salvarFilme(Filme filme, @PageableDefault(size = 5) Pageable pageable) {
+	public ModelAndView salvarFilme(@RequestParam("numeroSerie") String numeroSerie,
+			@RequestParam("tituloPortugues") String tituloPortugues,
+			@RequestParam("toriginal") String tituloOriginal,
+			@RequestParam("elenco") String elenco,
+			@RequestParam("pais") String pais,
+			@RequestParam("ano") String ano,
+			@RequestParam("direcao") String direcao,
+			@RequestParam("duracao") String duracao,
+			@RequestParam("dataaquisicao") String dataquisicao,
+			@RequestParam("genero") String genero,
+			
+			@RequestParam("fornecedor") String fornecedor,
+			@RequestParam("midia") String midia,
+			@RequestParam("sinopse") String sinopse,
+			@PageableDefault(size = 5) Pageable pageable) {
+		
+		System.err.println("Data Aquisição:"+dataquisicao);
 			ModelAndView andView = new ModelAndView(Navegacao.CADASTRAR_FILME);
-		if (this.validadeCliente(filme.getNumeroSerie(), filme.getTituloOriginal(), filme.getTituloPortugues(), filme.getPais(), filme.getAno(), filme.getDirecao(), filme.getElenco(),filme.getSinopse(),
-				filme.getDuracao(), filme.getDataAquisicao(), filme.getIdFornecedor(), filme.getTipoMidia(), filme.getValor())) {
+		if (this.validadeCliente(numeroSerie, tituloPortugues, tituloOriginal, pais, ano, direcao, elenco,sinopse,
+				duracao, dataquisicao, fornecedor, midia)) {
 			
 			
+			
+			 Filme filme = this.montarObjeto(numeroSerie, 
+					 tituloOriginal, tituloPortugues, 
+					 pais, ano, direcao, elenco, sinopse, duracao, dataquisicao, fornecedor, midia,genero);
 			this.filmeService.salvar(filme);
 			this.msg.add("Operação realizada com sucesso!");
 			this.tipoMidiaLista = this.tipoMidiaService.listarTodos();
@@ -150,7 +190,7 @@ public class FilmeController {
 			andView.addObject("tipoMidia", this.tipoMidiaLista);
 			andView.addObject("fornecedores", this.fornecedorLista);
 			this.messagensErro = new ArrayList<>();
-			filme = new Filme();
+			
 			andView.addObject("filme", new Filme());
 			page = this.filmeRepository.findAll(pageable);
 			andView.addObject("page", page);
@@ -160,8 +200,8 @@ public class FilmeController {
 	}
 
 	private boolean validadeCliente(String numeroSerie, String tituloOriginal, String tituloPortugues, String pais,
-			Integer ano, String direcao, String elenco, String sinopse, String duracao, java.util.Date dataAquisicao,
-			Fornecedor idFornecedor, TipoMidia tipoMidia, Double valor) {
+			String ano, String direcao, String elenco, String sinopse, String duracao, String dataAquisicao,
+			String fornecedor, String midia) {
 		boolean retorno = true;
 		this.messagensErro = new ArrayList<>();
 		if (tituloOriginal.isEmpty()) {
@@ -216,12 +256,13 @@ public class FilmeController {
 	 * @return
 	 */
 	private Filme montarObjeto(String numeroSerie, String tituloOriginal, String tituloPortugues, String pais,
-			String ano, String direcao, String elenco, String sinopse, String duracao, Date dataAquisicao,
-			String idFornecedor, String tipoMidia, Double valor) {
+			String ano, String direcao, String elenco, String sinopse, String duracao, String dataAquisicao,
+			String idFornecedor, String tipoMidia, String genero) {
 		Filme novoFilme = new Filme();
 		novoFilme.setNumeroSerie(numeroSerie);
 		novoFilme.setTipoMidia(this.obterTipoMidia(tipoMidia));
 		novoFilme.setIdFornecedor(this.obterFornecedor(idFornecedor));
+		novoFilme.setIdGenero(this.obrterGenero(genero));
 		novoFilme.setDuracao(duracao);
 		novoFilme.setTituloOriginal(tituloOriginal);
 		novoFilme.setTituloPortugues(tituloPortugues);
@@ -229,10 +270,31 @@ public class FilmeController {
 		novoFilme.setAno(Integer.valueOf(ano));
 		novoFilme.setDirecao(direcao);
 		novoFilme.setSinopse(sinopse);
+		novoFilme.setDataAquisicao(new java.util.Date());
+		
+	
+		
+		novoFilme.setValor(this.definirValor(novoFilme.getTipoMidia()));
 
 		return novoFilme;
 	}
 	
+
+	private Genero obrterGenero(String genero) {
+		return this.generoService.buscarPorId(Integer.valueOf(genero));
+	}
+
+	private ValoresLocacao definirValor(TipoMidia tipoMidia) {
+		
+		ValoresLocacao valorLocacao = null;
+		
+		
+		if(tipoMidia.getDescricao().equalsIgnoreCase("DVD")) {
+			 valorLocacao = this.valorLocacaoRepository.findById(1).get();
+		}
+		
+		return valorLocacao ;
+	}
 
 	private Fornecedor obterFornecedor(String idFornecedor) {
 		Fornecedor fornecedor = this.fornecedorService.buscarPorId(Integer.valueOf(idFornecedor));

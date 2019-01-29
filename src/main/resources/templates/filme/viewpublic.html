@@ -1,0 +1,70 @@
+
+<div class="modal-dialog " role="document">
+	<div class="modal-content">
+		<div class="modal-header">
+			<h1 class="modal-title" id="exampleModalLabel">Dados do Filme</h1>
+			<button type="button" class="close" data-dismiss="modal"
+				aria-label="Fechar">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<table class="table thead-dark">
+
+				<thead class="thead-dark">
+					<tr>
+						<th></th>
+						<th></th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="f: ${filme}">
+						<td style="font-weight: bold;" align="right">Título Nacional:</td>
+						<td th:text="${f.tituloPortugues}"></td>
+
+
+					</tr>
+
+					<tr th:each="f: ${filme}">
+						<td style="font-weight: bold;" align="right">Título Original:</td>
+						<td th:text="${f.tituloOriginal}"></td>
+					</tr>
+
+					<tr th:each="f: ${filme}">
+						<td style="font-weight: bold;" align="right">Duração:</td>
+						<td th:text="${f.duracao}"></td>
+					</tr>
+					
+					<tr th:each="f: ${filme}">
+						<td style="font-weight: bold;" align="right">Sinopse:</td>
+						<td th:text="${f.sinopse}"></td>
+					</tr>
+
+					<tr th:each="f: ${filme}">
+						<td style="font-weight: bold;" align="right">Direção:</td>
+						<td th:text="${f.direcao}"></td>
+					</tr>
+					
+					<tr th:each="m: ${midia}">
+						<td style="font-weight: bold;" align="right">Tipo Midia:</td>
+						<td th:text="${m.descricao}"></td>
+					</tr>
+					
+					<tr th:each="f: ${fornecedor}">
+						<td style="font-weight: bold;" align="right">Tipo Midia:</td>
+						<td th:text="${f.razaosocial}"></td>
+					</tr>
+
+
+				</tbody>
+
+
+			</table>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+			
+		</div>
+	</div>
+</div>

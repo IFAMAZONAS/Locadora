@@ -64,16 +64,19 @@ public class Filme implements Serializable {
     @ManyToOne
     private Fornecedor idFornecedor;
    
-    @Column(name = "valor")
-    private Double valor;
-    
+ 
     @JoinColumn(name = "tipo_midia", referencedColumnName = "id_tipo_midia")
     @ManyToOne(fetch = FetchType.LAZY)
     private TipoMidia tipoMidia;
     
+    
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ValoresLocacao valor;
+    
     @JoinColumn(name = "id_genero", referencedColumnName = "id_genero")
-    @ManyToOne
-    private Genero genero;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Genero idGenero;
 
     public Filme() {
     }
@@ -187,13 +190,13 @@ public class Filme implements Serializable {
 		return idFornecedor;
 	}
     
-    public Double getValor() {
-        return valor;
-    }
-
-    public void setValor(Double valor) {
-        this.valor = valor;
-    }
+    public void setValor(ValoresLocacao valor) {
+		this.valor = valor;
+	}
+    
+    public ValoresLocacao getValor() {
+		return valor;
+	}
 
     public TipoMidia getTipoMidia() {
         return tipoMidia;
@@ -209,6 +212,14 @@ public class Filme implements Serializable {
         hash += (idFilme != null ? idFilme.hashCode() : 0);
         return hash;
     }
+    
+    public void setIdGenero(Genero idGenero) {
+		this.idGenero = idGenero;
+	}
+    
+    public Genero getIdGenero() {
+		return idGenero;
+	}
 
     @Override
     public boolean equals(Object object) {
