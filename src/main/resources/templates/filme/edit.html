@@ -1,0 +1,213 @@
+<div class="modal-dialog modal-lg" role="document">
+	<div class="modal-content">
+		<div class="modal-header">
+			<h1 class="modal-title" id="exampleModalLabel">Dados do Filme</h1>
+			<button type="button" class="close" data-dismiss="modal"
+				aria-label="Fechar">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<form id="formFilme" th:action="salvarfilme" method="post"
+					th:object="${filme}">
+
+					<div class="row">
+						<div class="form-group col-sm-12 col-md-6">
+							<label class="control-label col-sm-4 text-right" for="idFilme">Código:</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="idFilme"
+									th:field="*{idFilme}" readonly="readonly" name="idFilme" />
+							</div>
+						</div>
+
+					</div>
+
+					<div class="row">
+						<div class="form-group col-sm-12 col-md-6">
+							<label class="control-label col-sm-4 text-right" for="nserie">Número
+								Série:</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="nserie"
+									th:field="*{numeroSerie}" placeholder="Entre com o nome"
+									name="numeroSerie" />
+							</div>
+						</div>
+
+
+
+						<div class="form-group col-sm-12 col-md-6">
+							<label class="control-label col-sm-4 text-right" for="tnacional">Título
+								Nacional</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="tnacional"
+									th:field="*{tituloPortugues}" name="tituloPortugues"
+									placeholder="Enter com Título Nacional" />
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group col-sm-12 col-md-6">
+							<label class="control-label col-sm-4 text-right" for="toriginal">Título
+								Original:</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="toriginal"
+									th:field="*{tituloOriginal}" placeholder="Entre com o nome"
+									name="toriginal" />
+							</div>
+						</div>
+
+						<div class="form-group col-sm-12 col-md-6">
+							<label class="control-label col-sm-4 text-right" for="elenco">Elenco</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="elenco"
+									name="elenco" th:field="*{elenco}"
+									placeholder="Enter com elenco" />
+							</div>
+						</div>
+					</div>
+
+					<div class="row"></div>
+
+					<div class="row">
+						<div class="form-group col-sm-12 col-md-6">
+							<label class="control-label col-sm-4 text-right" for="pais">País:</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="pais"
+									th:field="*{pais}" placeholder="Entre com pais" name="pais" />
+							</div>
+						</div>
+
+
+
+						<div class="form-group col-sm-12 col-md-6">
+							<label class="control-label col-sm-4 text-right" for="ano">Ano</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="ano" name="ano"
+									th:field="*{ano}" placeholder="Entre com o ano" />
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group col-sm-12 col-md-6">
+							<label class="control-label col-sm-4 text-right" for="direcao">Direção:</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="direcao"
+									th:field="*{direcao}" placeholder="Entre com a direção"
+									name="direcao" />
+							</div>
+						</div>
+
+						<div class="form-group col-sm-12 col-md-6">
+							<label class="control-label col-sm-4 text-right" for="duracao">Duração</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="duracao"
+									th:field="*{duracao}" name="duracao"
+									placeholder="Entre com o duracao" />
+							</div>
+						</div>
+
+
+					</div>
+
+
+					<div class="row">
+						<div class="form-group col-sm-12 col-md-6">
+							<label class="control-label col-sm-4 text-right"
+								for="dataaquisicao">Data Aquisição:</label>
+							<div class="col-sm-8">
+								<input type="date" class="form-control" id="dataaquisicao"
+									placeholder="Entre com a data aquição" name="dataaquisicao" />
+							</div>
+						</div>
+
+						<div class="form-group form-group form-group col-sm-12 col-md-6">
+							<label class="control-label col-sm-4 text-right" for="funcao">Genero:</label>
+							<div class="col-sm-8">
+								<select class="form-control" id="genero" name="genero">
+									<option value="genero.id">Selecione a função</option>
+									<option th:each="genero : ${generos}" th:value="${genero.id}"
+										th:text="${genero.id}+' --- '+${genero.descricao}"></option>
+								</select>
+							</div>
+
+						</div>
+
+
+					</div>
+
+					<div class="row">
+
+						<div class="form-group form-group form-group col-sm-12 col-md-6">
+							<label class="control-label col-sm-4 text-right" for="funcao">Fornecedor:</label>
+							<div class="col-sm-8">
+								<select class="form-control" id="fornecedor" name="fornecedor">
+									<option value="fornecedor.id">Selecione o Fornecedor</option>
+									<option selected="selected"
+										th:each="fornecedor : ${fornecedores}"
+										th:value="${fornecedor.id}"
+										th:text="${fornecedor.id}+' --- '+${fornecedor.razaosocial}"></option>
+								</select>
+							</div>
+
+						</div>
+
+
+
+
+						<div class="  form-group form-group form-group col-sm-12 col-md-6">
+							<label class="control-label col-sm-4 text-right" for="midia">Tipo
+								Mídia:</label>
+							<div class="col-sm-8 ">
+								<select class="form-control custom-select" id="midia"
+									name="midia">
+									<option value="tipoMidia.idTipoMidia">Selecione o tipo
+										de Mídia</option>
+									<option selected="selected" th:each="tipo : ${tipoMidia}"
+										th:value="${tipo.idTipoMidia}"
+										th:text="${tipo.idTipoMidia}+' : '+${tipo.descricao}"></option>
+								</select>
+							</div>
+
+						</div>
+
+
+
+
+					</div>
+
+					<div class="row">
+						<div class="form-group col-sm-12 col-md-6">
+							<label class="control-label col-sm-4 text-right" for="valor">Valor</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="valor" name="valor"
+									th:field="*{valor}" placeholder="Valor" />
+							</div>
+						</div>
+
+
+					</div>
+
+					<div class="row">
+						<div class="form-group col-sm-12 col-md-12">
+							<label class="control-label col-sm-2 text-right" for="sinopse">Sinopse::</label>
+							<div class="col-sm-10">
+								<textarea id="sinopse" name="sinopse" class="form-control"
+									th:field="*{sinopse}" rows="2"></textarea>
+							</div>
+						</div>
+					</div>
+
+					<button type="submit" class="btn btn-primary ">Salvar</button>
+
+
+
+				</form>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+			
+		</div>
+	</div>
+</div>

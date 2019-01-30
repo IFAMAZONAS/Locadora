@@ -257,10 +257,13 @@
 				<td th:text="${f.tituloPortugues}"></td>
 				<td th:text="${f.direcao}"></td>
 				<td th:text="${f.duracao}"></td>
-				<td><a class="btn btn-success " data-toggle="tooltip"
-					title="Editar dados do filme"
-					th:href="@{/filme/editarfilme/{idFilme}(idFilme=${f.idFilme})}">
-						Editar</a>
+				<td>
+				
+					<button
+							th:data-href="@{/filme/editarfilme/{idFilme}(idFilme=${f.idFilme})}"
+							type="button" class="btn-modal btn-success" data-toggle="modal"
+							data-target="#editFilmeModal" data-whatever="@getbootstrap">Editar
+					</button>
 				<td>
 					<button
 						th:data-href="@{/filme/modal/{idFilme}(idFilme=${f.idFilme})}"
@@ -307,6 +310,16 @@
 			</div>
 
 		</div>
+		
+		<div class="modal fade " id="editFilmeModal" tabindex="-1" role="dialog"
+			aria-labelledby="editFilmeModal" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">Carregando Dados....</div>
+				</div>
+			</div>
+
+		</div>
 
 
 		<script>
@@ -320,6 +333,8 @@
 				modal.find('.modal-body input').val(recipient)
 			})
 		</script>
+		
+		
 
 
 
@@ -332,6 +347,7 @@
 		<script>
 			$(function() {
 
+				
 				$(".btn-modal").click(function() {
 					var link = $(this).attr('data-href');
 					var modal = $(this).attr('data-target');

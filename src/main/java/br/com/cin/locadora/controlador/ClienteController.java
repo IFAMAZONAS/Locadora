@@ -113,7 +113,7 @@ public class ClienteController {
 		if (this.validateCliente(nome, email, celular, foneComercial, foneResidencial, cpf, endereco, localTrabalho)) {
 			this.msg = new ArrayList<String>();
 			Cliente cliente = new Cliente();
-			cliente.setNome(nome);
+			cliente.setNome(nome.toUpperCase());
 			cliente.setEmail(email);
 			cliente.setCpf(cpf);
 			cliente.setFoneCelular(celular);

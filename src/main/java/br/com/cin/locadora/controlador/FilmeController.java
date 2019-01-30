@@ -105,12 +105,12 @@ public class FilmeController {
 	@GetMapping("**/modal/{idFilme}")
 	public ModelAndView modal(@PathVariable("idFilme") Integer idFilme) {
 		 ModelAndView andView = new ModelAndView(Navegacao.MODAL_FILME);
-		  Filme filme = this.filmeRepository.findById(idFilme).get();
-		  
-		  TipoMidia midia = filme.getTipoMidia();
+		  Filme filme = this.filmeRepository.findById(idFilme).get();		  
+		  TipoMidia midia = filme.getTipoMidia();	
 		  
 		  andView.addObject("filme", filme);
 		  andView.addObject("midia", midia);
+		  andView.addObject("valores", this.valorLocacaoRepository.findById(filme.getValor().getId()).get());
 		  andView.addObject("fornecedor", this.fornecedorService.buscarPorId(filme.getIdFornecedor().getId()));
 		 
 		 return andView;
@@ -119,18 +119,11 @@ public class FilmeController {
 	
 	@GetMapping("/editarfilme/{idFilme}")
 	public ModelAndView editar(@PathVariable("idFilme") Integer idFilme, @PageableDefault(size = 5) Pageable pageable) {
-		ModelAndView andView = new ModelAndView(Navegacao.CADASTRAR_FILME);
+		ModelAndView andView = new ModelAndView(Navegacao.ALTERAR_FILME);
 		try {
 			this.generoLista = this.generoService.listarTodos();
 			this.fornecedorLista = this.fornecedorService.listarTodos();
-			
-			andView.addObject("msg", this.msg);
-			andView.addObject("generos", generoLista);
-			andView.addObject("tipoMidia", this.tipoMidiaLista);
-			andView.addObject("fornecedores", this.fornecedorLista);
-			page = this.filmeRepository.findAll(pageable);
-			andView.addObject("page", page);
-			
+					
 			andView.addObject("filme", this.filmeRepository.findById(Integer.valueOf(idFilme)));
 		} catch (NumberFormatException e) {
 			

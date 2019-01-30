@@ -1,8 +1,8 @@
 
-<div class="modal-dialog " role="document">
+<div class="modal-dialog modal-lg " role="document">
 	<div class="modal-content">
-		<div class="modal-header">
-			<h1 class="modal-title" id="exampleModalLabel">Dados do Filme</h1>
+		<div class="modal-header" style="background-color: LightGray ;">
+			<h1 class="modal-title" id="exampleModalLabel"> <span th:text="${filme.tituloPortugues}" /></h1>
 			<button type="button" class="close" data-dismiss="modal"
 				aria-label="Fechar">
 				<span aria-hidden="true">&times;</span>
@@ -52,8 +52,27 @@
 					</tr>
 					
 					<tr th:each="f: ${fornecedor}">
-						<td style="font-weight: bold;" align="right">Tipo Midia:</td>
+						<td style="font-weight: bold;" align="right">Fornecedor:</td>
 						<td th:text="${f.razaosocial}"></td>
+					</tr>
+					<tr th:each="f: ${filme}">
+						<td style="font-weight: bold;" align="right">País:</td>
+						<td th:text="${f.pais}"></td>
+					</tr>
+					
+					<tr th:each="f: ${filme}">
+						<td style="font-weight: bold;" align="right">Ano:</td>
+						<td th:text="${f.ano}"></td>
+					</tr>
+					
+					<tr th:each="f: ${filme}">
+						<td style="font-weight: bold;" align="right">Elenco:</td>
+						<td th:text="${f.elenco}"></td>
+					</tr>
+					
+					<tr th:each="v: ${valores}">
+						<td style="font-weight: bold;" align="right">Valor Locação:</td>
+						<td th:text="${v.valor}"></td>
 					</tr>
 
 
@@ -62,8 +81,8 @@
 
 			</table>
 		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+		<div class="modal-footer" style="background-color: LightGray ;">
+			<button type="button" class="btn btn-danger" data-dismiss="modal">Voltar</button>
 			
 		</div>
 	</div>

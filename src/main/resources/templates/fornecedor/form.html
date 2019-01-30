@@ -125,6 +125,55 @@
 
 					
 	</div>
+	
+	<table class="table table-hover">
+
+			<thead class="thead-dark">
+				<tr>
+					<th>Código</th>
+					<th>Razão Social</th>
+					<th>Telefone</th>
+					<th>Endereço</th>
+					<th></th>
+					<th></th>
+
+				</tr>
+			</thead>
+
+			<tr th:each="f : ${page.content}">
+				<td th:text="${f.id}"></td>
+				<td th:text="${f.razaosocial}"></td>
+				<td th:text="${f.telefone}"></td>
+				<td th:text="${f.endereco}"></td>
+				<td><a
+					th:href="@{/fornecedor/editarfornecedor/{idfornecedor}(idfornecedor=${f.id})}">
+						<span class="glyphicon glyphicon-edit" />
+				</a></td>
+
+				<td><a
+					th:href="@{/fornecedor/editarfornecedor/{idfornecedor}(idfornecedor=${f.id})}">
+						<span class="glyphicon glyphicon-eye-open" />
+				</a></td>
+
+
+			</tr>
+		</table>
+		<div class="center pagination">
+			<span th:if="${page.hasPrevious()}" class="page-item"> <a
+				th:href="@{/fornecedor/listarfornecedor(page=${page.number-1},size=${page.size})}"><span
+					class="glyphicon glyphicon-backward"></span></a>
+			</span>
+			<th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+				<span th:if="${page.number == i}" class="selected ">[[${i}+1]]</span>
+				<span th:unless="${page.number == i}"> <a class="page-item"
+					th:href="@{/fornecedor/listarfornecedor(page=${i},size=${page.size})}">[[${i}+1]]</a>
+				</span>
+			</th:block>
+			<span th:if="${page.hasNext()}" class="page-item"> <a
+				th:href="@{/fornecedor/listarfornecedor(page=${page.number+1},size=${page.size})}"><span
+					class="glyphicon glyphicon-forward"></a>
+			</span>
+		</div>
 
 
 

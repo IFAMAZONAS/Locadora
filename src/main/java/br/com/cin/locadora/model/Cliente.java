@@ -42,6 +42,9 @@ public class Cliente implements Serializable{
     private String sexo;    
     private Integer status;
     
+    @OneToMany(mappedBy = "idCliente", fetch = FetchType.EAGER)
+    private List<Locacao> locacaoList;
+    
     
     @OneToMany(mappedBy = "idCliente", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<Dependente> dependentes  = new ArrayList<Dependente>();

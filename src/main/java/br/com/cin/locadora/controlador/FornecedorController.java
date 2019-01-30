@@ -36,6 +36,8 @@ public class FornecedorController {
 	
 	@Autowired
 	FornecedorService fornecedorservice;
+	@Autowired
+	FornecedorRepository fornecedorRepository;
 	
 	private List<String> msgErros;
 	private List<String> msg;
@@ -48,18 +50,20 @@ public class FornecedorController {
 	}
 	
 	@RequestMapping("**/cadastrofornecedor")
-	public ModelAndView form() {
-		ModelAndView andView = new ModelAndView("fornecedor/cadastrofornecedor");
+	public ModelAndView form(@PageableDefault(size = 5) Pageable pageable) {
+		ModelAndView andView = new ModelAndView(Navegacao.CADASTRAR_FORNECEDOR);
 		Iterable<Fornecedor> fornecedores = this.repository.findAll();
 		andView.addObject("fornecedores",fornecedores);
 		andView.addObject("fornecedor", new Fornecedor());
+		Page<Fornecedor>page = this.fornecedorRepository.findAll(pageable);
+		andView.addObject("page", page);
 		return andView;
 	}
 	
 	@RequestMapping(value = "**/salvarfornecedor", method=RequestMethod.POST)
 	public ModelAndView salvar(@RequestParam("cnpj") String cnpj, @RequestParam("razaosocial") String razaosocial,
 			@RequestParam("endereco") String endereco, @RequestParam("telefone") String telefone,
-			@RequestParam("pessoacontato") String pessoacontato, @RequestParam("id") String id) {
+			@RequestParam("pessoacontato") String pessoacontato, @RequestParam("id") String id, @PageableDefault(size = 5) Pageable pageable) {
 		Fornecedor fornecedor = new Fornecedor();
 		ModelAndView andView = new ModelAndView(Navegacao.CADASTRAR_FORNECEDOR);
 		Iterable<Fornecedor> fornecedores = this.repository.findAll();
@@ -86,6 +90,8 @@ public class FornecedorController {
 			andView.addObject("fornecedor", new Fornecedor());
 			andView.addObject("mgs", this.msg);
 			this.msg = new ArrayList<>();
+			Page<Fornecedor>page = this.fornecedorRepository.findAll(pageable);
+			andView.addObject("page", page);
 			return andView;
 		}else {
 			andView.addObject("fornecedores",fornecedores);
@@ -133,25 +139,27 @@ public class FornecedorController {
 	
 
 	@GetMapping("/editarfornecedor/{idfornecedor}")
-	public ModelAndView editar(@PathVariable("idfornecedor") Integer idfornecedor) {
+	public ModelAndView editar(@PathVariable("idfornecedor") Integer idfornecedor, @PageableDefault(size = 5) Pageable pageable) {
 		
 		
 		ModelAndView modelAndView = new ModelAndView(Navegacao.CADASTRAR_FORNECEDOR);
 		/*modelAndView.addObject("fornecedor", fornecedor.get());*/
 		modelAndView.addObject("fornecedor", this.repository.findById(idfornecedor));
+		Page<Fornecedor>page = this.fornecedorRepository.findAll(pageable);
+		modelAndView.addObject("page", page);
 		
 		return modelAndView;
 		
 	}
 	
-	@GetMapping("/removerfornecedor/{idfornecedor}")
+	/**@GetMapping("/removerfornecedor/{idfornecedor}")
 	public ModelAndView excluir(@PathVariable("idfornecedor") Integer idfornecedor) {	
 		this.repository.deleteById(idfornecedor);
 		ModelAndView view = new ModelAndView(Navegacao.CADASTRAR_FORNECEDOR);
 		view.addObject("fornecedores", this.repository.findAll());
 		view.addObject("fornecedor", new Fornecedor());
 		return this.form();
-	}
+	}**/
 	
 	@GetMapping(value="**/listarfornecedor")
 	public ModelAndView getEmployees(@PageableDefault(size = 8) Pageable pageable ) {

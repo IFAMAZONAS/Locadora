@@ -1,0 +1,127 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<link
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link th:href="@{/vendor/main.js}" type="text/javascript" />
+</head>
+
+
+
+
+
+<body>
+	<div class="container" align="center">
+		<div>
+			<h1 align="left">Locadora Imperial</h1>
+			<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The
+				Static Templates</div>
+
+			<div style="text-align: left;" th:each="m : ${msg}">
+
+				<span class="row" style="color: green; font-size: 20" th:text="${m}">
+				</span>
+			</div>
+			<br />
+			<div style="text-align: left;" th:each="m : ${messagensErro}">
+
+				<span class="row"
+					style="color: red; font-size: 16; font-weight: bold" th:text="${m}">
+				</span>
+			</div>
+			<hr />
+
+		</div>
+
+		<div class="row">
+			<button type="button"  class="btn btn-primary btn-modal" data-href="entrarpesquisa" data-target="#buscarClienteModal" data-toggle="modal">
+				  Pesquisar Cliente
+		    </button>
+		</div>
+		<br />
+
+		<div class="panel panel panel-default">
+			<div class="panel-heading" align="left">
+				<h3 class="panel-title">Cliente</h3>
+
+			</div>
+			<div class="panel-body"></div>
+		</div>
+
+		<div class="panel panel panel-default">
+			<div class="panel-heading" align="left">
+				<h3 class="panel-title">Filmes Inseridos</h3>
+
+			</div>
+			<div class="panel-body"></div>
+		</div>
+
+	</div>
+
+	<div class="modal fade " id="buscarClienteModal" tabindex="-1"
+		role="dialog" aria-labelledby="buscarClienteModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">Carregando Dados....</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+
+
+</body>
+
+<script>
+	$(function() {
+
+		$(".btn-modal").click(function() {
+			var link = $(this).attr('data-href');
+			var modal = $(this).attr('data-target');
+			$(modal).delay(50).queue(function() {
+				$(this).load(link).dequeue();
+
+			});
+		});
+		
+		$(document).on("click", ".btn-pesquisar",function() {
+			
+			console.log("TESTE")
+			
+			var pesquisa = $(".pesquisa_nome").val();
+			console.log(pesquisa);
+			$.ajax({
+				url:"listarclientes",
+				type:"GET",
+				data: {pesquisa: pesquisa},
+				success: function(data){
+					$("#tabelaCliente").html(data)
+				}
+			})
+		});
+
+	});
+</script>
+
+
+
+
+
+
+</html>
