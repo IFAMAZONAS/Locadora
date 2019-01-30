@@ -12,6 +12,11 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>	
 </head>
 
 
@@ -63,7 +68,8 @@
 									<label class="control-label col-sm-4 text-right" for="nome">CNPJ:</label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control" id="cnpj"
-											th:field="*{cnpj}" placeholder="Entre com o CNPJ" name="cnpj" />
+											th:field="*{cnpj}" placeholder="Entre com o CNPJ" name="cnpj"
+											pattern="\d{2}.?\d{3}.?\d{3}/?\d{4}-?\d{2}" />
 									</div>
 								</div>
 
@@ -86,7 +92,8 @@
 									<div class="col-sm-8">
 										<input type="text" class="form-control" id="telefone"
 											th:field="*{telefone}" placeholder="Entre com o Telefone"
-											name="telefone" />
+											name="telefone" 
+											pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}"/>
 									</div>
 								</div>
 
@@ -152,5 +159,9 @@
 	});
 </script>
 
+<script type="text/javascript">
+	$("#telefone").mask("(00) 0000-0000");
+	$("#cnpj").mask('00.000.000/0000-00');
+</script>
 
 </html>

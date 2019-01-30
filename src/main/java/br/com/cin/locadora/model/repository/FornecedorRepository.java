@@ -12,4 +12,7 @@ public interface FornecedorRepository extends PagingAndSortingRepository<Fornece
 
 	@Query("select f from fornecedor f where f.razaosocial like %?1% ")
 	List<Fornecedor> findPessoaByName(String razaosocial);
+	
+	@Query("select f from fornecedor f where f.cnpj = ?1 ")
+	List<Fornecedor> findCNPJ(String cnpj);
 }

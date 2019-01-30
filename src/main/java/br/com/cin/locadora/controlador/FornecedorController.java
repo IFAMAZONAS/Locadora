@@ -80,6 +80,14 @@ public class FornecedorController {
 			fornecedor.setTelefone(telefone);
 			fornecedor.setPessoacontato(pessoacontato);
 			
+			Iterable<Fornecedor> forn = this.repository.findCNPJ(cnpj);
+			if( forn == null ){
+			  // não existe
+			 }else{
+			   // existe
+			  }
+			
+			
 			this.fornecedorservice.salvarFornecedor(fornecedor);
 			this.msg.add("Operação realizada com sucesso!");
 			andView.addObject("fornecedores",fornecedores);
@@ -116,6 +124,13 @@ public class FornecedorController {
 			this.msgErros.add("Campo endereço deve ser informado!");
 		}
 		
+		Iterable<Fornecedor> forn = this.repository.findCNPJ(cnpj);
+		for(Fornecedor f: forn) {
+			if( f != null){
+				this.msgErros.add("Este número de CNPJ já foi cadastrado!");
+			 }
+		}
+	
 		if(!this.msgErros.isEmpty()) {
 			retorno = false;
 		}
