@@ -65,12 +65,12 @@ public class Filme implements Serializable {
     private Date dataAquisicao;
     
     @JoinColumn(name = "id_fornecedor", referencedColumnName = "id_fornecedor")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Fornecedor idFornecedor;
    
  
     @JoinColumn(name = "tipo_midia", referencedColumnName = "id_tipo_midia")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private TipoMidia tipoMidia;
     
     
@@ -82,7 +82,7 @@ public class Filme implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Genero idGenero;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFilme", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFilme", fetch = FetchType.LAZY)
     private List<LocacaoFilme> locacaoFilmeList;
 
     public Filme() {

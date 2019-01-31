@@ -43,7 +43,7 @@ public class Cliente implements Serializable{
     private String sexo;    
    
     
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private StatusCliente status;
     
     @OneToMany(mappedBy = "idCliente", fetch = FetchType.EAGER)
