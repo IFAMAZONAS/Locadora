@@ -61,4 +61,28 @@ public class ClienteService {
 		public void atualizar(Cliente cliente) {
 			this.clienteRepository.save(cliente);
 		}
+		/***
+		 * 
+		 * @return
+		 */
+		public Iterable<Cliente> listarUsuarioAtivos(){
+			Iterable<Cliente> listaTodos = this.clienteRepository.findAll();
+			Iterable<Cliente> listaClientesAtivos = this.buscarAtivos(listaTodos);
+			
+			return listaClientesAtivos;
+		}
+        /***
+         * 
+         * @param listaTodos
+         * @return
+         */
+		private Iterable<Cliente> buscarAtivos(Iterable<Cliente> listaTodos) {
+			 List<Cliente> ativos = new ArrayList<>();
+			 for(Cliente cliente : listaTodos) {
+				  if(cliente.getStatus().getIdStatus() ==1) {
+					  ativos.add(cliente);
+				  }
+			 }
+			return ativos;
+		}
 }

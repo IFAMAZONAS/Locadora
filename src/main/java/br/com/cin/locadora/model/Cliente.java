@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -40,7 +41,10 @@ public class Cliente implements Serializable{
     @Column(name="fone_comercial")
     private String foneComercial;   
     private String sexo;    
-    private Integer status;
+   
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    private StatusCliente status;
     
     @OneToMany(mappedBy = "idCliente", fetch = FetchType.EAGER)
     private List<Locacao> locacaoList;
@@ -115,12 +119,6 @@ public class Cliente implements Serializable{
 		this.sexo = sexo;
 	}
 	
-	public Integer getStatus() {
-		return status;
-	}
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
 	
 	public void setDependentes(List<Dependente> dependentes) {
 		this.dependentes = dependentes;
@@ -128,6 +126,14 @@ public class Cliente implements Serializable{
 	
 	public List<Dependente> getDependentes() {
 		return dependentes;
+	}
+	
+	public void setStatus(StatusCliente status) {
+		this.status = status;
+	}
+	
+	public StatusCliente getStatus() {
+		return status;
 	}
 	
 	

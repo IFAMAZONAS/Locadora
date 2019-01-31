@@ -279,13 +279,7 @@ public class FilmeController {
 
 	private ValoresLocacao definirValor(TipoMidia tipoMidia) {
 		
-		ValoresLocacao valorLocacao = null;
-		
-		
-		if(tipoMidia.getDescricao().equalsIgnoreCase("DVD")) {
-			 valorLocacao = this.valorLocacaoRepository.findById(1).get();
-		}
-		
+		ValoresLocacao valorLocacao = this.valorLocacaoRepository.findValoresByName(tipoMidia.getDescricao()).get(0);
 		return valorLocacao ;
 	}
 

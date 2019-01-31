@@ -10,7 +10,7 @@ public final class Navegacao {
 		public static final String CADASTRO_PERMISSOES = "usuario/permissoes";
 		public static final String PAGINA_INICIAL_USUARIOS = "";
 		
-		public static final String CADASTRAR_FORNECEDOR = "fornecedor/form";
+		public static final String CADASTRAR_FORNECEDOR = "fornecedor/cadastrofornecedor";
 		public static final String LISTAGEM_FORNECEDORES = "fornecedor/list";
 		public static final String VISUALIZAR_FORNECEDOR = "fornecedor/resumo";
 		

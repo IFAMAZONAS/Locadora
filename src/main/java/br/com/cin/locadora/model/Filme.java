@@ -65,12 +65,12 @@ public class Filme implements Serializable {
     private Date dataAquisicao;
     
     @JoinColumn(name = "id_fornecedor", referencedColumnName = "id_fornecedor")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Fornecedor idFornecedor;
    
  
     @JoinColumn(name = "tipo_midia", referencedColumnName = "id_tipo_midia")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TipoMidia tipoMidia;
     
     
