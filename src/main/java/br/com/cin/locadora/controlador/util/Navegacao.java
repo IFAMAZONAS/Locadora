@@ -25,6 +25,7 @@ public final class Navegacao {
 		public static final String BUSCAR_CLIENTE_LOCACAO = "locacao/buscarcliente";
 		public static final String LISTAR_CLIENTE_LOCACAO = "locacao/tabelaclientes";
 
-		
+		public static final String CADASTRAR_GENERO = "genero/form";
+		public static final String LISTAGEM_GENERO = "genero/list";
 		
 }

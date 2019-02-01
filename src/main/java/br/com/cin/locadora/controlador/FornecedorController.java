@@ -84,13 +84,7 @@ public class FornecedorController {
 			fornecedor.setTelefone(telefone);
 			fornecedor.setPessoacontato(pessoacontato);
 			
-			Iterable<Fornecedor> forn = this.repository.findCNPJ(cnpj);
-			if( forn == null ){
-			  // não existe
-			 }else{
-			   // existe
-			  }
-			
+				
 			
 			this.fornecedorservice.salvarFornecedor(fornecedor);
 			this.msg.add("Operação realizada com sucesso!");
