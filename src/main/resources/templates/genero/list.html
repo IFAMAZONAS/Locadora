@@ -1,37 +1,126 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 
-<link
-	href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
-	rel="stylesheet" id="bootstrap-css">
+
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<head>
+<style>
+.btn-circle {
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	padding: 6px 0;
+	font-size: 12px;
+	line-height: 1.428571429;
+	border-radius: 15px;
+}
 
-<link th:href="@{/vendor/main.js}" type="text/javascript" />
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    -webkit-font-smoothing: antialiased;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+}
+</style>
 </head>
-
-
-
-
-
 <body>
-	LISTAR GÊNEROS
+
+
+	<div class="container" align="center">
+
+		<h2>SISTEMA DE LOCADORA</h2>
+		<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The Static
+			Templates</div>
+		<br />
+
+
+		<div align="left">
+			<a href="cadastrogenero" class="btn btn-primary">Cadastrar
+				Gênero</a>
+		</div>
+
+		<div class="row">
+			<form class="col s12">
+				<div class="row">
+					<div class="input-field col m12 s12 l6">
+
+						<input id="icon_prefix" type="text" class="validate"> <label
+							for="icon_prefix">Informe a Descrição</label>
+					</div>
+				</div>
+			</form>
+		</div>
+
+
+		<br />
+		<table class="table table-hover">
+
+			<thead class="thead-dark">
+				<tr>
+					<th>Código</th>
+					<th>Descrição</th>
+					<th></th>
+					<th></th>
+
+				</tr>
+			</thead>
+
+			<tr th:each="g : ${page.content}">
+				<td th:text="${g.idGenero}"></td>
+				<td th:text="${g.descricao}"></td>
+				<td><a
+					th:href="@{/genero/editargenero/{idGenero}(idGenero=${g.idGenero})}">
+						<span class="glyphicon glyphicon-edit" />
+				</a></td>
+
+				<td><a
+					th:href="@{/genero/removergenero/{idGenero}(idGenero=${g.idGenero})}">
+						<span class="glyphicon glyphicon-eye-open" />
+				</a></td>
+
+
+			</tr>
+		</table>
+
+		<div class="center pagination">
+			<span th:if="${page.hasPrevious()}" class="page-item"> <a
+				th:href="@{/genero/listargenero(page=${page.number-1},size=${page.size})}"><span
+					class="glyphicon glyphicon-backward"></span></a>
+			</span>
+			<th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+				<span th:if="${page.number == i}" class="selected ">[[${i}+1]]</span>
+				<span th:unless="${page.number == i}"> <a class="page-item"
+					th:href="@{/genero/listargenero(page=${i},size=${page.size})}">[[${i}+1]]</a>
+				</span>
+			</th:block>
+			<span th:if="${page.hasNext()}" class="page-item"> <a
+				th:href="@{/genero/listargenero(page=${page.number+1},size=${page.size})}"><span
+					class="glyphicon glyphicon-forward"></a>
+			</span>
+		</div>
+	</div>
+
+
+
+
+
+	<script>
+		$(document).ready(function() {
+			$("#myBtn").click(function() {
+				$("#myModal").modal();
+			});
+		});
+	</script>
 </body>
-
-
-
-
-
-
-
-
-</html>

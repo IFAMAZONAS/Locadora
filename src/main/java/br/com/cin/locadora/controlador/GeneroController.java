@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.cin.locadora.controlador.util.Navegacao;
+import br.com.cin.locadora.model.Cliente;
 import br.com.cin.locadora.model.Fornecedor;
 import br.com.cin.locadora.model.Genero;
 import br.com.cin.locadora.model.repository.GeneroRepository;
@@ -32,82 +33,80 @@ import br.com.cin.locadora.servico.GeneroService;
 public class GeneroController {
 	
 	@Autowired
+	GeneroService generoService;
+	
+	@Autowired
 	GeneroRepository repository;
-	
-	@Autowired
-	GeneroService generoservice;
-	
-	@Autowired
-	GeneroRepository generoRepository;
 	
 	private List<String> msgErros;
 	private List<String> msg;
 	
-	@RequestMapping( "**/home")
-	public void home(HttpServletResponse response, HttpServletRequest request) throws IOException {
-		String context = request.getContextPath();
-		response.sendRedirect(context+"/home");
-		
+	List<String> messagensErro = new ArrayList<String>();
+	
+	public void setMessagensErro(List<String> messagensErro) {
+		this.messagensErro = messagensErro;
+	}
+
+	public List<String> getMessagensErro() {
+		return messagensErro;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "home")
+	@ResponseBody
+	public ModelAndView home(HttpServletResponse response, HttpServletRequest request) throws IOException {
+		ModelAndView andView = new ModelAndView("home");
+		return andView;
+
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "**/cadastrogenero")
 	@ResponseBody
 	public ModelAndView form(@PageableDefault(size = 5) Pageable pageable) {
 		ModelAndView andView = new ModelAndView(Navegacao.CADASTRAR_GENERO);
-		Iterable<Genero> generos  = this.repository.findAll();
-		andView.addObject("generos",generos);
+		Page<Genero> page = repository.findAll(pageable);	
+		Iterable<Genero> generos = this.repository.findAll();
+		andView.addObject("generos", new ArrayList<>());
 		andView.addObject("genero", new Genero());
-		Page<Genero>page = this.generoRepository.findAll(pageable);
+		andView.addObject("msg", this.msg);
+		andView.addObject("messagensErro", this.messagensErro);
 		andView.addObject("page", page);
+		this.messagensErro = new ArrayList<>();
+		this.msg = new ArrayList<>();
 		return andView;
 	}	
 	
 	@RequestMapping(value = "**/salvargenero", method=RequestMethod.POST)
-	public ModelAndView salvar(@RequestParam("descricao") String descricao,@RequestParam("idGenero") String id, @PageableDefault(size = 5) Pageable pageable) {
-		Genero genero = new Genero();
-		ModelAndView andView = new ModelAndView(Navegacao.CADASTRAR_GENERO);
-		Iterable<Genero> generos = this.repository.findAll();
+	public ModelAndView salvar(Genero genero, @PageableDefault(size = 5) Pageable pageable) {
+		ModelAndView modelAndView = new ModelAndView(Navegacao.CADASTRAR_GENERO);
+		Page<Genero> page = repository.findAll(pageable);
+	if (this.validadeGenero(genero.getDescricao())) {
+		this.msg = new ArrayList<String>();
+		this.msg.add("Operação realizada com sucesso!");
+		modelAndView.addObject("msg", this.msg);
+		this.msg = new ArrayList<>();
+		this.generoService.salvarGenero(genero);
+        Iterable<Genero> generos = this.repository.findAll();
+        modelAndView.addObject("page", page);
+        modelAndView.addObject("genero", new Genero());
+		return modelAndView;
+	} else {
+		modelAndView.addObject("messagensErro", messagensErro);
+		modelAndView.addObject("page", page);
+		return modelAndView;
 		
-		
-		if(validadeGenero(descricao)) {
-			this.msg = new ArrayList<String>();
-			try {
-				int idGenero = Integer.valueOf(id);
-				genero.setIdGenero(idGenero);
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			
-			genero.setDescricao(descricao);			
-				
-			
-			this.generoservice.salvarGenero(genero);
-			this.msg.add("Operação realizada com sucesso!");
-			andView.addObject("generos",generos);
-			andView.addObject("genero", new Genero());
-			andView.addObject("mgs", this.msg);
-			this.msg = new ArrayList<>();
-			Page<Genero>page = this.generoRepository.findAll(pageable);
-			andView.addObject("page", page);
-			return andView;
-		}else {
-			andView.addObject("generos",generos);
-			andView.addObject("genero", new Genero());
-			andView.addObject("messagensErro", this.msgErros);
-			
-			return andView;
-		}
-
+	}
+	
 	}
 	
 	private boolean validadeGenero(String descricao) {
 		boolean retorno = true;
-		this.msgErros = new ArrayList<>();
+		this.messagensErro = new ArrayList<>();
+		
 		if(descricao.isEmpty()) {
-			this.msgErros.add("Campo Descrição deve ser informado!");
+			this.messagensErro.add("Campo Descrição deve ser informado!");
 		}
 	
-		if(!this.msgErros.isEmpty()) {
+		if(!this.messagensErro.isEmpty()) {
 			retorno = false;
 		}
 		return retorno;
@@ -115,9 +114,9 @@ public class GeneroController {
 	
 	@PostMapping("**/pesquisargenero")
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
-		ModelAndView modelAndView = new ModelAndView("genero/cadastrogenero");		
+		ModelAndView modelAndView = new ModelAndView("fornecedor/cadastrogenero");		
 		Iterable<Genero> generos = this.repository.findGeneroByName(nomepesquisa);
-		modelAndView.addObject("generos", generos);
+		modelAndView.addObject("generos",generos);
 		modelAndView.addObject("genero", new Genero());
 		return modelAndView;
 	}
@@ -128,12 +127,22 @@ public class GeneroController {
 		ModelAndView modelAndView = new ModelAndView(Navegacao.CADASTRAR_GENERO);
 		/*modelAndView.addObject("fornecedor", fornecedor.get());*/
 		modelAndView.addObject("genero", this.repository.findById(idgenero));
-		Page<Genero>page = this.generoRepository.findAll(pageable);
+		Page<Genero>page = this.repository.findAll(pageable);
 		modelAndView.addObject("page", page);
-		
 		return modelAndView;
 		
 	}	
+	
+	@GetMapping("/removergenero/{idgenero}")
+	public ModelAndView excluir(@PathVariable("idgenero") Integer idgenero, @PageableDefault(size = 8) Pageable pageable) {
+		this.repository.deleteById(idgenero);
+		ModelAndView view = new ModelAndView(Navegacao.CADASTRAR_GENERO);
+		Page<Genero> page = repository.findAll(pageable);
+		view.addObject("generos", this.repository.findAll());
+		view.addObject("genero", new Cliente());
+		view.addObject("page", page);
+		return view;
+	}
 	
 	
 	@GetMapping(value="**/listargenero")

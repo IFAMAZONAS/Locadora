@@ -71,8 +71,6 @@
 
 							
 							<button type="submit" class="btn btn-primary" style="align-content: left">Salvar</button>
-							<a href="listargenero" class="btn btn-success" style="align-content: right">Pesquisar
-							Generos</a>
 
 						</form>
 					</div>
@@ -81,62 +79,44 @@
 
 					
 	</div>
-	
+
+
 	<table class="table table-hover">
-
-			<thead class="thead-dark">
-				<tr>
-					<th>Código</th>
-					<th>Descrição</th>
-					<th></th>
-					<th></th>
-
-				</tr>
-			</thead>
-
-			<tr th:each="g : ${page.content}">
-				<td th:text="${g.idGenero}"></td>
-				<td th:text="${g.descricao}"></td>
-				<td><a
-					th:href="@{/genero/editargenero/{idGenero}(idGenero=${g.idGenero})}">
-						<span class="glyphicon glyphicon-edit" />
-				</a></td>
-
-				<td><a
-					th:href="@{/genero/editargenero/{idGenero}(idGenero=${g.idGenero})}">
-						<span class="glyphicon glyphicon-eye-open" />
-				</a></td>
-
-
+		<thead>
+			<tr>
+	
+				<th>Código</th>
+				<th>Descrição</th>
+				<th></th>
 			</tr>
-		</table>
-		<div class="center pagination">
+		</thead>
+		<tr th:each="g : ${page.content}">
+			<td th:text="${g.idGenero}"></td>
+			<td th:text="${g.descricao}"></td>
+			<td><a class="btn btn-success"
+				th:href="@{/genero/editargenero/{idGenero}(idGenero=${g.idGenero})}">
+							Editar
+				</a></td>	
+	
+		</tr>
+	</table>
+
+			<div class="center pagination">
 			<span th:if="${page.hasPrevious()}" class="page-item"> <a
-				th:href="@{/genero/listargenero(page=${page.number-1},size=${page.size})}"><span
+				th:href="@{/genero/cadastrogenero(page=${page.number-1},size=${page.size})}"><span
 					class="glyphicon glyphicon-backward"></span></a>
 			</span>
 			<th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
 				<span th:if="${page.number == i}" class="selected ">[[${i}+1]]</span>
 				<span th:unless="${page.number == i}"> <a class="page-item"
-					th:href="@{/genero/listargenero(page=${i},size=${page.size})}">[[${i}+1]]</a>
+					th:href="@{/genero/cadastrogenero(page=${i},size=${page.size})}">[[${i}+1]]</a>
 				</span>
 			</th:block>
 			<span th:if="${page.hasNext()}" class="page-item"> <a
-				th:href="@{/genero/listargenero(page=${page.number+1},size=${page.size})}"><span
+				th:href="@{/genero/cadastrogenero(page=${page.number+1},size=${page.size})}"><span
 					class="glyphicon glyphicon-forward"></a>
 			</span>
 		</div>
-
-
-
-
-</div>
-
-
-
-
-
-
 
 
 <script>
