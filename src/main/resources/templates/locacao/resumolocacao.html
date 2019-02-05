@@ -37,26 +37,36 @@
 				<thead>
 					<th>Código</th>
 					<th>Nome Filme</th>
+					<th>Lançamento</th>
+					<th>Data da Locação</th>
+					<th>Data Prevista devolução</th>
 					<th>Valor de Locação</th>
+					
 
 				</thead>
 				<tbody>
 					<tr th:each="item : ${itens}">
-						<td style="font-weight: bold;" th:text="${item.idFilme}"></td>
-						<td style="font-weight: bold;" th:text="${item.tituloPortugues}"></td>
-						<td style="font-weight: bold; color: red;"th:text="${item.lancamento}"></td>
+						<td style="font-weight: bold;" th:text="${item.idFilme.idFilme}"></td>
+						<td style="font-weight: bold;" th:text="${item.idFilme.tituloPortugues}"></td>
+						<td style="font-weight: bold; color: red;"th:text="${item.idFilme.lancamento}"></td>
+						<td style="font-weight: bold; color: red;"th:text="${item.idLocacao.dataLocacao}"></td>
+						<td style="font-weight: bold; color: red;"th:text="${item.dataPrevistaDevolucao}"></td>
 	
-						<td style="font-weight: bold;" th:text="${item.valor.valor}"></td>
-					</tr>
+						<td style="font-weight: bold;" th:text="${item.idFilme.valor.valor}"></td>
+					</tr>.
 
 					<tr th:each="val : ${valorLocacao}">
 						<td></td>
 						<td></td>
-						<td style="font-weight: bold; color: green; font-size: 40px">Valor Total</td>
+						
+					
+						
+						<td style="font-weight: bold; color: green; font-size: 40px" colspan="3">Valor Total</td>
 						<td style="font-weight: bold; color: red; font-size: 40px" colspan="2" th:text="${valorLocacao}"></td>
 					</tr>
 				</tbody>
 			</table>
+			
 		</div>
 		<div class="modal-footer" style="background-color: LightGray;">
 			<a href="processar" class="btn btn-success">Confirmar</a>

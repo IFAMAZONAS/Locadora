@@ -362,6 +362,31 @@ public class LocacaoController {
 		}	
 	}
 	
+	// 2
+	
+	private List<LocacaoFilme> getFilmesLocasdos(List<Filme> filmesAdionados) {
+		List<LocacaoFilme> locacaoFilmes =  new ArrayList<LocacaoFilme>();
+		
+		this.locacao = new Locacao();
+	
+		this.locacao.setDataLocacao(new Date());
+		
+		for(Filme filme : filmesAdionados) {
+			LocacaoFilme locacaoFilme = new LocacaoFilme();
+			
+			Calendar date = new GregorianCalendar();
+			date.add(Calendar.DATE, LocacaoUtil.DIAS_DEVOLUCAO_NORMAL);
+			locacaoFilme.setDataPrevistaDevolucao(date.getTime());
+			locacaoFilme.setIdFilme(filme);
+			locacaoFilme.setIdLocacao(this.locacao);
+			locacaoFilme.setValor(filme.getValor().getValor());
+			this.locacao.getLocacaoFilmeList().add(locacaoFilme);
+			
+		}	
+		
+		return locacao.getLocacaoFilmeList();
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, value = "**/resumo")
 	public ModelAndView resumoLocacao() {
 		
@@ -372,7 +397,8 @@ public class LocacaoController {
 				ModelAndView andView = new ModelAndView(Navegacao.RESUMO_LOCACAO);
 				andView.addObject("cliente", this.clienteLocacao);
 				andView.addObject("valorLocacao", this.valorTemporario);
-				andView.addObject("itens",this.listaAux);
+				//andView.addObject("itens",this.listaAux);
+				andView.addObject("itens",getFilmesLocasdos(this.listaAux));
 				return andView;
 			}
 		} catch (NullPointerException e) {
