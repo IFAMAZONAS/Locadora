@@ -34,4 +34,6 @@ public final class Navegacao {
 		public static final String CADASTRAR_GENERO = "genero/form";
 		public static final String LISTAGEM_GENERO = "genero/list";
 		
+		public static final String CADASTRAR_FORMA_PAGAMENTO = "formapagamento/form";
+		
 }
