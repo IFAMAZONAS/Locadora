@@ -15,66 +15,74 @@
 <body>
 	<nav class="navbar navbar-inverse" style="" th:fragment="menu">
 
-			</div>
-			<div class="collapse navbar-collapse" id="myNavbar">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="/">Locadora Imperial</a></li>
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Cadastro <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="/cliente/cadastrocliente">Clientes</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="/fornecedor/listarfornecedor">Fornecedor</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="/usuario/cadastrousuario">Usuários</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="/filme/cadastrofilme">Filmes</a></li>
-							<li role="separator" class="divider"></li>
+		<div class="container-fluid">
+			
+
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="#myNavbar">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
 
 
-						</ul></li>
-
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Controle de Locações <span
-							class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="/locacao/buscarlocacao">Locações </a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="/locacao/cadastrolocacao">Cadastrar</a></li>
-							<li role="separator" class="divider"></li>
-
-						</ul></li>
-						
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="/">Locadora Imperial</a></li>
 						<li class="dropdown"><a class="dropdown-toggle"
-							data-toggle="dropdown" href="#">Administração <span class="caret"></span></a>
+							data-toggle="dropdown" href="#">Cadastro <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="/cliente/cadastrocliente">Clientes</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="/fornecedor/listarfornecedor">Fornecedor</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="/usuario/cadastrousuario">Usuários</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="/filme/cadastrofilme">Filmes</a></li>
+								<li role="separator" class="divider"></li>
+
+
+							</ul></li>
+
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">Controle de Locações <span
+								class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="/locacao/buscarlocacao">Locações </a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="/locacao/cadastrolocacao">Cadastrar</a></li>
+								<li role="separator" class="divider"></li>
+
+							</ul></li>
+
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">Administração <span
+								class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="/genero/cadastrogenero">Gênero</a></li>
 								<li role="separator" class="divider"></li>
-								
-							</ul></li>
-							
-							<li class="dropdown"><a class="dropdown-toggle"
-							data-toggle="dropdown" href="#">Administração <span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="/genero/cadastrogenero">Gênero</a></li>
-								<li><a href="/formapagamento/cadastroformapagamento">Forma de Pagamento</a></li>
+								<li><a href="/formapagamento/cadastroformapagamento">Forma
+										de Pagamento</a></li>
+
 							</ul></li>
 
 
-				</ul>
+					</ul>
 
 
 
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/"><span class="glyphicon glyphicon-user"></span>
-							Sair do Sistema</a></li>
-					<li><a href="/login"><span
-							class="glyphicon glyphicon-user"></span> Entrar</a></li>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/"><span class="glyphicon glyphicon-user"></span>
+								Sair do Sistema</a></li>
+						<li><a href="/login"><span
+								class="glyphicon glyphicon-user"></span> Entrar</a></li>
 
-				</ul>
+					</ul>
 
+				</div>
 			</div>
-		</div>
 	</nav>
 </body>
 

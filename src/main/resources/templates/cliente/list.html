@@ -13,7 +13,7 @@
 <div class="container" align="center" >
 	<div class="row">
 		<h2>SISTEMA DE LOCADORA</h2>
-		<div th:insert="~{fragments/menu2:: menu2}">&copy; 2017 The Static
+		<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The Static
 			Templates</div>
 
 
@@ -92,10 +92,8 @@
 							<td><a
 								th:href="@{/cliente/dependentes/{idcliente}(idcliente=${cliente.id})}"><span
 									class="btn btn-primary">Adicionar Dependente</span></a></td>
-							<td><a href="#"><span class="btn btn-success"> Editar</span></a></td>
-							<td><a
-								th:href="@{/cliente/removercliente/{idcliente}(idcliente=${cliente.id})}"><span
-									class="btn btn-danger">Desativar</span></a></td>
+							
+							
 
 
 						</tr>
