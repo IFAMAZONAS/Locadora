@@ -72,7 +72,7 @@
 							<th>Cpf</th>
 							<th>Celular</th>
 							<th>Telefone Residencial</th>
-							<th>Situação</th>
+							
 							<th></th>
 							<th></th>
 							<th></th>
@@ -87,7 +87,7 @@
 							<td><span th:text="${cliente.cpf}"></span></td>
 							<td><span th:text="${cliente.foneCelular}"></span></td>
 							<td><span th:text="${cliente.foneResidencial}"></span></td>
-							<td><span th:text="${cliente.status.descricao}"></span></td>
+							
 							
 							<td><a
 								th:href="@{/cliente/dependentes/{idcliente}(idcliente=${cliente.id})}"><span
