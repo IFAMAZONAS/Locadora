@@ -46,8 +46,8 @@ public class Cliente implements Serializable{
     @ManyToOne(fetch = FetchType.LAZY)
     private StatusCliente status;
     
-    @OneToMany(mappedBy = "idCliente", fetch = FetchType.EAGER)
-    private List<Locacao> locacaoList;
+    @OneToMany(mappedBy = "idCliente", cascade= {CascadeType.ALL}, fetch = FetchType.LAZY)
+    private List<Locacao> locacaoList = new ArrayList<Locacao>();
     
     
     @OneToMany(mappedBy = "idCliente", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
@@ -134,6 +134,14 @@ public class Cliente implements Serializable{
 	
 	public StatusCliente getStatus() {
 		return status;
+	}
+	
+	public void setLocacaoList(List<Locacao> locacaoList) {
+		this.locacaoList = locacaoList;
+	}
+	
+	public List<Locacao> getLocacaoList() {
+		return locacaoList;
 	}
 	
 	

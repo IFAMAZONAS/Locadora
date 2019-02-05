@@ -1,10 +1,10 @@
 
 
 <tr th:each="cliente : ${clientes}">
-	<td><span th:text="${cliente.id}"></span></td>
-	<td><span th:text="${cliente.nome}"></span></td>
-	<td><span th:text="${cliente.email}"></span></td>
-	<td><span th:text="${cliente.cpf}"></span></td>
+	<td><span style="font-weight: bold;" th:text="${cliente.id}"></span></td>
+	<td><span style="font-weight: bold;" th:text="${cliente.nome}"></span></td>
+	<td><span style="font-weight: bold;" th:text="${cliente.email}"></span></td>
+	<td><span style="font-weight: bold;" th:text="${cliente.cpf}"></span></td>
 	<td><a
 		th:href="@{/locacao/buscarClienteLocacao/{idcliente}(idcliente=${cliente.id})}"><span
 			class="btn btn-primary">Selecionar Cliente</span></a></td>

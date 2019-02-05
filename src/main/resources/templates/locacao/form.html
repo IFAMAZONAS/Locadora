@@ -8,6 +8,26 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style>
+.autocomplete-suggestions {
+	background: gray;
+	border: 1px #ccc solid;
+	z-index: 2;
+}
+
+.autocomplete-suggestion {
+	border-top: 1px #ccc solid;
+	padding: 4px;
+}
+
+.table>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th
+	{
+	background-color: #f2f2f2;
+}
+</style>
+
 <link
 	href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
 	rel="stylesheet" id="bootstrap-css">
@@ -31,6 +51,9 @@
 <!--Import Google Icon Font-->
 <link href="http://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
+
+
+
 </head>
 
 
@@ -38,7 +61,7 @@
 
 
 <body>
-	<div class="container" >
+	<div class="container">
 		<div>
 			<h1 align="left">Locadora Imperial</h1>
 			<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The
@@ -60,51 +83,68 @@
 
 		</div>
 
-		<div class="row" align="left">
+		<div class="row">
 			<button type="button" class="btn btn-primary btn-modal"
 				data-href="entrarpesquisa" data-target="#buscarClienteModal"
 				data-toggle="modal">Pesquisar Cliente</button>
-				
-				<button type="button" class="btn btn-primary btn-modal"
-				data-href="entrarpesquisa" data-target="#buscarClienteModal"
-				data-toggle="modal" >Pesquisar Cliente</button>
+
+			<button type="button" class="btn btn-success btn-modal"
+				data-href="resumo" data-target="#resumoModal" data-toggle="modal">Finalizar
+				Locacão</button>
+
+			<a href="novaLocacao" class="btn btn-warning">Nova Locacão</a>
+
 		</div>
-		
-		<hr/>
+
+		<hr />
 		<br />
 
-		
-				<table class="table table-hover" >
-					<thead>
-							<th>Código cliente</th>
-							<th>Cliente</th>
-					</thead>
-					
-					<tbody>
-							<tr th:each="c: ${cliente}">
-								<td th:text="${c.id}"></td>
-								<td th:text="${c.nome}"></td>
-							</tr>
-					</tbody>
-				</table>
-			
 
-		<div class="row">
-			<div class="col s12">
-				<form action="locacao/buscar" method="post">
-					<div class="row">
-						<div class="input-field col s12" align="left">
-							<i class="material-icons prefix">textsms</i> <input type="text" 
-								width="80%" id="autocomplete-input" class="autocomplete"
-								name="nome" />
-							<button type="submit" class="btn btn-success">Adicionar
-								à locação</button>
-						</div>
+		<table class="table table-hover">
+			<thead>
+				<th>Código cliente</th>
+				<th>Cliente</th>
+			</thead>
 
+			<tbody>
+				<tr th:each="c: ${cliente}">
+					<td style="font-weight: bold;" th:text="${c.id}"></td>
+					<td style="font-weight: bold;" th:text="${c.nome}"></td>
+				</tr>
+			</tbody>
+		</table>
+
+
+		<div class="panel panel panel-default" align="center">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col s12">
+						<form action="locacao/buscar" method="post">
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="input-field col s12" align="left">
+										<i class="material-icons prefix"></i> <input type="text"
+											size="100px" id="autocomplete-input" class="autocomplete"
+											name="nome" />
+										<button type="submit" class="btn btn-success">Adicionar
+											à locação</button>
+									</div>
+								</div>
+
+
+
+
+
+							</div>
+						</form>
 					</div>
-				</form>
+				</div>
 			</div>
+
 		</div>
+
+
+
 
 
 		<div class="panel panel panel-default">
@@ -117,7 +157,10 @@
 							<th>Código</th>
 							<th>Titulo Nacional</th>
 							<th>Direção</th>
+							<th>Tipo Mídia</th>
+							<th>Lançamento</th>
 							<th>Valor de Locação</th>
+
 							<th></th>
 
 
@@ -129,6 +172,10 @@
 						<td style="font-weight: bold" th:text="${f.numeroSerie}"></td>
 						<td style="font-weight: bold" th:text="${f.tituloPortugues}"></td>
 						<td style="font-weight: bold" th:text="${f.direcao}"></td>
+
+						<td style="font-weight: bold" th:text="${f.tipoMidia.descricao}"></td>
+						<td style="font-weight: bold; color: red;"
+							th:text="${f.lancamento}"></td>
 						<td style="font-weight: bold" th:text="${f.valor.valor}"></td>
 
 						<td>
@@ -142,7 +189,9 @@
 		</div>
 
 		<div align="right">
-			<span style="font-weight: bold; font-size: 50px"> Valor da Locação: R$<span style="font-weight: bold; font-size: 50px" th:text="${valorLocacao}"></span>
+			<span style="font-weight: bold; font-size: 50px"> Valor da
+				Locação: R$<span style="font-weight: bold; font-size: 50px"
+				th:text="${valorLocacao}"></span>
 		</div>
 
 	</div>
@@ -158,10 +207,17 @@
 
 	</div>
 
+	<div class="modal fade " id="resumoModal" tabindex="-1" role="dialog"
+		aria-labelledby="resumoModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header" style="font-weight: bold; color: red;">
+					Carregando...
+				</div>
+				
+			</div>
 
-
-
-
+		</div>
 </body>
 
 
@@ -198,8 +254,6 @@
 		});
 
 		$(document).on("click", ".btn-pesquisar", function() {
-
-			console.log("TESTE")
 
 			var pesquisa = $(".pesquisa_nome").val();
 			console.log(pesquisa);

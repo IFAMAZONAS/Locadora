@@ -52,9 +52,9 @@
 						<td th:text="${m.descricao}"></td>
 					</tr>
 					
-					<tr th:each="f: ${fornecedor}">
+					<tr th:each="f: ${filme}">
 						<td style="font-weight: bold;" align="right">Fornecedor:</td>
-						<td th:text="${f.razaosocial}"></td>
+						<td th:text="${f.idFornecedor.razaosocial}"></td>
 					</tr>
 					<tr th:each="f: ${filme}">
 						<td style="font-weight: bold;" align="right">País:</td>

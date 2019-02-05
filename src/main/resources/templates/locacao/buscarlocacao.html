@@ -2,18 +2,25 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 
+
+<head>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+
+</head>
 
 
-<div class="container" align="center" >
+
+
+<div class="container" align="center">
 	<div class="row">
 		<h2>SISTEMA DE LOCADORA</h2>
-		<div th:insert="~{fragments/menu2:: menu2}">&copy; 2017 The Static
+		<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The Static
 			Templates</div>
 
 
@@ -32,25 +39,33 @@
 
 			<span class="row"
 				style="color: red; font-size: 16; font-weight: bold" th:text="${m}">
+				<span class="glyphicon glyphicon-warning-sign;"></span>
 			</span>
 		</div>
 
 		<br />
 
 		<div class="container">
-			<h1 align="left">Listagem de Clientes</h1>
+			<h1 align="left">Clientes</h1>
 			<hr />
 
 			<div class="row">
-				<form >
+				<form action="processarBuscaCliente" method="post">
 					<div class="row">
 
-						<div class="form-group col-sm-12 col-md-12">
+						<div class="form-group col-sm-12 col-md-10">
 							<label class="control-label col-sm-2 text-right" for="endereco">Pesquise
 								por nome do cliente</label>
 							<div class="col-sm-10">
 								<input class="form-control" id="myInput" type="text"
-					placeholder="Search..">
+									name="pesquisa" placeholder="Pesquisar..">
+							</div>
+						</div>
+						<div align="left" class="form-group col-sm-12 col-md-2">
+							<div class="col-sm-6">
+								<button class="btn btn-primary" data-toggle="tooltip"
+									title="Pesquisar por clientes, entre com o nome" type="submit">Buscar
+									Clientes</button>
 							</div>
 						</div>
 					</div>
@@ -61,7 +76,7 @@
 			<hr />
 			<div id="listaDeConvidados" style="width: 100%">
 
-				
+
 
 				<table class="table table-hover">
 					<thead>
@@ -69,33 +84,24 @@
 							<th>Código</th>
 							<th>Nome</th>
 							<th>Email</th>
-							<th>Cpf</th>
-							<th>Celular</th>
-							<th>Telefone Residencial</th>
-							<th>Situação</th>
+
 							<th></th>
-							<th></th>
-							<th></th>
+
 
 						</tr>
 					</thead>
 					<tbody id="myTable">
 						<tr th:each="cliente : ${clientes}">
-							<td><span th:text="${cliente.id}"></span></td>
-							<td><span th:text="${cliente.nome}"></span></td>
-							<td><span th:text="${cliente.email}"></span></td>
-							<td><span th:text="${cliente.cpf}"></span></td>
-							<td><span th:text="${cliente.foneCelular}"></span></td>
-							<td><span th:text="${cliente.foneResidencial}"></span></td>
-							<td><span th:text="${cliente.status.descricao}"></span></td>
-							
+							<td><span style="font-weight: bold;" th:text="${cliente.id}"></span></td>
+							<td><span style="font-weight: bold;"
+								th:text="${cliente.nome}"></span></td>
+							<td><span style="font-weight: bold;"
+								th:text="${cliente.email}"></span></td>
 							<td><a
-								th:href="@{/cliente/dependentes/{idcliente}(idcliente=${cliente.id})}"><span
-									class="btn btn-primary">Adicionar Dependente</span></a></td>
-							<td><a href="#"><span class="btn btn-success"> Editar</span></a></td>
-							<td><a
-								th:href="@{/cliente/removercliente/{idcliente}(idcliente=${cliente.id})}"><span
-									class="btn btn-danger">Desativar</span></a></td>
+								th:href="@{/locacao/visualizarClienteLocacao/{idcliente}(idcliente=${cliente.id})}"
+								class="btn btn-success">Selecionar >>></a></td>
+
+
 
 
 						</tr>
@@ -134,6 +140,12 @@
 									});
 						});
 			});
+</script>
+
+<script>
+	$(document).ready(function() {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
 </script>
 
 

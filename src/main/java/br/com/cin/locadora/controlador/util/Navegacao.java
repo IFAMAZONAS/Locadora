@@ -22,8 +22,14 @@ public final class Navegacao {
 		public static final String LISTAGEM_FILMES = "filme/list";
 		
 		public static final String INICIAR_LOCACAO = "locacao/form";
+		public static final String BUSCAR_LOCACAO_NOVO = "locacao/buscarlocacao";
 		public static final String BUSCAR_CLIENTE_LOCACAO = "locacao/buscarcliente";
 		public static final String LISTAR_CLIENTE_LOCACAO = "locacao/tabelaclientes";
+		
+		public static final String VIEW_LOCACAO_ABERTAS_CLIENTE = "locacao/locacoesabertas";
+		public static final String RESUMO_LOCACAO = "locacao/resumolocacao";
+		
+		public static final String RESUMO_LOCACAO_ERROR = "locacao/resumoerro";
 
 		
 		

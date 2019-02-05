@@ -38,6 +38,23 @@ import cucumber.api.java.it.Date;
 @Controller
 @RequestMapping(value = "filme")
 public class FilmeController {
+	
+	static String LANCAMENTO_SIM = "SIM";
+	static String LANCAMENTO_NAO = "NÃO";
+	
+	static String DVD_LANCAMENTO = "DVD LANCAMENTO";
+	static String BLURAY_LANCAMENTO = "BLURAY LACAMENTO";
+	
+	static String HD_DVD_LANCAMENTO = "HD-DVD LANCAMENTO";
+	static String VHS_LANCAMENTO = "VHS LANCAMENTO";
+	
+	static String DVD = "DVD";
+	static String BLURAY = "BLU-RAY";
+	
+	static String HD_DVD = "HD-DVD";
+	static String VHS= "VHS";
+	
+	
 	@Autowired
 	TipoMidiaService tipoMidiaService;
 
@@ -144,6 +161,7 @@ public class FilmeController {
 			@RequestParam("duracao") String duracao,
 			@RequestParam("dataaquisicao") String dataquisicao,
 			@RequestParam("genero") String genero,
+			@RequestParam("lancamento") String lancamento,
 			
 			@RequestParam("fornecedor") String fornecedor,
 			@RequestParam("midia") String midia,
@@ -159,7 +177,7 @@ public class FilmeController {
 			
 			 Filme filme = this.montarObjeto(numeroSerie, 
 					 tituloOriginal, tituloPortugues, 
-					 pais, ano, direcao, elenco, sinopse, duracao, dataquisicao, fornecedor, midia,genero);
+					 pais, ano, direcao, elenco, sinopse, duracao, dataquisicao, fornecedor, midia,genero, lancamento);
 			this.filmeService.salvar(filme);
 			this.msg.add("Operação realizada com sucesso!");
 			this.tipoMidiaLista = this.tipoMidiaService.listarTodos();
@@ -250,7 +268,7 @@ public class FilmeController {
 	 */
 	private Filme montarObjeto(String numeroSerie, String tituloOriginal, String tituloPortugues, String pais,
 			String ano, String direcao, String elenco, String sinopse, String duracao, String dataAquisicao,
-			String idFornecedor, String tipoMidia, String genero) {
+			String idFornecedor, String tipoMidia, String genero, String lancamento) {
 		Filme novoFilme = new Filme();
 		novoFilme.setNumeroSerie(numeroSerie);
 		novoFilme.setTipoMidia(this.obterTipoMidia(tipoMidia));
@@ -264,10 +282,11 @@ public class FilmeController {
 		novoFilme.setDirecao(direcao);
 		novoFilme.setSinopse(sinopse);
 		novoFilme.setDataAquisicao(new java.util.Date());
+		novoFilme.setLancamento(lancamento.toUpperCase());
 		
 	
 		
-		novoFilme.setValor(this.definirValor(novoFilme.getTipoMidia()));
+		novoFilme.setValor(this.definirValor(novoFilme.getTipoMidia(),lancamento));
 
 		return novoFilme;
 	}
@@ -277,9 +296,33 @@ public class FilmeController {
 		return this.generoService.buscarPorId(Integer.valueOf(genero));
 	}
 
-	private ValoresLocacao definirValor(TipoMidia tipoMidia) {
+	private ValoresLocacao definirValor(TipoMidia tipoMidia,String lancamento) {
+		ValoresLocacao valorLocacao = null ;
+		if(lancamento.equalsIgnoreCase(LANCAMENTO_SIM)) {
+			
+			
+			if(tipoMidia.getDescricao().equalsIgnoreCase(DVD)) {
+				valorLocacao = this.valorLocacaoRepository.findValoresByName(DVD_LANCAMENTO).get(0);
+			}
+			if(tipoMidia.getDescricao().equalsIgnoreCase(BLURAY)) {
+				valorLocacao = this.valorLocacaoRepository.findValoresByName(BLURAY_LANCAMENTO).get(0);
+			}
+			if(tipoMidia.getDescricao().equalsIgnoreCase(HD_DVD)) {
+				valorLocacao = this.valorLocacaoRepository.findValoresByName(HD_DVD_LANCAMENTO).get(0);
+			}
+			
+			if(tipoMidia.getDescricao().equalsIgnoreCase(VHS)) {
+				valorLocacao = this.valorLocacaoRepository.findValoresByName(VHS_LANCAMENTO).get(0);
+			}
+		}else {
+			
+			valorLocacao = this.valorLocacaoRepository.findValoresByName(tipoMidia.getDescricao()).get(0);
+		}
 		
-		ValoresLocacao valorLocacao = this.valorLocacaoRepository.findValoresByName(tipoMidia.getDescricao()).get(0);
+		
+		
+		
+		
 		return valorLocacao ;
 	}
 

@@ -2,6 +2,7 @@
 package br.com.cin.locadora.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -39,13 +40,17 @@ public class Locacao implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "valor")
     private Double valor;
-    @Column(name = "status")
-    private Integer status;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idLocacao", fetch = FetchType.EAGER)
-    private List<LocacaoFilme> locacaoFilmeList;
+    private List<LocacaoFilme> locacaoFilmeList = new ArrayList<LocacaoFilme>();
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
+    
     @ManyToOne(fetch = FetchType.EAGER)
     private Cliente idCliente;
+    
+    @JoinColumn(name = "status_locacao", referencedColumnName = "id_status_locacao")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private StatusLocacao statusLocacao;
 
     public Locacao() {
     }
@@ -78,13 +83,7 @@ public class Locacao implements Serializable {
         this.valor = valor;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+   
 
     public List<LocacaoFilme> getLocacaoFilmeList() {
         return locacaoFilmeList;
@@ -101,6 +100,14 @@ public class Locacao implements Serializable {
     public void setIdCliente(Cliente idCliente) {
         this.idCliente = idCliente;
     }
+    
+    public void setStatusLocacao(StatusLocacao statusLocacao) {
+		this.statusLocacao = statusLocacao;
+	}
+    
+    public StatusLocacao getStatusLocacao() {
+		return statusLocacao;
+	}
 
     @Override
     public int hashCode() {
