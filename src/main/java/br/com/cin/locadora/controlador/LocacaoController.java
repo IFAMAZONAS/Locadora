@@ -140,7 +140,7 @@ public class LocacaoController {
 	@RequestMapping(value="**/processarBuscaCliente", method=RequestMethod.POST)
 	public ModelAndView buscarClientesLocacaoPorNome(@RequestParam("pesquisa") String pesquisa) {
 		ModelAndView andView = new ModelAndView(Navegacao.BUSCAR_LOCACAO_NOVO);
-		List<Cliente> clientes = this.clienterepository.findPessoaByName(pesquisa);
+		List<Cliente> clientes = this.clienterepository.findPessoaByName(pesquisa.toUpperCase());
 			
 		if(clientes.isEmpty()) {
 			this.messagensErro = new ArrayList<>();
