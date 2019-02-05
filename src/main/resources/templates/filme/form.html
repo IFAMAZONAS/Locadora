@@ -52,10 +52,9 @@
 
 			</div>
 			<div class="panel-body">
-				<form id="formFilme" th:action="salvarfilme" method="post"
-					>
+				<form id="formFilme" th:action="salvarfilme" method="post">
 
-					
+
 
 					<div class="row">
 						<div class="form-group col-sm-12 col-md-6">
@@ -63,8 +62,7 @@
 								Série:</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" id="nserie"
-									 placeholder="Entre com o nome"
-									name="numeroSerie" />
+									placeholder="Entre com o nome" name="numeroSerie" />
 							</div>
 						</div>
 
@@ -75,8 +73,7 @@
 								Nacional</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" id="tnacional"
-									name="tituloPortugues"
-									placeholder="Enter com Título Nacional" />
+									name="tituloPortugues" placeholder="Enter com Título Nacional" />
 							</div>
 						</div>
 					</div>
@@ -87,8 +84,7 @@
 								Original:</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" id="toriginal"
-									 placeholder="Entre com o nome"
-									name="toriginal" />
+									placeholder="Entre com o nome" name="toriginal" />
 							</div>
 						</div>
 
@@ -96,8 +92,7 @@
 							<label class="control-label col-sm-4 text-right" for="elenco">Elenco</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" id="elenco"
-									name="elenco" 
-									placeholder="Enter com elenco" />
+									name="elenco" placeholder="Enter com elenco" />
 							</div>
 						</div>
 					</div>
@@ -109,7 +104,7 @@
 							<label class="control-label col-sm-4 text-right" for="pais">País:</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" id="pais"
-									 placeholder="Entre com pais" name="pais" />
+									placeholder="Entre com pais" name="pais" />
 							</div>
 						</div>
 
@@ -119,7 +114,7 @@
 							<label class="control-label col-sm-4 text-right" for="ano">Ano</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" id="ano" name="ano"
-									 placeholder="Entre com o ano" />
+									placeholder="Entre com o ano" />
 							</div>
 						</div>
 					</div>
@@ -129,8 +124,7 @@
 							<label class="control-label col-sm-4 text-right" for="direcao">Direção:</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" id="direcao"
-									 placeholder="Entre com a direção"
-									name="direcao" />
+									placeholder="Entre com a direção" name="direcao" />
 							</div>
 						</div>
 
@@ -138,8 +132,7 @@
 							<label class="control-label col-sm-4 text-right" for="duracao">Duração</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" id="duracao"
-									 name="duracao"
-									placeholder="Entre com o duracao" />
+									name="duracao" placeholder="Entre com o duracao" />
 							</div>
 						</div>
 
@@ -162,7 +155,8 @@
 							<div class="col-sm-8">
 								<select class="form-control" id="genero" name="genero">
 									<option value="genero.idGenero">Selecione a função</option>
-									<option th:each="genero : ${generos}" th:value="${genero.idGenero}"
+									<option th:each="genero : ${generos}"
+										th:value="${genero.idGenero}"
 										th:text="${genero.idGenero}+' --- '+${genero.descricao}"></option>
 								</select>
 							</div>
@@ -171,6 +165,22 @@
 
 
 					</div>
+
+					<div class="row">
+						<div class="form-group col-sm-12 col-md-6">
+							<label class="control-label col-sm-4 text-right" for="sel2">Lançamento:</label>
+							<div class="col-sm-8">
+								<select  class="form-control " id="sel2" name="lancamento">
+									<option>Sim</option>
+									<option selected="selected">Não</option>
+
+								</select>
+							</div>
+						</div>
+
+					</div>
+
+
 
 					<div class="row">
 
@@ -195,11 +205,11 @@
 							<label class="control-label col-sm-4 text-right" for="midia">Tipo
 								Mídia:</label>
 							<div class="col-sm-8 ">
-								<select  class="form-control custom-select" id="midia"
+								<select class="form-control custom-select" id="midia"
 									name="midia">
-									<option  value="tipoMidia.idTipoMidia">Selecione o tipo
+									<option value="tipoMidia.idTipoMidia">Selecione o tipo
 										de Mídia</option>
-									<option  th:each="tipo : ${tipoMidia}"
+									<option th:each="tipo : ${tipoMidia}"
 										th:value="${tipo.idTipoMidia}"
 										th:text="${tipo.idTipoMidia}+' : '+${tipo.descricao}"></option>
 								</select>
@@ -212,14 +222,14 @@
 
 					</div>
 
-					
+
 
 					<div class="row">
 						<div class="form-group col-sm-12 col-md-12">
 							<label class="control-label col-sm-2 text-right" for="sinopse">Sinopse::</label>
 							<div class="col-sm-10">
 								<textarea id="sinopse" name="sinopse" class="form-control"
-									 rows="2"></textarea>
+									rows="2"></textarea>
 							</div>
 						</div>
 					</div>
@@ -244,8 +254,9 @@
 					<th>Titulo Nacional</th>
 					<th>Direção</th>
 					<th>Duração</th>
+					<th>Lançamento</th>
 					<th></th>
-					<th></th>
+
 
 
 				</tr>
@@ -257,14 +268,9 @@
 				<td th:text="${f.tituloPortugues}"></td>
 				<td th:text="${f.direcao}"></td>
 				<td th:text="${f.duracao}"></td>
+				<td th:text="${f.lancamento}"></td>
 				<td>
-				
-					<button
-							th:data-href="@{/filme/editarfilme/{idFilme}(idFilme=${f.idFilme})}"
-							type="button" class="btn-modal btn-success" data-toggle="modal"
-							data-target="#editFilmeModal" data-whatever="@getbootstrap">Editar
-					</button>
-				<td>
+
 					<button
 						th:data-href="@{/filme/modal/{idFilme}(idFilme=${f.idFilme})}"
 						type="button" class="btn-modal btn-success" data-toggle="modal"
@@ -310,9 +316,9 @@
 			</div>
 
 		</div>
-		
-		<div class="modal fade " id="editFilmeModal" tabindex="-1" role="dialog"
-			aria-labelledby="editFilmeModal" aria-hidden="true">
+
+		<div class="modal fade " id="editFilmeModal" tabindex="-1"
+			role="dialog" aria-labelledby="editFilmeModal" aria-hidden="true">
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-header">Carregando Dados....</div>
@@ -333,8 +339,8 @@
 				modal.find('.modal-body input').val(recipient)
 			})
 		</script>
-		
-		
+
+
 
 
 
@@ -347,7 +353,6 @@
 		<script>
 			$(function() {
 
-				
 				$(".btn-modal").click(function() {
 					var link = $(this).attr('data-href');
 					var modal = $(this).attr('data-target');

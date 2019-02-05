@@ -65,6 +65,11 @@
 					<td th:text="${f.direcao}"></td>
 				</tr>
 				
+				<tr th:each="f: ${filme}">
+					<td style="font-weight: bold;" align="right">Direção:</td>
+					<td th:text="${f.fornecedor.razaosocial}"></td>
+				</tr>
+				
 				
 			</tbody>
 

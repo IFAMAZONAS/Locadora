@@ -39,6 +39,7 @@ import br.com.cin.locadora.model.Dependente;
 import br.com.cin.locadora.model.Usuario;
 import br.com.cin.locadora.model.repository.ClienteRepository;
 import br.com.cin.locadora.model.repository.DependenteRepository;
+import br.com.cin.locadora.model.repository.StatusClienteRepository;
 import br.com.cin.locadora.servico.ClienteService;
 
 @Controller
@@ -49,6 +50,9 @@ public class ClienteController {
 	ClienteRepository repository;
 	@Autowired
 	DependenteRepository dependenteRepository;
+	
+	@Autowired
+	StatusClienteRepository statusClienteRepository;
 
 	@Autowired
 	ClienteService clienteService;
@@ -116,6 +120,7 @@ public class ClienteController {
 			cliente.setNome(nome.toUpperCase());
 			cliente.setEmail(email);
 			cliente.setCpf(cpf);
+			cliente.setStatus(this.statusClienteRepository.findById(1).get());
 			cliente.setFoneCelular(celular);
 			cliente.setFoneComercial(foneComercial);
 			cliente.setFoneResidencial(foneResidencial);

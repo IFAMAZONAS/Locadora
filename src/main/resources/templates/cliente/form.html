@@ -17,16 +17,16 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 
 
-<div class="container" style="width: 90%" align="center">
+<div class="container" style="width: 90%; " align="center">
 	<div>
-		<h2>SISTEMA DE LOCADORA</h2>
+		<h2 style="font-weight: bold; font-size: 40px; background-color: black; color: white" align="center">SISTEMA DE LOCADORA</h2>
 		<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The Static
 			Templates</div>
 
 		<br />
 
 		<div>
-			<div class="alert alert-success" style="text-align: left;"
+			<div  style="text-align: left;"
 				th:each="m : ${msg}">
 
 				<span class="row"
@@ -37,7 +37,7 @@
 
 		<br />
 
-		<div class="alert alert-danger">
+		<div >
 			<div  style="text-align: left;"
 				th:each="m : ${messagensErro}">
 
@@ -235,6 +235,9 @@
 
 	</tr>
 </table>
+
+
+	
 
 
 

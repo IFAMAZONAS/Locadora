@@ -11,6 +11,6 @@ import br.com.cin.locadora.model.Cliente;
 @Repository
 public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
 
-	@Query("select p from Cliente p where p.nome like %?1% ")
+	@Query("select p from Cliente p where upper(p.nome) like %?1% ")
 	List<Cliente> findPessoaByName(String nome);
 }
