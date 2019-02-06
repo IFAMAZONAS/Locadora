@@ -30,9 +30,9 @@ public class Dependente {
     private String sexo;
     @Column(name = "data_nascimento")
     private Date dataNascimento;
+    @Column(name="ativo")
     private boolean ativo;
-   
-  
+
     
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
     @ManyToOne(optional=false)
