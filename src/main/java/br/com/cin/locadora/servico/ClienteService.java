@@ -79,10 +79,25 @@ public class ClienteService {
 		private Iterable<Cliente> buscarAtivos(Iterable<Cliente> listaTodos) {
 			 List<Cliente> ativos = new ArrayList<>();
 			 for(Cliente cliente : listaTodos) {
-				  if(cliente.getStatus().getIdStatus() ==1) {
+				  if(cliente.getStatus().getIdStatus()==1) {
 					  ativos.add(cliente);
 				  }
 			 }
 			return ativos;
+		}
+		
+		public List<Cliente> findPessoaByName(String nome){
+			
+			if(nome.isEmpty()) {
+				return new ArrayList<>();
+			}
+			List<Cliente> clintesAtivos = new ArrayList<Cliente>();
+			
+			for(Cliente cliente : this.clienteRepository.findPessoaByNameALL(nome)) {
+				if(cliente.getStatus().getIdStatus()==1) {
+					clintesAtivos.add(cliente);
+				}
+			}
+			return clintesAtivos;
 		}
 }

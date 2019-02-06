@@ -45,6 +45,14 @@ import br.com.cin.locadora.servico.ClienteService;
 @Controller
 @RequestMapping(value = "cliente")
 public class ClienteController {
+	
+	static int CLIENTE_ATIVO=1;
+	static int CLIENTE_INATIVO=2;
+	
+	static boolean DEPEPENDENTE_ATIVO = true;
+	static boolean DEPEPENDENTE_INATIVO = false;
+	
+	
 
 	@Autowired
 	ClienteRepository repository;
@@ -141,7 +149,7 @@ public class ClienteController {
 	@PostMapping("**/pesquisarcliente")
 	public ModelAndView ListarPorNome(@RequestParam("nomepesquisa") String nomepesquisa) {
 		ModelAndView modelAndView = new ModelAndView(Navegacao.LISTAGEM_CLIENTES);
-		Iterable<Cliente> clientes = this.repository.findPessoaByName(nomepesquisa);
+		Iterable<Cliente> clientes = this.clienteService.findPessoaByName(nomepesquisa);
 		List<Cliente> lista = (List<Cliente>) clientes;
 		if(!ValidadorCliente.getInstance().validatePesquisa(lista)) {
 			modelAndView.addObject("clientes", clientes);
@@ -208,6 +216,7 @@ public class ClienteController {
 			if(validadeDependente(dependente)) {
 				this.msg = new ArrayList<>();
 				this.msg.add("Operação realizada com sucesso");
+				dependente.setAtivo(DEPEPENDENTE_ATIVO);
 				dependente.setIdCliente(cliente);
 				this.dependenteRepository.save(dependente);
 				modelAndView.addObject("cliente", cliente);
@@ -241,6 +250,34 @@ public class ClienteController {
 		modelAndView.addObject("dependentes", this.dependenteRepository.getDependentes(cliente.getId()));
 		return modelAndView;
 	}
+	
+	
+	@GetMapping("**/desativarcliente/{idcliente}")
+	public ModelAndView destativarCliente(@PathVariable("idcliente") Integer idcliente) {
+		ModelAndView andView = new ModelAndView(Navegacao.LISTAGEM_CLIENTES);
+		
+		Cliente cliente = this.clienteService.buscarPorId(idcliente);
+		cliente.setStatus(this.statusClienteRepository.findById(CLIENTE_INATIVO).get());
+		
+		List<Dependente> dependentes = cliente.getDependentes();
+		
+		/****
+		 * Desativa os dependentes de existirem
+		 */
+		if(!dependentes.isEmpty()) {
+			for(Dependente dependente : dependentes) {
+				dependente.setAtivo(DEPEPENDENTE_INATIVO);
+				this.dependenteRepository.save(dependente);
+			}
+		}
+		
+		this.clienteService.atualizar(cliente);
+		this.msg = new ArrayList<>();
+		this.msg.add("Cliente desativado com sucesso!");
+		andView.addObject("msg", this.msg);
+		this.msg = new ArrayList<>();
+		return andView;
+	}
 
 	/****
 	 * 
@@ -249,7 +286,7 @@ public class ClienteController {
 	 */
 	@RequestMapping("**/listarclientes")
 	public ModelAndView listarTodos() {
-		Iterable<Cliente> clientes = this.clienteService.listarTodos();
+		Iterable<Cliente> clientes = this.clienteService.listarUsuarioAtivos();
 		ModelAndView andView = new ModelAndView(Navegacao.LISTAGEM_CLIENTES);
 		List<Cliente> lista = (List<Cliente>) clientes;
 		

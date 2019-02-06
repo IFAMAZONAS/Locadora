@@ -29,8 +29,10 @@ public class Dependente {
     @Column(name = "sexo")
     private String sexo;
     @Column(name = "data_nascimento")
-   
     private Date dataNascimento;
+    private boolean ativo;
+   
+  
     
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
     @ManyToOne(optional=false)
@@ -91,6 +93,14 @@ public class Dependente {
     
     public Cliente getIdCliente() {
 		return idCliente;
+	}
+    
+    public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+    
+    public boolean isAtivo() {
+		return ativo;
 	}
 
 	

@@ -33,6 +33,7 @@ import br.com.cin.locadora.model.LocacaoFilme;
 import br.com.cin.locadora.model.repository.ClienteRepository;
 import br.com.cin.locadora.model.repository.FilmeRepository;
 import br.com.cin.locadora.model.repository.StatusLocacaoRepository;
+import br.com.cin.locadora.servico.ClienteService;
 import br.com.cin.locadora.servico.LocacaoService;
 
 @Controller
@@ -41,6 +42,8 @@ public class LocacaoController {
 
 	@Autowired
 	private ClienteRepository clienterepository;
+	@Autowired
+	private ClienteService clienteService;
 
 	@Autowired
 	ClienteRepository repository;
@@ -120,7 +123,19 @@ public class LocacaoController {
 	@RequestMapping(value="**/listarclientes", method=RequestMethod.GET)
 	public ModelAndView entrarClientes( @RequestParam("pesquisa") String nome) {
 		ModelAndView andView = new ModelAndView(Navegacao.LISTAR_CLIENTE_LOCACAO);
-		Iterable<Cliente> clientesPesquisa = this.clienterepository.findPessoaByName(nome.toUpperCase());
+		List<Cliente> clientesPesquisa = this.clienteService.findPessoaByName(nome.toUpperCase());
+		if(nome.isEmpty()) {
+			this.msg = new ArrayList<>();
+			this.msg.add("Por favor digite um nome válido");
+			andView.addObject("msg",this.msg);
+			this.msg = new ArrayList<>();
+		}
+		if(clientesPesquisa.isEmpty()) {
+			this.msg = new ArrayList<>();
+			this.msg.add("Não foi encontrado nenhum cliente com o nome informado! Por favor digite um nome válido");
+			andView.addObject("msg",this.msg);
+			this.msg = new ArrayList<>();
+		}
 		andView.addObject("clientes", clientesPesquisa);
 		
 		return andView;
@@ -140,7 +155,7 @@ public class LocacaoController {
 	@RequestMapping(value="**/processarBuscaCliente", method=RequestMethod.POST)
 	public ModelAndView buscarClientesLocacaoPorNome(@RequestParam("pesquisa") String pesquisa) {
 		ModelAndView andView = new ModelAndView(Navegacao.BUSCAR_LOCACAO_NOVO);
-		List<Cliente> clientes = this.clienterepository.findPessoaByName(pesquisa.toUpperCase());
+		List<Cliente> clientes = this.clienteService.findPessoaByName(pesquisa.toUpperCase());
 			
 		if(clientes.isEmpty()) {
 			this.messagensErro = new ArrayList<>();
