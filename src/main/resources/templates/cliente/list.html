@@ -71,7 +71,7 @@
 							<th>Email</th>
 							<th>Cpf</th>
 							<th>Celular</th>
-							<th>Telefone Residencial</th>
+							<th>Situação</th>
 							
 							<th></th>
 							<th></th>
@@ -86,7 +86,8 @@
 							<td><span th:text="${cliente.email}"></span></td>
 							<td><span th:text="${cliente.cpf}"></span></td>
 							<td><span th:text="${cliente.foneCelular}"></span></td>
-							<td><span th:text="${cliente.foneResidencial}"></span></td>
+							<td><span th:text="${cliente.status.descricao}"></span></td>
+							<td></td>
 							
 							
 							<td><a

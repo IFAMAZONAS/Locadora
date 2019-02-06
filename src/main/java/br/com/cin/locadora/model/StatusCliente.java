@@ -1,6 +1,7 @@
 package br.com.cin.locadora.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -32,7 +33,7 @@ public class StatusCliente implements Serializable {
     @Column(name = "descricao")
     private String descricao;
     @OneToMany(mappedBy = "status")
-    private List<Cliente> clienteList;
+    private List<Cliente> clienteList = new ArrayList<Cliente>();
 
     public StatusCliente() {
     }
