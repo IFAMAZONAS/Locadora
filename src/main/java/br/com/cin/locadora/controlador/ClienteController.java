@@ -274,6 +274,7 @@ public class ClienteController {
 		this.clienteService.atualizar(cliente);
 		this.msg = new ArrayList<>();
 		this.msg.add("Cliente desativado com sucesso!");
+		andView.addObject("clientes", this.clienteService.listarUsuarioAtivos() );
 		andView.addObject("msg", this.msg);
 		this.msg = new ArrayList<>();
 		return andView;
