@@ -31,7 +31,7 @@ public class StatusCliente implements Serializable {
     @Column(name = "id_status")
     private Integer idStatus;
     @Column(name = "descricao")
-    private String descricao;
+    private String situacao;
     @OneToMany(mappedBy = "status",cascade= {CascadeType.ALL}, fetch=FetchType.LAZY)
     private List<Cliente> clienteList = new ArrayList<Cliente>();
 
@@ -50,13 +50,14 @@ public class StatusCliente implements Serializable {
         this.idStatus = idStatus;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+    public void setSituacao(String situacao) {
+		this.situacao = situacao;
+	}
+    
+    public String getSituacao() {
+		return situacao;
+	}
 
     public List<Cliente> getClienteList() {
         return clienteList;
