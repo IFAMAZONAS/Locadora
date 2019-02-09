@@ -43,7 +43,7 @@ public class FilmeController {
 	static String LANCAMENTO_NAO = "NÃO";
 	
 	static String DVD_LANCAMENTO = "DVD LANCAMENTO";
-	static String BLURAY_LANCAMENTO = "BLURAY LACAMENTO";
+	static String BLURAY_LANCAMENTO = "BLURAY LANCAMENTO";
 	
 	static String HD_DVD_LANCAMENTO = "HD-DVD LANCAMENTO";
 	static String VHS_LANCAMENTO = "VHS LANCAMENTO";

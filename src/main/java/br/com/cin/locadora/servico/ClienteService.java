@@ -6,18 +6,29 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.crypto.CipherOutputStream;
+import javax.persistence.criteria.CriteriaBuilder.In;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.cin.locadora.model.Cliente;
+import br.com.cin.locadora.model.Dependente;
 import br.com.cin.locadora.model.repository.ClienteRepository;
+import br.com.cin.locadora.model.repository.DependenteRepository;
+import br.com.cin.locadora.model.repository.StatusClienteRepository;
 
 @Service
 public class ClienteService {
 		
 		@Autowired
 		ClienteRepository clienteRepository;
+		@Autowired
+		StatusClienteRepository statusClienteRepository;
+		@Autowired
+		DependenteRepository dependenteRepository;
+				
+	    static Integer ATIVO =1;
+	    static Integer INATIVO =2;
 		
 	
 		/***
@@ -61,6 +72,37 @@ public class ClienteService {
 		public void atualizar(Cliente cliente) {
 			this.clienteRepository.save(cliente);
 		}
+		
+		/****
+		 * Recece um cliente o desativa e desativa todos os seus dependetes se houver
+		 * @param cliente
+		 * @return
+		 */
+		public boolean desativarCliente(Cliente cliente) {			
+			boolean retorno = false;
+			
+			if(!(cliente.getId()==null)) {
+				List<Dependente> depedeList = cliente.getDependentes();
+				
+				if(!depedeList.isEmpty()) {
+					for (Dependente dependente: depedeList) {
+						dependente.setAtivo(Boolean.FALSE);
+						retorno = Boolean.TRUE;
+					}
+				}
+				
+				cliente.setStatus(this.statusClienteRepository.findById(INATIVO).get());
+				
+				retorno = Boolean.TRUE;
+				
+			}
+			
+			
+			return retorno;
+			
+			
+		}
+		
 		/***
 		 * 
 		 * @return
@@ -99,5 +141,17 @@ public class ClienteService {
 				}
 			}
 			return clintesAtivos;
+		}
+		/****
+		 * 
+		 * @param dependentes
+		 */
+		public void destativarDepedentes(List<Dependente> dependentes) {
+			if(!dependentes.isEmpty()) {
+				for (Dependente dependente : dependentes) {
+					dependente.setAtivo(false);
+					this.dependenteRepository.save(dependente);
+				}
+			}
 		}
 }

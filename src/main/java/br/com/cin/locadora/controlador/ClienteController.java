@@ -257,27 +257,26 @@ public class ClienteController {
 		ModelAndView andView = new ModelAndView(Navegacao.LISTAGEM_CLIENTES);
 		
 		Cliente cliente = this.clienteService.buscarPorId(idcliente);
-		cliente.setStatus(this.statusClienteRepository.findById(CLIENTE_INATIVO).get());
 		
-		List<Dependente> dependentes = cliente.getDependentes();
-		
-		/****
-		 * Desativa os dependentes de existirem
-		 */
-		if(!dependentes.isEmpty()) {
-			for(Dependente dependente : dependentes) {
-				dependente.setAtivo(DEPEPENDENTE_INATIVO);
-				this.dependenteRepository.save(dependente);
-			}
+		if(this.clienteService.desativarCliente(cliente)) {
+			cliente.setStatus(this.statusClienteRepository.findById(CLIENTE_INATIVO).get());
+			this.clienteService.destativarDepedentes(cliente.getDependentes());
+			this.clienteService.atualizar(cliente);
+			this.msg = new ArrayList<>();
+			this.msg.add("Cliente desativado com sucesso!");
+			andView.addObject("clientes", this.clienteService.listarUsuarioAtivos() );
+			andView.addObject("msg", this.msg);
+			this.msg = new ArrayList<>();
+			return andView;
+		}else {
+			this.messagensErro = new ArrayList<>();
+			this.messagensErro.add("Não foi possível desativar o cliente!");
+			andView.addObject("clientes", this.clienteService.listarUsuarioAtivos() );
+			andView.addObject("messagensErro", this.messagensErro);
+			this.messagensErro = new ArrayList<>();
+			return andView;
 		}
 		
-		this.clienteService.atualizar(cliente);
-		this.msg = new ArrayList<>();
-		this.msg.add("Cliente desativado com sucesso!");
-		andView.addObject("clientes", this.clienteService.listarUsuarioAtivos() );
-		andView.addObject("msg", this.msg);
-		this.msg = new ArrayList<>();
-		return andView;
 	}
 
 	/****

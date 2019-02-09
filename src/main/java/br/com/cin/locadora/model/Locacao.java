@@ -22,6 +22,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import cucumber.api.java.fi.Oletetaan;
+
 @Entity
 @Table(name = "locacao")
 @NamedQueries({
@@ -41,6 +43,9 @@ public class Locacao implements Serializable {
     @Column(name = "valor")
     private Double valor;
     
+    @Column(name="valor_pago")
+    private Double valor_pago;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idLocacao", fetch = FetchType.EAGER)
     private List<LocacaoFilme> locacaoFilmeList = new ArrayList<LocacaoFilme>();
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
@@ -51,7 +56,11 @@ public class Locacao implements Serializable {
     @JoinColumn(name = "status_locacao", referencedColumnName = "id_status_locacao")
     @ManyToOne(fetch = FetchType.LAZY)
     private StatusLocacao statusLocacao;
-
+    
+    @OneToMany(mappedBy = "locacao", fetch = FetchType.LAZY)
+    private List<Pagamento> pagamentoList;
+    
+   
     public Locacao() {
     }
 
