@@ -12,11 +12,48 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>	
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
+<style>
+#customers {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#customers td, #customers th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+#customers tr:nth-child(even) {
+	background-color: #e0e6e1;
+}
+
+#customers tr:hover {
+	background-color: #ddd;
+}
+
+#customers th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #909a91;
+	color: white;
+}
+
+.formaItem {
+	display: none;
+}
+
+.exibirFormaCheque #forma_cheque, .exibirFormaCartao #forma_cartao {
+	display: block;
+}
+</style>
 </head>
 
 
@@ -43,95 +80,155 @@
 		</div>
 		<hr />
 
-		
-
-					<div class="container" style="width: 100%" align="center">
-
-						<form action="salvarfornecedor" method="post"
-							th:object="${fornecedor}">
-
-							<div class="row">
-								<div class="form-group col-sm-12 col-md-12">
-									<label class="control-label col-sm-2 text-right" for="id">Código
-										do Fornecedor:</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control" id="id"
-											th:field="*{id}" readonly="readonly" name="id" />
-									</div>
-								</div>
-
-							</div>
 
 
-							<div class="row">
-								<div class="form-group col-sm-12 col-md-6">
-									<label class="control-label col-sm-4 text-right" for="nome">CNPJ:</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control" id="cnpj"
-											th:field="*{cnpj}" placeholder="Entre com o CNPJ" name="cnpj"
-											pattern="\d{2}.?\d{3}.?\d{3}/?\d{4}-?\d{2}" />
-									</div>
-								</div>
+		<div class="container" style="width: 100%" align="center">
 
+			<form action="salvarfornecedor" method="post"
+				th:object="${fornecedor}">
 
-
-								<div class="form-group col-sm-12 col-md-6">
-									<label class="control-label col-sm-4 text-right"
-										for="razao_social">Razão Social:</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control" id="razaosocial"
-											th:field="*{razaosocial}"
-											placeholder="Entre com a Razão Social" name="razaosocial" />
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="form-group col-sm-12 col-md-6">
-									<label class="control-label col-sm-4 text-right" for="telefone">Telefone:</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control" id="telefone"
-											th:field="*{telefone}" placeholder="Entre com o Telefone"
-											name="telefone" 
-											pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}"/>
-									</div>
-								</div>
-
-
-								<div class="form-group col-sm-12 col-md-6">
-									<label class="control-label col-sm-4 text-right"
-										for="pessoa_contato">Pessoa de Contato:</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control" id="pessoacontato"
-											th:field="*{pessoacontato}"
-											placeholder="Entre com a Pessoa de Contato"
-											name="pessoacontato" />
-									</div>
-								</div>
-
-							</div>
-
-							<div class="row">
-								<div class="form-group col-sm-12 col-md-12">
-									<label class="control-label col-sm-2 text-right" for="endereco">Endereço:</label>
-									<div class="col-sm-10">
-										<textarea id="endereco" th:field="*{endereco}" name="endereco"
-											class="form-control" rows="2"></textarea>
-									</div>
-								</div>
-							</div>
-							
-							<button type="submit" class="btn btn-primary" style="align-content: left">Salvar</button>
-							<a href="listarfornecedor" class="btn btn-success" style="align-content: right">Pesquisar
-							Fornecedores</a>
-
-						</form>
+				<div class="row">
+					<div class="form-group col-sm-12 col-md-12">
+						<label class="control-label col-sm-2 text-right" for="id">Código
+							do Fornecedor:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="id" th:field="*{id}"
+								readonly="readonly" name="id" />
+						</div>
 					</div>
-				
-						
 
-					
+				</div>
+
+
+				<div class="row">
+					<div class="form-group col-sm-12 col-md-6">
+						<label class="control-label col-sm-4 text-right" for="nome">CNPJ:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="cnpj"
+								th:field="*{cnpj}" placeholder="Entre com o CNPJ" name="cnpj"
+								pattern="\d{2}.?\d{3}.?\d{3}/?\d{4}-?\d{2}" />
+						</div>
+					</div>
+
+
+
+					<div class="form-group col-sm-12 col-md-6">
+						<label class="control-label col-sm-4 text-right"
+							for="razao_social">Razão Social:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="razaosocial"
+								th:field="*{razaosocial}" placeholder="Entre com a Razão Social"
+								name="razaosocial" />
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-sm-12 col-md-6">
+						<label class="control-label col-sm-4 text-right" for="telefone">Telefone:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="telefone"
+								th:field="*{telefone}" placeholder="Entre com o Telefone"
+								name="telefone" pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}" />
+						</div>
+					</div>
+
+
+					<div class="form-group col-sm-12 col-md-6">
+						<label class="control-label col-sm-4 text-right"
+							for="pessoa_contato">Pessoa de Contato:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="pessoacontato"
+								th:field="*{pessoacontato}"
+								placeholder="Entre com a Pessoa de Contato" name="pessoacontato" />
+						</div>
+					</div>
+
+				</div>
+
+				<div class="row">
+					<div class="form-group col-sm-12 col-md-12">
+						<label class="control-label col-sm-2 text-right" for="endereco">Endereço:</label>
+						<div class="col-sm-10">
+							<textarea id="endereco" th:field="*{endereco}" name="endereco"
+								class="form-control" rows="2"></textarea>
+						</div>
+					</div>
+				</div>
+
+				<button type="submit" class="btn btn-primary"
+					style="align-content: left">Salvar</button>
+
+
+			</form>
+		</div>
+
+		<table class="table table-hover">
+
+			<thead class="thead-dark">
+				<tr>
+					<th>Código</th>
+					<th>Razão Social</th>
+					<th>Telefone</th>
+					<th>Endereço</th>
+					<th></th>
+					<th></th>
+
+				</tr>
+			</thead>
+
+			<tr th:each="f : ${page.content}">
+				<td style="font-weight: bold;" th:text="${f.id}"></td>
+				<td style="font-weight: bold;" th:text="${f.razaosocial}"></td>
+				<td style="font-weight: bold;" th:text="${f.telefone}"></td>
+				<td style="font-weight: bold;" th:text="${f.endereco}"></td>
+				<td><a
+					th:href="@{/fornecedor/editarfornecedor/{idfornecedor}(idfornecedor=${f.id})}"
+					class="btn btn-success"> <span> Editar</span>
+				</a></td>
+
+				
+				<td>
+					<button th:data-href="@{/fornecedor/visualizarfonecedor/{idFornecedor}(idFornecedor=${f.id})}"
+									type="button" class="btn-modal btn-success" data-toggle="modal"
+									data-target="#viewFornecedorModal" >Visualizar</button>
+				</td>
+
+
+			</tr>
+		</table>
+
+		<div class="center pagination">
+			<span th:if="${page.hasPrevious()}" class="page-item"> <a
+				th:href="@{/fornecedor/cadastrofornecedor(page=${page.number-1},size=${page.size})}"><span
+					class="glyphicon glyphicon-backward"></span></a>
+			</span>
+			<th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+				<span th:if="${page.number == i}" class="selected ">[[${i}+1]]</span>
+				<span th:unless="${page.number == i}"> <a class="page-item"
+					th:href="@{/fornecedor/cadastrofornecedor(page=${i},size=${page.size})}">[[${i}+1]]</a>
+				</span>
+			</th:block>
+			<span th:if="${page.hasNext()}" class="page-item"> <a
+				th:href="@{/fornecedor/cadastrofornecedor(page=${page.number+1},size=${page.size})}"><span
+					class="glyphicon glyphicon-forward"></a>
+			</span>
+		</div>
+
+
+
+
 	</div>
+	
+	<div class="modal fade " id="viewFornecedorModal" tabindex="-1"
+			role="dialog" aria-labelledby="viewFornecedorModal" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">Carregando Dados....</div>
+				</div>
+			</div>
+
+		</div>
 
 
 
@@ -140,7 +237,29 @@
 
 
 
+<script>
+			$(function() {
 
+				$(".btn-modal").click(function() {
+					var link = $(this).attr('data-href');
+					var modal = $(this).attr('data-target');
+					$(modal).delay(50).queue(function() {
+						$(this).load(link).dequeue();
+
+					});
+				});
+
+				$(".dropdown").hover(function() {
+					$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+					$(this).toggleClass('open');
+					$('b', this).toggleClass("caret caret-up");
+				}, function() {
+					$('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+					$(this).toggleClass('open');
+					$('b', this).toggleClass("caret caret-up");
+				});
+			});
+		</script>
 
 
 

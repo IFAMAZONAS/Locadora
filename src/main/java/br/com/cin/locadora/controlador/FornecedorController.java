@@ -148,17 +148,34 @@ public class FornecedorController {
 	
 
 	@GetMapping("/editarfornecedor/{idfornecedor}")
-	public ModelAndView editar(@PathVariable("idfornecedor") Integer idfornecedor, @PageableDefault(size = 5) Pageable pageable) {
+	public ModelAndView editar(@PathVariable("idfornecedor") String idfornecedor, @PageableDefault(size = 5) Pageable pageable) throws NumberFormatException{
 		
-		
-		ModelAndView modelAndView = new ModelAndView(Navegacao.CADASTRAR_FORNECEDOR);
-		/*modelAndView.addObject("fornecedor", fornecedor.get());*/
-		modelAndView.addObject("fornecedor", this.repository.findById(idfornecedor));
-		Page<Fornecedor>page = this.fornecedorRepository.findAll(pageable);
-		modelAndView.addObject("page", page);
-		
+		 ModelAndView modelAndView = new ModelAndView(Navegacao.CADASTRAR_FORNECEDOR);
+		 Integer idForn;
+		 try {
+			 	idForn = Integer.valueOf(idfornecedor);
+			
+				modelAndView.addObject("fornecedor", this.repository.findById(Integer.valueOf(idfornecedor)));
+				Page<Fornecedor>page = this.fornecedorRepository.findAll(pageable);
+				modelAndView.addObject("page", page);
+				
+				return modelAndView;
+		} catch (NumberFormatException e) {
+			modelAndView = new ModelAndView(Navegacao.LISTAGEM_FORNECEDORES);
+			Page<Fornecedor>page = this.fornecedorRepository.findAll(pageable);
+			modelAndView.addObject("page", page);
+		}
+	
 		return modelAndView;
 		
+	}
+	
+	@GetMapping("**/visualizarfonecedor/{idFornecedor}")
+	public ModelAndView visualizarFornecedor(@PathVariable("idFornecedor") Integer idFornecedor) {
+		ModelAndView andView = new ModelAndView(Navegacao.VIEW_FORNECEDOR);
+		Fornecedor fornecedor = this.repository.findById(idFornecedor).get();
+		andView.addObject("fornecedor", fornecedor);
+		return andView;
 	}
 	
 	/**@GetMapping("/removerfornecedor/{idfornecedor}")

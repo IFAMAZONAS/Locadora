@@ -1,0 +1,44 @@
+<div class="modal-dialog modal-lg " role="document">
+	<div class="modal-content">
+		<div class="modal-header" style="background-color: LightGray;">
+			<h1 class="modal-title" id="exampleModalLabel">
+				
+			</h1>
+
+			<button type="button" class="close" data-dismiss="modal"
+				aria-label="Fechar">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+				<table class="table table-hover">
+				
+					<thead>
+						<th>Código</th>
+						<th>CNPJ</th>
+						<th>Razão Social</th>
+						<th>Pessoa Contato</th>
+						<th>Endereço</th>
+						
+					</thead>
+					
+					<tbody>
+						<tr th:each="f : ${fornecedor}">
+								<td style="font-weight: bold;" th:text="${f.id}"></td>
+								<td style="font-weight: bold;" th:text="${f.cnpj}"></td>
+								<td style="font-weight: bold;" th:text="${f.razaosocial}"></td>
+								<td style="font-weight: bold;" th:text="${f.pessoacontato}"></td> 
+								<td style="font-weight: bold;" th:text="${f.endereco}"></td>  
+						</tr>
+					</tbody>
+				
+				</table>
+		</div>
+		<div class="modal-footer" style="background-color: LightGray;">
+			
+			<button type="button" class="btn btn-danger btn-lg" data-dismiss="modal">Voltar</button>
+
+		</div>
+		
+	</div>
+</div>

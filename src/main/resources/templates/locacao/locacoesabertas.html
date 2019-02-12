@@ -64,7 +64,7 @@
 
 		<div class="row" align="left">
 			<table class="table table-hover">
-				<thead >
+				<thead>
 					<th>Código</th>
 					<th>Nome Cliente</th>
 					<th>E-mail</th>
@@ -74,7 +74,7 @@
 				</thead>
 
 				<tbody>
-					<tr  th:each="c:${cliente}">
+					<tr th:each="c:${cliente}">
 						<td style="font-weight: bold;" th:text="${c.id}"></td>
 						<td style="font-weight: bold;" th:text="${c.nome}"></td>
 						<td style="font-weight: bold;" th:text="${c.email}"></td>
@@ -98,7 +98,7 @@
 				</div>
 
 				<div class="panel-body">
-					
+
 					<table class="table table-hover">
 
 						<thead>
@@ -114,8 +114,12 @@
 								<td style="font-weight: bold;" th:text="${locacao.idLocacao}"></td>
 								<td style="font-weight: bold;" th:text="${locacao.valor}"></td>
 								<td style="font-weight: bold;" th:text="${locacao.dataLocacao}"></td>
-								<td style="font-weight: bold;" > <a href=""> <span style="color: red;" th:text="${locacao.statusLocacao.descricao}"/></a> </td>
-								<td> <a class="btn btn-primary">Finalizar</a></td>
+								<td style="font-weight: bold;"><a href=""> <span
+										style="color: red;"
+										th:text="${locacao.statusLocacao.descricao}" /></a></td>
+								<td><a
+									th:href="@{/fechamento/cadastropagamento/{idlocacao}(idlocacao=${locacao.idLocacao})}"
+									class="btn btn-primary">Finalizar</a></td>
 
 
 							</tr>
@@ -129,14 +133,14 @@
 
 
 			</div>
-			
+
 			<div class="panel panel panel-success">
 				<div class="panel-heading" align="left">
 					<h3 class="panel-title">Locações Fechadas</h3>
 				</div>
 
 				<div class="panel-body">
-					
+
 					<table class="table table-hover">
 
 						<thead>
@@ -152,8 +156,13 @@
 								<td style="font-weight: bold;" th:text="${locacao.idLocacao}"></td>
 								<td style="font-weight: bold;" th:text="${locacao.valor}"></td>
 								<td style="font-weight: bold;" th:text="${locacao.dataLocacao}"></td>
-								<td style="font-weight: bold; color: green;" th:text="${locacao.statusLocacao.descricao}"></td>
-								<td> <a class="btn btn-primary">Visualizar</a></td>
+								<td style="font-weight: bold; color: green;"
+									th:text="${locacao.statusLocacao.descricao}"></td>
+
+								<td><button
+									th:data-href="@{/fechamento/visualizarlocacao/{idLocacao}(idLocacao=${locacao.idLocacao})}"
+									type="button" class="btn-modal btn-success" data-toggle="modal"
+									data-target="#resumoLocacaoModal" >Visualizar</button></td>
 
 							</tr>
 
@@ -167,6 +176,16 @@
 
 			</div>
 
+
+		</div>
+
+		<div class="modal fade " id="resumoLocacaoModal" tabindex="-1"
+			role="dialog" aria-labelledby="resumoLocacaoModal" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">Carregando Dados....</div>
+				</div>
+			</div>
 
 		</div>
 </body>

@@ -1,0 +1,393 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<link
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link th:href="@{/vendor/main.js}" type="text/javascript" />
+
+<style>
+#customers {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#customers td, #customers th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+#customers tr:nth-child(even) {
+	background-color: #e0e6e1;
+}
+
+#customers tr:hover {
+	background-color: #ddd;
+}
+
+#customers th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #909a91;
+	color: white;
+}
+
+.formaItem {
+	display: none;
+}
+
+.exibirFormaCheque #forma_cheque, .exibirFormaCartao #forma_cartao {
+	display: block;
+}
+</style>
+
+</head>
+
+
+
+
+
+<body>
+
+	<div class="container" align="center">
+
+		<div class="row">
+			<h2>SISTEMA DE LOCADORA</h2>
+			<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The
+				Static Templates</div>
+
+
+
+			<br />
+			<div style="text-align: left;" th:each="m : ${msg}">
+
+				<span class="row"
+					style="color: green; font-size: 16; font-weight: bold;"
+					th:text="${m}"> </span>
+			</div>
+
+			<br />
+
+			<div style="text-align: left;" th:each="m : ${messagensErro}">
+
+				<span class="row"
+					style="color: red; font-size: 16; font-weight: bold" th:text="${m}">
+				</span>
+			</div>
+
+			<br />
+
+			<div class="panel-group" style="width: 100%" align="left">
+
+
+				<form action="processarpagamento" method="post">
+					<table class="table table-hover">
+
+						<thead>
+							<tr>
+								<th colspan="4">Dados do Cliente</th>
+
+							</tr>
+
+
+						</thead>
+
+						<tbody>
+							<tr th:each="c : ${clienteLocacao}">
+								<td style="font-weight: bold;" th:text="${c.id}"></td>
+								<td style="font-weight: bold;" th:text="${c.nome}"></td>
+								<td style="font-weight: bold;" th:text="${c.email}"></td>
+								<td style="font-weight: bold;" th:text="${c.foneCelular}"></td>
+							</tr>
+
+						</tbody>
+
+					</table>
+
+					<table id="customers" class="table table-hover">
+						<thead>
+							<tr>
+								<th>Código</th>
+								<th>Filme</th>
+								<th>Lançamento</th>
+								<th>Data Locação</th>
+								<th>Data prevista devolução</th>
+								<th>Valor a Pagar</th>
+								<th></th>
+
+
+
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr th:each="item : ${itens}">
+								<td style="font-weight: bold;" th:text="${item.idFilme.idFilme}"></td>
+								<td style="font-weight: bold;"
+									th:text="${item.idFilme.tituloPortugues}"></td>
+								<td style="font-weight: bold; color: red;"
+									th:text="${item.idFilme.lancamento}"></td>
+								<td style="font-weight: bold; color: red;"
+									th:text="${item.idLocacao.dataLocacao}"></td>
+								<td style="font-weight: bold; color: red;"
+									th:text="${item.dataPrevistaDevolucao}"></td>
+
+								<td style="font-weight: bold;"
+									th:text="${item.idFilme.valor.valor}"></td>
+
+								<td><a class="btn btn-success">Devolver</a></td>
+
+							</tr>
+
+
+						</tbody>
+
+
+					</table>
+
+					<table class="table table-hover">
+						<tr th:each="l: ${locacao}">
+							<td style="font-weight: bold; color: green; font-size: 20px"
+								colspan="6">Valor Total</td>
+							<td style="font-weight: bold; color: red; font-size: 20px"
+								colspan="1" th:text="${l.valor}"></td>
+						</tr>
+						<tr th:each="l: ${locacao}">
+							<td style="font-weight: bold; color: green; font-size: 20px"
+								colspan="6">Valor Pago</td>
+							<td style="font-weight: bold; color: green; font-size: 20px"
+								colspan="1" th:text="${l.valor_pago}"></td>
+						</tr>
+						<tr>
+
+							<td colspan="2">Forma de Pagamento</td>
+
+							<td colspan="5"><select style="font-weight: bold;"
+								class="form-control lg " id="formaPagamento"
+								name="formaPagamento">
+
+									<option style="font-weight: bold;"
+										th:each="p : ${formaPagamento}"
+										th:value="${p.idFormaPagamento}"
+										th:selected="${p.idFormaPagamento==3? 'selected' : ''}"
+										th:text="${p.idFormaPagamento}+' : '+${p.descricao}"></option>
+
+							</select></td>
+
+						</tr>
+
+
+
+
+						<tr>
+							<td colspan="7">
+								<div id="formaPagamentos">
+									<div id="forma_cartao" class="formaItem">
+										<div class="panel panel-default">
+											<div class="panel-heading">Dados do cartão</div>
+											<div class="panel-body">
+												<div class="row">
+
+													<div class="form-group col-sm-12 col-md-6">
+														<label class="control-label col-sm-4 text-right"
+															for="numerocartao">Numero do Cartão:</label>
+														<div class="col-sm-8">
+															<input type="text" class="form-control" id="numerocartao"
+																placeholder="Numero do cartão" name="numerocartao" />
+														</div>
+													</div>
+
+
+
+													<div class="form-group col-sm-12 col-md-6">
+														<label class="control-label col-sm-4 text-right"
+															for="dataautorizacao">Data autorização:</label>
+														<div class="col-sm-8">
+															<input type="date" class="form-control"
+																id="dataautorizacao" name="dataautorizacao" />
+														</div>
+													</div>
+
+												</div>
+												<div class="row">
+
+													<div class="form-group col-sm-12 col-md-6">
+														<label class="control-label col-sm-4 text-right"
+															for="bandeira">Bandeira:</label>
+														<div class="col-sm-8">
+															<select class="form-control lg " name="bandeira">
+																<option>Visa</option>
+																<option>Master Card</option>
+																<option>Elo</option>
+															</select>
+														</div>
+													</div>
+
+
+
+													<div class="form-group col-sm-12 col-md-6"></div>
+												</div>
+											</div>
+
+
+
+										</div>
+
+
+									</div>
+
+									<div id="forma_cheque" class="formaItem">
+										<div class="panel panel-default">
+											<div class="panel-heading">Dados do Cheque</div>
+											<div class="panel-body">
+												<div class="row">
+
+													<div class="form-group col-sm-12 col-md-6">
+														<label class="control-label col-sm-4 text-right"
+															for="numerocheque">Numero do Cheque:</label>
+														<div class="col-sm-8">
+															<input type="text" class="form-control" id="numerocheque"
+																placeholder="Numero do cartão" name="numerocheque" />
+														</div>
+													</div>
+
+
+
+													<div class="form-group col-sm-12 col-md-6">
+														<label class="control-label col-sm-4 text-right"
+															for="banco">Banco:</label>
+														<div class="col-sm-8">
+															<input type="text" class="form-control"
+																id="banco" name="banco" />
+														</div>
+													</div>
+
+												</div>
+												
+												<div class="row">
+
+													<div class="form-group col-sm-12 col-md-6">
+														<label class="control-label col-sm-4 text-right"
+															for="agencia">Agência:</label>
+														<div class="col-sm-8">
+															<input type="text" class="form-control" id="agencia"
+																placeholder="Agência" name="agencia" />
+														</div>
+													</div>
+
+
+
+													<div class="form-group col-sm-12 col-md-6">
+														<label class="control-label col-sm-4 text-right"
+															for="conta">Conta:</label>
+														<div class="col-sm-8">
+															<input type="text" class="form-control"
+																id="conta" name="conta" />
+														</div>
+													</div>
+
+												</div>
+												
+												
+											</div>
+
+
+
+										</div>
+									</div>
+
+
+
+
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+
+							<td align="right" colspan="7"><a
+								class="btn btn-danger btn-lg">Cancelar</a>
+								<button class="btn btn-primary btn-lg" type="submit">
+									Finalizar Locação</button></td>
+						</tr>
+					</table>
+
+
+				</form>
+
+			</div>
+
+		</div>
+
+
+
+
+
+
+
+
+		<script>
+			$("#formaPagamento").change(
+					function() {
+						var forma = $(this).val();
+
+						if (forma == "1") {
+							$("#formaPagamentos").removeClass().addClass(
+									"exibirFormaCartao");
+						} else if (forma == "2") {
+							$("#formaPagamentos").removeClass().addClass(
+									"exibirFormaCheque");
+						} else {
+							$("#formaPagamentos").removeClass();
+						}
+					})
+		</script>
+
+
+		<script>
+			$(function() {
+
+				$(".btn-modal").click(function() {
+					var link = $(this).attr('data-href');
+					var modal = $(this).attr('data-target');
+					$(modal).delay(50).queue(function() {
+						$(this).load(link).dequeue();
+
+					});
+				});
+
+				$(".dropdown").hover(function() {
+					$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+					$(this).toggleClass('open');
+					$('b', this).toggleClass("caret caret-up");
+				}, function() {
+					$('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+					$(this).toggleClass('open');
+					$('b', this).toggleClass("caret caret-up");
+				});
+			});
+		</script>
+</body>
+
+
+
+
+
+
+
+
+</html>

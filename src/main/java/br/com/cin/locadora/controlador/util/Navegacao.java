@@ -13,6 +13,7 @@ public final class Navegacao {
 		public static final String CADASTRAR_FORNECEDOR = "fornecedor/cadastrofornecedor";
 		public static final String LISTAGEM_FORNECEDORES = "fornecedor/list";
 		public static final String VISUALIZAR_FORNECEDOR = "fornecedor/resumo";
+		public static final String VIEW_FORNECEDOR = "fornecedor/view";
 		
 		public static final String CADASTRAR_FILME= "filme/form";
 		public static final String ALTERAR_FILME= "filme/edit";
@@ -35,5 +36,9 @@ public final class Navegacao {
 		public static final String LISTAGEM_GENERO = "genero/list";
 		
 		public static final String CADASTRAR_FORMA_PAGAMENTO = "formapagamento/form";
+		
+		public static final String ENTRAR_TELA_PAGAMENTO_LOCACAO = "pagamento/form";
+		public static final String VISUALIZAR_LOCACAO = "pagamento/resumolocacao";
+		
 		
 }

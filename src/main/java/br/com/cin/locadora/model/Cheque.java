@@ -31,7 +31,7 @@ public class Cheque implements Serializable {
     @Column(name = "id_cheque")
     private Integer idCheque;
     @Column(name = "banco")
-    private Integer banco;
+    private String banco;
     @Column(name = "agencia")
     private String agencia;
     @Column(name = "conta")
@@ -57,13 +57,7 @@ public class Cheque implements Serializable {
         this.idCheque = idCheque;
     }
 
-    public Integer getBanco() {
-        return banco;
-    }
-
-    public void setBanco(Integer banco) {
-        this.banco = banco;
-    }
+   
 
     public String getAgencia() {
         return agencia;
@@ -76,6 +70,14 @@ public class Cheque implements Serializable {
     public String getConta() {
         return conta;
     }
+    
+    public void setBanco(String banco) {
+		this.banco = banco;
+	}
+    
+    public String getBanco() {
+		return banco;
+	}
 
     public void setConta(String conta) {
         this.conta = conta;

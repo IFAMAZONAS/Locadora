@@ -57,8 +57,8 @@ public class Locacao implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private StatusLocacao statusLocacao;
     
-    @OneToMany(mappedBy = "locacao", fetch = FetchType.LAZY)
-    private List<Pagamento> pagamentoList;
+    @OneToMany(mappedBy = "locacao", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+    private List<Pagamento> pagamentoList = new ArrayList<>();
     
    
     public Locacao() {
@@ -116,6 +116,22 @@ public class Locacao implements Serializable {
     
     public StatusLocacao getStatusLocacao() {
 		return statusLocacao;
+	}
+    
+    public void setValor_pago(Double valor_pago) {
+		this.valor_pago = valor_pago;
+	}
+    
+    public Double getValor_pago() {
+		return valor_pago;
+	}
+    
+    public void setPagamentoList(List<Pagamento> pagamentoList) {
+		this.pagamentoList = pagamentoList;
+	}
+    
+    public List<Pagamento> getPagamentoList() {
+		return pagamentoList;
 	}
 
     @Override

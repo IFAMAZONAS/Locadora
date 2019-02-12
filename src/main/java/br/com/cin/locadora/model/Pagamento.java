@@ -1,8 +1,10 @@
 package br.com.cin.locadora.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -50,11 +52,11 @@ public class Pagamento implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Locacao locacao;
 
-    @OneToMany(mappedBy = "pagamento", fetch = FetchType.LAZY)
-    private List<Cheque> chequeList;
+    @OneToMany(mappedBy = "pagamento",cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    private List<Cheque> chequeList = new ArrayList<Cheque>();
     
-    @OneToMany(mappedBy = "pagamento", fetch = FetchType.LAZY)
-    private List<Cartao> cartaoList;
+    @OneToMany(mappedBy = "pagamento", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+    private List<Cartao> cartaoList = new ArrayList<Cartao>();
     
     public Pagamento() {
     }
@@ -127,6 +129,22 @@ public class Pagamento implements Serializable {
         hash += (idPagamento != null ? idPagamento.hashCode() : 0);
         return hash;
     }
+    
+    public void setCartaoList(List<Cartao> cartaoList) {
+		this.cartaoList = cartaoList;
+	}
+    
+    public List<Cartao> getCartaoList() {
+		return cartaoList;
+	}
+    
+    public void setChequeList(List<Cheque> chequeList) {
+		this.chequeList = chequeList;
+	}
+    
+    public List<Cheque> getChequeList() {
+		return chequeList;
+	}
 
     @Override
     public boolean equals(Object object) {

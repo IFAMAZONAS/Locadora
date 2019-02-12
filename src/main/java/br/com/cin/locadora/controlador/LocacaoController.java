@@ -1,4 +1,4 @@
-  package br.com.cin.locadora.controlador;
+package br.com.cin.locadora.controlador;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,15 +56,13 @@ public class LocacaoController {
 
 	List<Filme> lista = new ArrayList<>();
 	List<Filme> listaAux = new ArrayList<>();
-	
-	Cliente clienteLocacao;	
+
+	Cliente clienteLocacao;
 	LocacaoFilme locacaoFilme;
 	Locacao locacao;
-	
 
-	
 	Iterable<Locacao> locacoesAbertas;
-	
+
 	@Autowired
 	LocacaoService locacaoService;
 
@@ -82,10 +80,10 @@ public class LocacaoController {
 		this.valorTemporario = 0.0;
 		andView.addObject("valorLocacao", this.valorTemporario);
 		andView.addObject("cliente", new Cliente());
-		andView.addObject("messagensErro",this.messagensErro);
+		andView.addObject("messagensErro", this.messagensErro);
 		return andView;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET, value = "**/novaLocacao")
 	public ModelAndView novaLocacao() {
 		ModelAndView andView = new ModelAndView(Navegacao.INICIAR_LOCACAO);
@@ -96,10 +94,10 @@ public class LocacaoController {
 		this.clienteLocacao = new Cliente();
 		andView.addObject("valorLocacao", this.valorTemporario);
 		andView.addObject("cliente", new Cliente());
-		andView.addObject("messagensErro",this.messagensErro);
+		andView.addObject("messagensErro", this.messagensErro);
 		return andView;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET, value = "**/resete")
 	public ModelAndView resetar() {
 		ModelAndView andView = new ModelAndView(Navegacao.INICIAR_LOCACAO);
@@ -109,74 +107,76 @@ public class LocacaoController {
 		this.clienteLocacao = new Cliente();
 		andView.addObject("valorLocacao", this.valorTemporario);
 		andView.addObject("cliente", new Cliente());
-		andView.addObject("messagensErro",this.messagensErro);
+		andView.addObject("messagensErro", this.messagensErro);
 		this.messagensErro = new ArrayList<>();
 		return andView;
 	}
-	
+
 	@GetMapping("**/entrarpesquisa")
 	public ModelAndView entrarBusca() {
 		ModelAndView andView = new ModelAndView(Navegacao.BUSCAR_CLIENTE_LOCACAO);
 		return andView;
 	}
 
-	@RequestMapping(value="**/listarclientes", method=RequestMethod.GET)
-	public ModelAndView entrarClientes( @RequestParam("pesquisa") String nome) {
+	@RequestMapping(value = "**/listarclientes", method = RequestMethod.GET)
+	public ModelAndView entrarClientes(@RequestParam("pesquisa") String nome) {
 		ModelAndView andView = new ModelAndView(Navegacao.LISTAR_CLIENTE_LOCACAO);
 		List<Cliente> clientesPesquisa = this.clienteService.findPessoaByName(nome.toUpperCase());
-		if(nome.isEmpty()) {
+		if (nome.isEmpty()) {
 			this.msg = new ArrayList<>();
 			this.msg.add("Por favor digite um nome válido");
-			andView.addObject("msg",this.msg);
+			andView.addObject("msg", this.msg);
 			this.msg = new ArrayList<>();
 		}
-		if(clientesPesquisa.isEmpty()) {
+		if (clientesPesquisa.isEmpty()) {
 			this.msg = new ArrayList<>();
 			this.msg.add("Não foi encontrado nenhum cliente com o nome informado! Por favor digite um nome válido");
-			andView.addObject("msg",this.msg);
+			andView.addObject("msg", this.msg);
 			this.msg = new ArrayList<>();
 		}
 		andView.addObject("clientes", clientesPesquisa);
-		
+
 		return andView;
 	}
-	
+
 	// Aqui .......
-	
-	@RequestMapping(value="**/buscarlocacao", method=RequestMethod.GET)
+
+	@RequestMapping(value = "**/buscarlocacao", method = RequestMethod.GET)
 	public ModelAndView entrarBuscaLocacao() {
 		ModelAndView andView = new ModelAndView(Navegacao.BUSCAR_LOCACAO_NOVO);
-		
+
 		andView.addObject("clientes", new ArrayList<>());
-		
+
 		return andView;
 	}
-	
-	@RequestMapping(value="**/processarBuscaCliente", method=RequestMethod.POST)
+
+	@RequestMapping(value = "**/processarBuscaCliente", method = RequestMethod.POST)
 	public ModelAndView buscarClientesLocacaoPorNome(@RequestParam("pesquisa") String pesquisa) {
 		ModelAndView andView = new ModelAndView(Navegacao.BUSCAR_LOCACAO_NOVO);
 		List<Cliente> clientes = this.clienteService.findPessoaByName(pesquisa.toUpperCase());
-			
-		if(clientes.isEmpty()) {
+
+		if (clientes.isEmpty()) {
 			this.messagensErro = new ArrayList<>();
 			this.messagensErro.add("Não foi encontrado nehum cliente com o nome informado! Por favor Tente novamente");
 			andView.addObject("messagensErro", this.messagensErro);
 			this.messagensErro = new ArrayList<>();
 		}
-		
-		if(pesquisa.isEmpty()) {
+
+		if (pesquisa.isEmpty()) {
 			this.messagensErro = new ArrayList<>();
-			this.messagensErro.add("Não foi encontrado nenhum cliente com o nome informado! Por favor, digite um nome válido!");
+			this.messagensErro
+					.add("Não foi encontrado nenhum cliente com o nome informado! Por favor, digite um nome válido!");
 			andView.addObject("messagensErro", this.messagensErro);
 			this.messagensErro = new ArrayList<>();
 			andView.addObject("clientes", new ArrayList<>());
-			
+
 			return andView;
 		}
-		
+
 		andView.addObject("clientes", clientes);
 		return andView;
 	}
+
 	/***
 	 * 
 	 */
@@ -184,15 +184,14 @@ public class LocacaoController {
 	public ModelAndView visualizarClienteLocacao(@PathVariable("idcliente") Integer idCliente) {
 		ModelAndView andView = new ModelAndView(Navegacao.VIEW_LOCACAO_ABERTAS_CLIENTE);
 		this.clienteLocacao = this.clienterepository.findById(idCliente).get();
-		
-		
+
 		andView.addObject("locacoesAbertas", this.locacaoService.listarLocacoesAbertas(idCliente));
 		andView.addObject("locacosFechadas", this.locacaoService.listarLocacoesFechadas(idCliente));
 		andView.addObject("cliente", this.clienteLocacao);
 		return andView;
-		
+
 	}
-	
+
 	@GetMapping("**/buscarClienteLocacao/{idcliente}")
 	public ModelAndView buscarClienteLocacao(@PathVariable("idcliente") Integer idCliente) {
 		ModelAndView andView = new ModelAndView(Navegacao.INICIAR_LOCACAO);
@@ -200,11 +199,10 @@ public class LocacaoController {
 		andView.addObject("valorLocacao", this.valorTemporario);
 		andView.addObject("filmes", this.listaAux);
 		andView.addObject("cliente", this.clienteLocacao);
-		System.out.println("Cliente:"+this.clienteLocacao.getCpf());
+		System.out.println("Cliente:" + this.clienteLocacao.getCpf());
 		return andView;
-		
+
 	}
-	
 
 	@PostMapping("**/pesquisarcliente")
 	public ModelAndView buscarPorNome(@RequestParam("nomepesquisa") String nomepesquisa) {
@@ -246,16 +244,14 @@ public class LocacaoController {
 
 		if (!nome.isEmpty()) {
 
-			
-				this.lista = this.filmeRepository.findFilmeByName(nome.toUpperCase());
-				this.listaAux.add(this.lista.get(0));
+			this.lista = this.filmeRepository.findFilmeByName(nome.toUpperCase());
+			this.listaAux.add(this.lista.get(0));
 
-				this.valorTemporario = this.valorTemporario + lista.get(0).getValor().getValor();
+			this.valorTemporario = this.valorTemporario + lista.get(0).getValor().getValor();
 
-				andView.addObject("filmes", this.listaAux);
-				andView.addObject("valorLocacao", this.valorTemporario);
-				andView.addObject("cliente", this.clienteLocacao);
-			
+			andView.addObject("filmes", this.listaAux);
+			andView.addObject("valorLocacao", this.valorTemporario);
+			andView.addObject("cliente", this.clienteLocacao);
 
 		} else {
 			this.messagensErro.add("Por Favor, adicione o nome do filme na busca");
@@ -268,7 +264,6 @@ public class LocacaoController {
 		return andView;
 	}
 
-	
 // http://localhost:8080/suggestion?searchstr=car
 
 	/**
@@ -300,41 +295,40 @@ public class LocacaoController {
 		sw.setSuggestions(sulb);
 		return sw;
 	}
+
 	/****
 	 * 
 	 */
-	
+
 	@RequestMapping(method = RequestMethod.GET, value = "**/processar")
-	public ModelAndView processarLocacao(){
-		 ModelAndView andView = new ModelAndView(Navegacao.INICIAR_LOCACAO);
-		 
-		 if(validadeProcessar()) {
-			 this.locacao = new Locacao();
-			 Cliente cliente = this.clienterepository.findById(this.clienteLocacao.getId()).get();
-			 this.locacao.setLocacaoFilmeList(new ArrayList<LocacaoFilme>());		 
-			 this.locacao.setIdCliente(this.clienteLocacao);
-			 this.locacao.setDataLocacao(new Date());
-			 this.locacao.setValor(this.valorTemporario);
-			 this.adicionarFilmesLocasdos(listaAux);
-			 this.locacao.setStatusLocacao(this.statuLocacaoRepository.findById(1).get());
-			 this.msg = new ArrayList<>();
-			 this.msg.add("Locação realizada com sucesso!");
-			 andView.addObject("msg",this.msg);
-			 this.locacaoService.persistirLocacao(locacao);
-			 this.resetar();
-		 }else {
-			 this.messagensErro.add("Não foi possível realizar a locação");
-			 ModelAndView view = new ModelAndView(Navegacao.RESUMO_LOCACAO);
-			 andView.addObject("messagensErro", this.messagensErro);
-			 return andView;
-		 }
-		
-		 
-		 
-		 return andView;
-		 
-		 
+	public ModelAndView processarLocacao() {
+		ModelAndView andView = new ModelAndView(Navegacao.INICIAR_LOCACAO);
+
+		if (validadeProcessar()) {
+			this.locacao = new Locacao();
+			Cliente cliente = this.clienterepository.findById(this.clienteLocacao.getId()).get();
+			this.locacao.setLocacaoFilmeList(new ArrayList<LocacaoFilme>());
+			this.locacao.setIdCliente(this.clienteLocacao);
+			this.locacao.setDataLocacao(new Date());
+			this.locacao.setValor(this.valorTemporario);
+			this.adicionarFilmesLocasdos(listaAux);
+			this.locacao.setStatusLocacao(this.statuLocacaoRepository.findById(1).get());
+			this.msg = new ArrayList<>();
+			this.msg.add("Locação realizada com sucesso!");
+			andView.addObject("msg", this.msg);
+			this.locacaoService.persistirLocacao(locacao);
+			this.resetar();
+		} else {
+			this.messagensErro.add("Não foi possível realizar a locação");
+			ModelAndView view = new ModelAndView(Navegacao.RESUMO_LOCACAO);
+			andView.addObject("messagensErro", this.messagensErro);
+			return andView;
+		}
+
+		return andView;
+
 	}
+
 	/***
 	 * 
 	 * @return
@@ -342,11 +336,12 @@ public class LocacaoController {
 	private boolean validadeProcessar() {
 		boolean retorno = true;
 		try {
-			if(this.clienteLocacao.getId().toString().isEmpty()) {
+			if (this.clienteLocacao.getId().toString().isEmpty()) {
 				this.messagensErro = new ArrayList<>();
-				this.messagensErro.add("Não foi possível finalizar a locação. É obrigatório adicionar um cliente e no mpinimo um filme para finalizar a locação");
+				this.messagensErro.add(
+						"Não foi possível finalizar a locação. É obrigatório adicionar um cliente e no mpinimo um filme para finalizar a locação");
 				retorno = false;
-				
+
 			}
 		} catch (Exception e) {
 			return false;
@@ -360,74 +355,85 @@ public class LocacaoController {
 	 * @return
 	 */
 	private void adicionarFilmesLocasdos(List<Filme> filmesAdionados) {
-		List<LocacaoFilme> locacaoFilmes =  new ArrayList<LocacaoFilme>();
-	
-		
-		for(Filme filme : filmesAdionados) {
+		List<LocacaoFilme> locacaoFilmes = new ArrayList<LocacaoFilme>();
+
+		for (Filme filme : filmesAdionados) {
 			LocacaoFilme locacaoFilme = new LocacaoFilme();
-			
+
 			Calendar date = new GregorianCalendar();
-			date.add(Calendar.DATE, LocacaoUtil.DIAS_DEVOLUCAO_NORMAL);
+
+			if (filme.getLancamento().equalsIgnoreCase("SIM")) {
+
+				date.add(Calendar.DATE, LocacaoUtil.DIAS_DEVOLUCAO_LANCAMENTO);
+			} else {
+
+				date.add(Calendar.DATE, LocacaoUtil.DIAS_DEVOLUCAO_NORMAL);
+			}
+
 			locacaoFilme.setDataPrevistaDevolucao(date.getTime());
 			locacaoFilme.setIdFilme(filme);
 			locacaoFilme.setIdLocacao(this.locacao);
 			locacaoFilme.setValor(filme.getValor().getValor());
 			this.locacao.getLocacaoFilmeList().add(locacaoFilme);
-			
-		}	
+
+		}
 	}
-	
+
 	// 2
-	
+
 	private List<LocacaoFilme> getFilmesLocasdos(List<Filme> filmesAdionados) {
-		List<LocacaoFilme> locacaoFilmes =  new ArrayList<LocacaoFilme>();
-		
+		List<LocacaoFilme> locacaoFilmes = new ArrayList<LocacaoFilme>();
+
 		this.locacao = new Locacao();
-	
+
 		this.locacao.setDataLocacao(new Date());
-		
-		for(Filme filme : filmesAdionados) {
+
+		for (Filme filme : filmesAdionados) {
 			LocacaoFilme locacaoFilme = new LocacaoFilme();
-			
 			Calendar date = new GregorianCalendar();
-			date.add(Calendar.DATE, LocacaoUtil.DIAS_DEVOLUCAO_NORMAL);
+			if (filme.getLancamento().equalsIgnoreCase("SIM")) {
+
+				date.add(Calendar.DATE, LocacaoUtil.DIAS_DEVOLUCAO_LANCAMENTO);
+			} else {
+
+				date.add(Calendar.DATE, LocacaoUtil.DIAS_DEVOLUCAO_NORMAL);
+			}
+
 			locacaoFilme.setDataPrevistaDevolucao(date.getTime());
 			locacaoFilme.setIdFilme(filme);
 			locacaoFilme.setIdLocacao(this.locacao);
 			locacaoFilme.setValor(filme.getValor().getValor());
 			this.locacao.getLocacaoFilmeList().add(locacaoFilme);
-			
-		}	
-		
+
+		}
+
 		return locacao.getLocacaoFilmeList();
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET, value = "**/resumo")
 	public ModelAndView resumoLocacao() {
-		
+
 		try {
-			if(this.clienteLocacao.getNome().isEmpty() != this.listaAux.isEmpty()) {
+			if (this.clienteLocacao.getNome().isEmpty() != this.listaAux.isEmpty()) {
 				throw new NullPointerException();
-			}else {
+			} else {
 				ModelAndView andView = new ModelAndView(Navegacao.RESUMO_LOCACAO);
 				andView.addObject("cliente", this.clienteLocacao);
 				andView.addObject("valorLocacao", this.valorTemporario);
-				//andView.addObject("itens",this.listaAux);
-				andView.addObject("itens",getFilmesLocasdos(this.listaAux));
+				// andView.addObject("itens",this.listaAux);
+				andView.addObject("itens", getFilmesLocasdos(this.listaAux));
 				return andView;
 			}
 		} catch (NullPointerException e) {
 			ModelAndView andView = new ModelAndView(Navegacao.RESUMO_LOCACAO_ERROR);
 			this.messagensErro = new ArrayList<>();
-			this.messagensErro.add("Não foi possível realizar a operação. Para processar uma locação é necessário adionar  cliente  e pelo menos um filme à mesma!");
+			this.messagensErro.add(
+					"Não foi possível realizar a operação. Para processar uma locação é necessário adionar  cliente  e pelo menos um filme à mesma!");
 			andView.addObject("messagensErro", this.messagensErro);
 			this.messagensErro = new ArrayList<>();
 			return andView;
 		}
-		
-		
-		
-		
+
 	}
 
 }
