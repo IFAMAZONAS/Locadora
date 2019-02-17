@@ -21,7 +21,15 @@ public class TipoMidiaService {
 	 * @param idTipoMidia
 	 * @return
 	 */
+	public void salvarTipoMidia(TipoMidia tipoMidia) {
+		midiaRepository.save(tipoMidia);
+	}
+	
 	public TipoMidia buscarPorId(Integer idTipoMidia) {		
 		return this.midiaRepository.findById(idTipoMidia).get();
+	}
+
+	public void atualizar(TipoMidia tipoMidia) {
+		this.midiaRepository.save(tipoMidia);
 	}
 }

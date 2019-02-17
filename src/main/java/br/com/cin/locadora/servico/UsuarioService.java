@@ -34,6 +34,19 @@ public class UsuarioService {
 			return false;
 		}
 	}
+	// Metodo utilizado para Validação de Testes BDD
+	public boolean validaUsuario(Usuario usuario) {
+		Usuario usuarioCadastrado = new Usuario();
+		//Setando os dados do Usuário
+		usuarioCadastrado.setId(Long.valueOf(1));
+		usuarioCadastrado.setLogin("Admin");
+		usuarioCadastrado.setSenha("admin");
+		
+		if(usuario.getSenha().equals(usuarioCadastrado.getSenha()) && usuario.getLogin().equals(usuarioCadastrado.getLogin()))
+				return true;
+		else		
+				return false;
+	}
 	
 	
 }

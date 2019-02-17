@@ -69,20 +69,23 @@ public class FornecedorController {
 		Iterable<Fornecedor> fornecedores = this.repository.findAll();
 		
 		
-		if(validadeFornecedor(cnpj, razaosocial, telefone, endereco)) {
+		if(validadeFornecedor(cnpj, razaosocial, telefone, endereco,id)) {
 			this.msg = new ArrayList<String>();
 			try {
 				int idFornecedor = Integer.valueOf(id);
 				fornecedor.setId(idFornecedor);
+				
 			} catch (Exception e) {
-				// TODO: handle exception
+				andView = new ModelAndView(Navegacao.CADASTRAR_FORNECEDOR);
+				fornecedores = this.repository.findAll();
+				andView.addObject("fornecedores",fornecedores);
+				andView.addObject("fornecedor", new Fornecedor());
+				Page<Fornecedor>page = this.fornecedorRepository.findAll(pageable);
+				andView.addObject("page", page);
+				return andView;
 			}
 			
-			fornecedor.setCnpj(cnpj);
-			fornecedor.setRazaosocial(razaosocial);
-			fornecedor.setEndereco(endereco);
-			fornecedor.setTelefone(telefone);
-			fornecedor.setPessoacontato(pessoacontato);
+			
 			
 				
 			
@@ -100,12 +103,15 @@ public class FornecedorController {
 			andView.addObject("fornecedor", new Fornecedor());
 			andView.addObject("messagensErro", this.msgErros);
 			
+			Page<Fornecedor>page = this.fornecedorRepository.findAll(pageable);
+			andView.addObject("page", page);
+			
 			return andView;
 		}
 
 	}
 	
-	private boolean validadeFornecedor(String cnpj, String razaosocial, String telefone, String endereco) {
+	private boolean validadeFornecedor(String cnpj, String razaosocial, String telefone, String endereco, String id) {
 		boolean retorno = true;
 		this.msgErros = new ArrayList<>();
 		if(cnpj.isEmpty()) {
@@ -126,7 +132,7 @@ public class FornecedorController {
 		
 		Iterable<Fornecedor> forn = this.repository.findCNPJ(cnpj);
 		for(Fornecedor f: forn) {
-			if( f != null){
+			if( f != null && id==null){
 				this.msgErros.add("Este número de CNPJ já foi cadastrado!");
 			 }
 		}

@@ -16,95 +16,22 @@
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<div class="modal-header">
-				Carregando Dados....
-			</div>
+			<div class="modal-header">Carregando Dados....</div>
 		</div>
 	</div>
-	
+
 </div>
 
 
 <div class="container">
 	<div class="row" style="border-bottom-color: black;">
-		<img src="../img/imperial.png" class="img-responsive" alt="...">
+
 		<h2>SISTEMA DE LOCADORA</h2>
 		<div th:insert="~{fragments/menupublic:: menupublic}">&copy;
 			2017 The Static Templates</div>
-			
-			
-
-
-		<div class="container" align="center" style="margin-top: 50px;">
-
-			<div align="center">
-				<br />
-				<table class="table table-hover">
-
-					<thead class="thead-dark">
-						<tr>
-							<th>Identificador</th>
-							<th>Código</th>
-							<th>Titulo Nacional</th>
-							<th>Direção</th>
-							<th>Duração</th>
-							<th>Sinopse</th>
-							<th></th>
-							<th></th>
-
-						</tr>
-					</thead>
-
-					<tr th:each="f : ${page.content}">
-						<td th:text="${f.idFilme}"></td>
-						<td th:text="${f.numeroSerie}"></td>
-						<td th:text="${f.tituloPortugues}"></td>
-						<td th:text="${f.direcao}"></td>
-						<td th:text="${f.duracao}"></td>
-						<td th:text="${f.sinopse}"></td>
 
 
 
-
-						<td>
-							<button
-								th:data-href="@{/filme/modal/{idFilme}(idFilme=${f.idFilme})}"
-								type="button" class="btn-modal btn-success" data-toggle="modal"
-								data-target="#exampleModal" data-whatever="@getbootstrap">Ver Detalhes</button>
-						</td>
-
-
-					</tr>
-				</table>
-
-				<div class=" pagination">
-					<ul class="pagination" style="background-color: white;">
-						<li class="page-item"><span th:if="${page.hasPrevious()}"
-							class="page-item"> <a
-								th:href="@{/(page=${page.number-1},size=${page.size})}"><span
-									class="glyphicon glyphicon-backward"></span></a>
-						</span></li>
-
-						<li class="page-item"><th:block
-								th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
-								<span th:if="${page.number == i}" class="selected ">[[${i}+1]]</span>
-								<span th:unless="${page.number == i}"> <a
-									class="page-item" th:href="@{/(page=${i},size=${page.size})}">[[${i}+1]]</a>
-								</span>
-							</th:block></li>
-
-						<li class="page-item"><span th:if="${page.hasNext()}"
-							class="page-item"> <a
-								th:href="@{/(page=${page.number+1},size=${page.size})}"><span
-									class="glyphicon glyphicon-forward"></a>
-						</span></li>
-					</ul>
-
-
-
-				</div>
-			</div>
-		</div>
 
 
 
@@ -119,9 +46,9 @@
 		$(".btn-modal").click(function() {
 			var link = $(this).attr('data-href');
 			var modal = $(this).attr('data-target');
-			$(modal).delay(50).queue(function(){
+			$(modal).delay(50).queue(function() {
 				$(this).load(link).dequeue();
-				
+
 			});
 		});
 

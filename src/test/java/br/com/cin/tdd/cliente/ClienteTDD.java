@@ -1,23 +1,17 @@
 package br.com.cin.tdd.cliente;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import br.cin.locadora.configuracao.AppConfig;
-import br.com.cin.locadora.controlador.*;
 import br.com.cin.locadora.model.Cliente;
 import br.com.cin.locadora.model.Dependente;
+import br.com.cin.locadora.model.Usuario;
 import br.com.cin.locadora.servico.ClienteService;
 import br.com.cin.locadora.servico.DependenteService;
 import br.com.cin.locadora.servico.UsuarioService;
@@ -31,16 +25,16 @@ public class ClienteTDD {
 		
 		DependenteService dependenteService = new DependenteService();
 		/*****
-		 * Teste para valida
+		 * Teste para validar ao Adicionar mais 3 Dependentes
 		 */
-		@Test
+		/*@Test
 		public void cadastroCliente() {
 				Cliente novocCliente = new Cliente();
-				novocCliente.setNome("jjjj");
+				novocCliente.setNome("Cliente_1");
 				boolean esperado = false;
 				
 				Assert.assertEquals(clienteService.salvarCliente(novocCliente),esperado);
-		}
+		}*/
 		/****
 		 * 
 		 */
@@ -70,12 +64,37 @@ public class ClienteTDD {
 			 d4.setNome("Dependente4");
 			 
 			 boolean esperado = false;
-			
 			 
 			 Assert.assertEquals(this.dependenteService.cadastro(d4), esperado);
-			 
 			
 		}
 		
+		@Test
+		public void desativaClienteDependentes() {
+			//Desativou retorna =True, senao False
+			boolean esperado = true;
+			 
+			Cliente clienteDesativa = new Cliente();
+			
+		    clienteDesativa.setId(1);
+			
+			clienteDesativa.setDependentes(new ArrayList<Dependente>());
+			 
+			 Dependente d1 = new Dependente();
+			 Dependente d2 = new Dependente();
+			 Dependente d3 = new Dependente();
+			 
+			 d1.setIdCliente(clienteDesativa);
+			 d2.setIdCliente(clienteDesativa);
+			 d3.setIdCliente(clienteDesativa);
+			 
+			 clienteDesativa.getDependentes().add(d1);
+			 clienteDesativa.getDependentes().add(d2);
+			 clienteDesativa.getDependentes().add(d3);
+			 
+			 
+			 assertEquals(this.clienteService.desativarCliente(clienteDesativa), esperado);
+			
+		}
 	  
 }

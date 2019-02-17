@@ -11,6 +11,43 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+#customers {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#customers td, #customers th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+#customers tr:nth-child(even) {
+	background-color: #e0e6e1;
+}
+
+#customers tr:hover {
+	background-color: #ddd;
+}
+
+#customers th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #909a91;
+	color: white;
+}
+
+.formaItem {
+	display: none;
+}
+
+.exibirFormaCheque #forma_cheque, .exibirFormaCartao #forma_cartao {
+	display: block;
+}
+</style>
 </head>
 
 
@@ -28,53 +65,42 @@
 				</span>
 			</div>
 			<br />
-			<div class="with panel-primary">
-				<div class="panel-heading">Dados do usuário</div>
-				<div class="panel-body">
-					<table class="table table-hover">
-						<thead>
-							<th>Código</th>
-							<th>Nome</th>
-							<th>Login</th>
+			<h2 align="left">Dados do Usuário</h2>
+			<table class="table table-hover">
+				
+				<thead>
+					<th>Código</th>
+					<th>Nome</th>
+					<th>Login</th>
+				</thead>
+	
+				<tbody>
+					<tr th:each="u : ${usuario}">
+						<td th:text="${u.id}"></td>
+						<td th:text="${u.nome}"></td>
+						<td th:text="${u.login}"></td>
 
-						</thead>
+					</tr>
+				</tbody>
+			</table>
 
-						<tbody>
-							<tr th:each="u : ${usuario}">
-								<td th:text="${u.id}"></td>
-								<td th:text="${u.nome}"></td>
-								<td th:text="${u.login}"></td>
-
-							</tr>
-						</tbody>
-					</table>
-				</div>
-
-			</div>
 
 		</div>
 
-		<div class="panel-group" style="width: 100%" align="left">
+		<div class="with panel-success">
 
-			<div class="with panel-danger">
-				<div class="panel-heading">Permissões Disponíveis</div>
-				<div class="panel-body"></div>
+			<div id="listaDeConvidados" style="width: 100%">
 				<table class="table table-hover">
 					<thead>
 						<tr>
-
-							<th>Permissão</th>
-							<th>Descrição</th>
-							<th>Ação</th>
-
+							<th>Permissões associadas ao usuário</th>
+							<th></th>
 						</tr>
 					</thead>
-					<tr th:each="r: ${allRoles}">
-						<td><span th:text="${r.nomeRole}"></span></td>
-						<td><span th:text="${r.descricao}"></span></td>
-						<td><a
-							th:href="@{/usuario/adicionarpermissao(idpermissao=${r.id},idusuario=${usuario.id})}"><span
-								class="glyphicon glyphicon-plus-sign"></span></a></td>
+					<tr th:each="p: ${rolesUsuario}">
+						<td><span th:text="${p.nomeRole}"></span></td>
+						<td><a class="btn btn-danger"
+							th:href="@{/usuario/removerpermissao(idpermissao=${p.id},idusuario=${usuario.id})}">Remover</span></a></td>
 					</tr>
 
 
@@ -84,58 +110,53 @@
 
 		</div>
 
-		<hr />
-		<div class="with panel-success">
-			<div class="panel-heading">
-				Permissões do Usuário <span th:text="${usuario.nome}"></span>
-			</div>
-			<div class="panel-body">
-				<div id="listaDeConvidados" style="width: 100%">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>Permissão</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tr th:each="p: ${rolesUsuario}">
-							<td><span th:text="${p.nomeRole}"></span></td>
-							<td><a
-								th:href="@{/usuario/removerpermissao(idpermissao=${p.id},idusuario=${usuario.id})}"><span
-									class="glyphicon glyphicon-minus-sign"></span></a></td>
-						</tr>
+		<div class="panel-group" style="width: 100%" align="left">
+
+
+			<table id="customers">
+				<thead>
+					<tr>
+
+						<th>Permissão</th>
+						<th>Descrição</th>
+						<th>Ação</th>
+
+					</tr>
+				</thead>
+				<tr th:each="r: ${allRoles}">
+					<td><span th:text="${r.nomeRole}"></span></td>
+					<td><span th:text="${r.descricao}"></span></td>
+					<td><a class="btn btn-success"
+						th:href="@{/usuario/adicionarpermissao(idpermissao=${r.id},idusuario=${usuario.id})}">Adicionar</a></td>
+				</tr>
 
 
 
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-
-	<
-
-
-	</div>
+			</table>
 
 
 
 
-	<script>
-		$(function() {
-			$(".dropdown").hover(function() {
-				$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
-				$(this).toggleClass('open');
-				$('b', this).toggleClass("caret caret-up");
-			}, function() {
-				$('.dropdown-menu', this).stop(true, true).fadeOut("fast");
-				$(this).toggleClass('open');
-				$('b', this).toggleClass("caret caret-up");
-			});
-		});
-	</script>
+
+
+
+			<script>
+				$(function() {
+					$(".dropdown").hover(
+							function() {
+								$('.dropdown-menu', this).stop(true, true)
+										.fadeIn("fast");
+								$(this).toggleClass('open');
+								$('b', this).toggleClass("caret caret-up");
+							},
+							function() {
+								$('.dropdown-menu', this).stop(true, true)
+										.fadeOut("fast");
+								$(this).toggleClass('open');
+								$('b', this).toggleClass("caret caret-up");
+							});
+				});
+			</script>
 </body>
 
 

@@ -15,18 +15,20 @@
 		<h2>SISTEMA DE LOCADORA</h2>
 		<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The Static
 			Templates</div>
-		<br/>
-			<div style="text-align: left;" th:each="m : ${msg}">
+		<br />
+		<div style="text-align: left;" th:each="m : ${msg}">
 
-				<span class="row" style="color: green; font-size: 16; font-weight: bold;"  th:text="${m}">
-				</span>
-			</div>
-			<div style="text-align: left;" th:each="m : ${messagensErro}">
-				
-				<span class="row" style="color: red; font-size: 16; font-weight: bold"  th:text="${m}">
-				</span>
-			</div>
-			<hr/>
+			<span class="row"
+				style="color: green; font-size: 16; font-weight: bold;"
+				th:text="${m}"> </span>
+		</div>
+		<div style="text-align: left;" th:each="m : ${messagensErro}">
+
+			<span class="row"
+				style="color: red; font-size: 16; font-weight: bold" th:text="${m}">
+			</span>
+		</div>
+		<hr />
 
 		<div class="panel-group" style="width: 80%" align="left">
 
@@ -68,10 +70,11 @@
 								<div class="form-group form-group form-group col-sm-12 col-md-6">
 									<label class="control-label col-sm-4 text-right" for="funcao">Função:</label>
 									<div class="col-sm-8">
-										<select class="form-control" id="funcao" name ="funcao">
+										<select class="form-control" id="funcao" name="funcao">
 											<option value="funcao.idFuncao">Selecione a função</option>
-											<option th:each="funcao : ${funcoes}" th:value="${funcao.idFuncao}"
-											th:text="${funcao.idFuncao}+' : '+${funcao.descricao}"></option>
+											<option th:each="funcao : ${funcoes}"
+												th:value="${funcao.idFuncao}"
+												th:text="${funcao.idFuncao}+' : '+${funcao.descricao}"></option>
 										</select>
 									</div>
 
@@ -81,11 +84,17 @@
 							</div>
 
 
-							<hr />
-							<button type="submit" class="btn btn-primary">Salvar</button>
-							<button class="waves-effect waves-light btn"
-								onclick="document.getElementById('salvarusuario').reset();">Novo</button>
-							<span><a class="btn btn-primary" href="/">Sair</a></span>
+							<div>
+								<table class="table table-hover">
+									<tr align="right">
+										<td style="background-color: white;">
+											<button type="submit" class="btn btn-primary btn-lg">Salvar</button>
+											
+										</td>
+									</tr>
+								</table>
+							</div>
+
 
 
 
@@ -103,54 +112,72 @@
 
 	</div>
 
-	<div>
-		<div class="row">
-			<form action="pesquisarusuario" method="post" class="col s12">
-				<div class="row">
-					<div class="input-field col s12">
-						<label for="usuariopesquisa" class="active">Pesquisar
-							Usuario:</label> <input name="usuariopesquisa" id="usuariopesquisa" /> <input
-							class="btn btn-primary" type="submit" value="Buscar" />
+	<div class="row">
+		<form>
+			<div class="row">
 
+				<div class="form-group col-sm-12 col-md-12">
+					<label class="control-label col-sm-2 text-right" for="endereco">Pesquise
+						pelo usuários</label>
+					<div class="col-sm-10">
+						<input class="form-control" id="myInput" type="text"
+							placeholder="Search..">
 					</div>
 				</div>
-			</form>
-		</div>
+			</div>
+		</form>
+
 	</div>
 
 
-
 </div>
 
 
 
-<div  width="80%">
-	<table  class="table table-hover">
-	<thead>
-		<tr>
-			<th>Usuário</th>
-			<th>Função</th>
+<div width="80%">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Usuário</th>
+				<th>Função</th>
 
-			<th></th>
-			<th></th>
-		</tr>
-	</thead>
-	<tr th:each="u : ${usuarios}">
-		<td th:text="${u.login}"></td>
-		<td  th:text="${u.idFuncao.descricao}"></td>
-		<td > <a
-			th:href="@{/usuario/cadastropermissoes/{idusuario}(idusuario=${u.id})}"> <span class="glyphicon glyphicon-plus-sign"></span>
-				
-		</a></td>
-		
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody id="tableUsuarios">
+			<tr th:each="u : ${usuarios}">
+				<td th:text="${u.login}"></td>
+				<td th:text="${u.idFuncao.descricao}"></td>
+				<td align="right"><a class="btn btn-success"
+					th:href="@{/usuario/cadastropermissoes/{idusuario}(idusuario=${u.id})}">
+						Gerenciar Permissões </a></td>
 
 
-	</tr>
-</table>
+
+			</tr>
+		</tbody>
+
+	</table>
 </div>
 
 
-
+<script>
+	$(document).ready(
+			function() {
+				$("#myInput").on(
+						"keyup",
+						function() {
+							var value = $(this).val().toLowerCase();
+							$("#tableUsuarios tr").filter(
+									function() {
+										$(this).toggle(
+												$(this).text().toLowerCase()
+														.indexOf(value) > -1)
+									});
+						});
+			});
+</script>
 
 
 

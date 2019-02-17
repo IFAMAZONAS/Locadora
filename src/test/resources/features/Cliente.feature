@@ -5,6 +5,6 @@ Funcionalidade: Cliente com Nome em branco
 
 Cenario: Cadastrar Clientes-TC-01-Nome em branco
 					Dado o nome do cliente em branco
-	
+				
 	
 	

@@ -30,6 +30,7 @@ import br.com.cin.locadora.model.repository.FuncaoRepository;
 import br.com.cin.locadora.model.repository.RoleRepository;
 import br.com.cin.locadora.model.repository.UsuarioRepository;
 import br.com.cin.locadora.servico.ClienteService;
+import cucumber.api.java.lu.an;
 
 @Controller
 @RequestMapping(value="usuario")
@@ -72,8 +73,10 @@ public class UsuarioController {
 		public ModelAndView forme() {
 			ModelAndView andView = new ModelAndView(Navegacao.CADASTRO_USUARIO);
 			List<Cliente> clientes =  (List<Cliente>) this.clienteService.listarTodos();
-			List<Usuario> usuarios = new ArrayList<Usuario>();
+			Iterable<Usuario> usuarios = new ArrayList<Usuario>();
 			this.funcoes = this.listarFuncoes();
+			usuarios = this.usuarioRepository.findAll();
+			andView.addObject("usuarios", usuarios);
 			andView.addObject("roles", rolesUsuario);
 			andView.addObject("funcoes", funcoes);
 			return andView;
@@ -116,6 +119,7 @@ public class UsuarioController {
 				this.funcoes = this.listarFuncoes();
 				andView.addObject("roles", rolesUsuario);
 				andView.addObject("funcoes", funcoes);
+				andView.addObject("usuarios", this.usuarioRepository.findAll());
 				
 				return andView;
 			}else {
@@ -124,6 +128,7 @@ public class UsuarioController {
 				andView.addObject("messagensErro",this.msgErros);
 				this.funcoes = this.listarFuncoes();
 				andView.addObject("funcoes", funcoes);
+				andView.addObject("usuarios", this.usuarioRepository.findAll());
 				this.msg = new ArrayList<String>();
 				return andView;
 			}

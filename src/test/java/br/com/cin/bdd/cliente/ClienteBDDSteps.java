@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import br.com.cin.locadora.model.Cliente;
 import br.com.cin.locadora.servico.ClienteService;
 import cucumber.api.java.pt.Dado;
+import cucumber.api.java.pt.Então;
 
 
 public class ClienteBDDSteps {
@@ -24,5 +25,13 @@ public class ClienteBDDSteps {
 		boolean esperado = false;		
 		Assert.assertEquals(clienteService.salvarCliente(novocCliente),esperado);		
 	}
-
+	@Então("^eu devo enviar uma menssagem de Campo em Branco$")
+	public void eu_devo_enviar_uma_menssagem_de_Campo_em_Branco() throws Throwable{
+	    // Write code here that turns the phrase above into concrete actions
+		Cliente novocCliente = new Cliente();
+		novocCliente.setNome("fff");
+		boolean esperado = false;		
+		Assert.assertEquals("Campo em branco",clienteService.salvarCliente2(novocCliente),esperado);
+	    
+	}
 }

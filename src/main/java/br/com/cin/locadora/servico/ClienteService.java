@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.cin.locadora.model.Cliente;
 import br.com.cin.locadora.model.Dependente;
+import br.com.cin.locadora.model.StatusCliente;
 import br.com.cin.locadora.model.repository.ClienteRepository;
 import br.com.cin.locadora.model.repository.DependenteRepository;
 import br.com.cin.locadora.model.repository.StatusClienteRepository;
@@ -41,10 +42,20 @@ public class ClienteService {
 			}else {
 				clienteRepository.save(cliente);
 				return true;
-			}
-			
-			
-			
+			}			
+		}
+		
+		/***
+		 * 
+		 * @param cliente
+		 */
+		public boolean salvarCliente2(Cliente cliente) {
+			if(cliente.getNome().equals("")) {
+				return true;
+			}else {
+				//clienteRepository.save(cliente);
+				return false;
+			}			
 		}
 		
 		/***
@@ -81,7 +92,7 @@ public class ClienteService {
 		public boolean desativarCliente(Cliente cliente) {			
 			boolean retorno = false;
 			
-			if(!(cliente.getId()==null)) {
+			if(!(cliente==null)) {
 				List<Dependente> depedeList = cliente.getDependentes();
 				
 				if(!depedeList.isEmpty()) {
@@ -89,19 +100,19 @@ public class ClienteService {
 						dependente.setAtivo(Boolean.FALSE);
 						retorno = Boolean.TRUE;
 					}
-				}
+				}				
+				//cliente.setStatus(this.statusClienteRepository.findById(INATIVO).get());
+				StatusCliente statuscli = new StatusCliente();
+				statuscli.setIdStatus(INATIVO);
+				statuscli.setDescricao("INATIVO");
+				cliente.setStatus(statuscli);
 				
-				cliente.setStatus(this.statusClienteRepository.findById(INATIVO).get());
-				
-				retorno = Boolean.TRUE;
-				
-			}
-			
-			
-			return retorno;
-			
-			
+				retorno = Boolean.TRUE;			
+			}			
+			return retorno;			
 		}
+		
+		
 		
 		/***
 		 * 
@@ -136,7 +147,7 @@ public class ClienteService {
 			List<Cliente> clintesAtivos = new ArrayList<Cliente>();
 			
 			for(Cliente cliente : this.clienteRepository.findPessoaByNameALL(nome)) {
-				if(cliente.getStatus().getIdStatus()==1) {
+				if(cliente.getStatus().getIdStatus()==ATIVO) {
 					clintesAtivos.add(cliente);
 				}
 			}
@@ -153,5 +164,28 @@ public class ClienteService {
 					this.dependenteRepository.save(dependente);
 				}
 			}
+		}
+		/****
+		 * 
+		 * @param dependentes
+		 */
+		public void reativarDepedentes(List<Dependente> dependentes) {
+			if(!dependentes.isEmpty()) {
+				for (Dependente dependente : dependentes) {
+					dependente.setAtivo(true);
+					this.dependenteRepository.save(dependente);
+				}
+			}
+		}
+
+		public List<Cliente> listarClientesInativos() {
+			 List<Cliente> listaTodos = (List<Cliente>) this.clienteRepository.findAll();
+			 List<Cliente> ativos = new ArrayList<>();
+			 for(Cliente cliente : listaTodos) {
+				  if(cliente.getStatus().getIdStatus()==INATIVO) {
+					  ativos.add(cliente);
+				  }
+			 }
+			return ativos;
 		}
 }

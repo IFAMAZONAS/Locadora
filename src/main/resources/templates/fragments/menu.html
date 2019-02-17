@@ -16,7 +16,16 @@
 	<nav class="navbar navbar-inverse" style="" th:fragment="menu">
 
 		<div class="container-fluid">
-			
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#myNavbar">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+
+
+
+			</div>
 
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -30,18 +39,22 @@
 				</div>
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="/">Locadora Imperial</a></li>
-						<li class="dropdown"><a class="dropdown-toggle"
+						<li style="font-weight: bold;" class="active"><a href="/inicio">Locadora Imperial</a></li>
+						<li style="font-weight: bold;" class="dropdown"><a class="dropdown-toggle"
 							data-toggle="dropdown" href="#">Cadastro <span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="/cliente/cadastrocliente">Clientes</a></li>
+								<li><a style="font-weight: bold;" href="/cliente/listarclientes">Cadastro de Clientes</a></li>
+								<li><a style="font-weight: bold;" href="/cliente/entrarReativarCliente">Reativar  Cliente</a></li>
+								
 								<li role="separator" class="divider"></li>
-								<li><a href="/fornecedor/cadastrofornecedor">Fornecedor</a></li>
-								<li role="separator" class="divider"></li>
-								<li><a href="/usuario/cadastrousuario">Usuários</a></li>
-								<li role="separator" class="divider"></li>
-								<li><a href="/filme/cadastrofilme">Filmes</a></li>
-								<li role="separator" class="divider"></li>
+								<li><a style="font-weight: bold;" href="/fornecedor/cadastrofornecedor">Fornecedor</a></li>
+								<li style="font-weight: bold;" role="separator" class="divider"></li>
+								<li><a style="font-weight: bold;" href="/usuario/cadastrousuario">Usuários</a></li>
+								<li style="font-weight: bold;" role="separator" class="divider"></li>
+								<li><a style="font-weight: bold;" href="/filme/cadastrofilme">Filmes</a></li>
+
+						
+
 
 
 							</ul></li>
@@ -65,8 +78,13 @@
 								<li role="separator" class="divider"></li>
 								<li><a href="/formapagamento/cadastroformapagamento">Forma
 										de Pagamento</a></li>
+								<li role="separator" class="divider"></li>
 
+
+								<li><a href="/tipomidia/cadastrotipomidia">Tipo de
+										Midia</a></li>
 							</ul></li>
+
 
 
 					</ul>
@@ -74,10 +92,9 @@
 
 
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="/"><span class="glyphicon glyphicon-user"></span>
+						<li><a href="/logout"><span class="glyphicon glyphicon-user"></span>
 								Sair do Sistema</a></li>
-						<li><a href="/login"><span
-								class="glyphicon glyphicon-user"></span> Entrar</a></li>
+						
 
 					</ul>
 
@@ -87,4 +104,3 @@
 </body>
 
 </html>
-

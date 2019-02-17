@@ -13,6 +13,44 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <head>
 <style>
+
+
+#customers {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#customers td, #customers th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+#customers tr:nth-child(even) {
+	background-color: #e0e6e1;
+}
+
+#customers tr:hover {
+	background-color: #ddd;
+}
+
+#customers th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #909a91;
+	color: white;
+}
+
+.formaItem {
+	display: none;
+}
+
+.exibirFormaCheque #forma_cheque, .exibirFormaCartao #forma_cartao {
+	display: block;
+}
+
+
 .btn-circle {
 	width: 30px;
 	height: 30px;
@@ -55,9 +93,9 @@
 
 		<br />
 		 
-		<table class="table table-hover">
+		<table id="customers">
 
-			<thead class="thead-dark">
+			<thead>
 				<tr>
 					<th>Identificador</th>
 					<th>Código</th>

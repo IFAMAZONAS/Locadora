@@ -1,9 +1,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-
+ 
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
+<link rel="stylesheet" th:href="@{../tableStyle/estilo.css}" type="text/css"/>
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -245,7 +247,7 @@
 		</div>
 
 
-		<table class="table table-striped table-bordered table-list">
+		<table id="customers">
 
 			<thead class="fa fa-cog">
 				<tr>

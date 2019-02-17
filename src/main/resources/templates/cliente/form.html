@@ -17,17 +17,16 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 
 
-<div class="container" style="width: 90%; " align="center">
+<div class="container" style="width: 90%;" align="center">
 	<div>
-		<h2   align="center">SISTEMA DE LOCADORA</h2>
+		<h2 align="center">SISTEMA DE LOCADORA</h2>
 		<div th:insert="~{fragments/menu:: menu}">&copy; 2017 The Static
 			Templates</div>
 
 		<br />
 
 		<div>
-			<div  style="text-align: left;"
-				th:each="m : ${msg}">
+			<div style="text-align: left;" th:each="m : ${msg}">
 
 				<span class="row"
 					style="color: green; font-size: 16; font-weight: bold;"
@@ -37,9 +36,8 @@
 
 		<br />
 
-		<div >
-			<div  style="text-align: left;"
-				th:each="m : ${messagensErro}">
+		<div>
+			<div style="text-align: left;" th:each="m : ${messagensErro}">
 
 				<span class="row"
 					style="color: red; font-size: 16; font-weight: bold" th:text="${m}">
@@ -171,10 +169,18 @@
 
 
 							<div>
-								<button type="submit" class="btn btn-primary">Salvar</button>
-								<a href="listarclientes" class="btn btn-primary">Listar
-									Clientes </a>
+								<table class="table table-hover">
 
+									<tr colspan="2">
+										<td  align="right">
+											<button type="submit" class="btn btn-success btn-lg">Salvar</button>
+											<a href="listarclientes" class="btn btn-info btn-lg">Listar
+												Clientes </a>
+										</td>
+									</tr>
+
+
+								</table>
 							</div>
 
 						</form>
@@ -191,53 +197,10 @@
 
 	</div>
 
-	<div class="row">
-		<form action="pesquisarcliente" method="post" class="col s12">
-			<div class="row">
-				<div class="input-field col s12">
-					<label for="nomepesquisa" class="active">Pesquia por nome:</label>
-					<input name="nomepesquisa" id="nomepesquisa" /> <input
-						class="btn btn-primary" type="submit" value="Buscar" />
 
-				</div>
-			</div>
-		</form>
-	</div>
 
 
 </div>
-
-<table class="table table-hover">
-	<thead>
-		<tr>
-
-			<th>Nome</th>
-			<th>E-mail</th>
-			<th>Cpf</th>
-			<th>Telefone Celular</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tr th:each="c : ${clientes}">
-		<td><a
-			th:href="@{/cliente/dependentes/{idcliente}(idcliente=${c.id})}"><span
-				th:text="${c.nome}"></span></a></td>
-
-		<td th:text="${c.email}"></td>
-		<td th:text="${c.cpf}"></td>
-		<td th:text="${c.foneCelular}"></td>
-		<td><a><span class="glyphicon glyphicon-plus"></span></a></td>
-		<td><a
-			th:href="@{/cliente/removercliente/{idcliente}(idcliente=${c.id})}">
-				<span class="glyphicon glyphicon-trash" />
-		</a></td>
-
-
-	</tr>
-</table>
-
-
-	
 
 
 

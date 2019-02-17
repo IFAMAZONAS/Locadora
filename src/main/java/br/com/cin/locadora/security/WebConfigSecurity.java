@@ -30,7 +30,11 @@ public class WebConfigSecurity  extends WebSecurityConfigurerAdapter{
 		.antMatchers(HttpMethod.GET,"/fornecedor/cadastrofornecedor").hasAnyRole("ADMIN","CAIXA")
 		.anyRequest().authenticated()
 		.and().formLogin().permitAll() // permite qualquer usuário
-		.and().logout() // Mapeia URL de Logout e invalida usuário autenticado
+		.loginPage("/login")
+		.defaultSuccessUrl("/inicio")
+		.failureUrl("/login?error=true")
+		
+		.and().logout().logoutSuccessUrl("/login")// Mapeia URL de Logout e invalida usuário autenticado
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 	
 	}
@@ -46,7 +50,7 @@ public class WebConfigSecurity  extends WebSecurityConfigurerAdapter{
 	
 	@Override // Ignora URL especificas
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/public/**");
+		web.ignoring().antMatchers("auto/**");
 	}
 
 }

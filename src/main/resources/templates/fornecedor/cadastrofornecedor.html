@@ -156,12 +156,35 @@
 					</div>
 				</div>
 
-				<button type="submit" class="btn btn-primary"
-					style="align-content: left">Salvar</button>
+				<table class="table table-hover">
+					<tr align="right" style="background-color: white;">
+						<td>
+							<button type="submit" class="btn btn-primary btn-lg"
+								style="align-content: left">Salvar Fornecedor</button>
+						</td>
+					</tr>
+				</table>
 
 
 			</form>
 		</div>
+		
+		<div class="row">
+				<form>
+					<div class="row">
+
+						<div class="form-group col-sm-12 col-md-12">
+							<label class="control-label col-sm-2 text-right" for="endereco">Pesquise
+								pelo fornecedor</label>
+							<div class="col-sm-10">
+								<input class="form-control" id="myInput" type="text"
+									placeholder="Search..">
+							</div>
+						</div>
+					</div>
+				</form>
+
+			</div>
 
 		<table class="table table-hover">
 
@@ -172,30 +195,30 @@
 					<th>Telefone</th>
 					<th>Endereço</th>
 					<th></th>
-					<th></th>
+
 
 				</tr>
 			</thead>
 
-			<tr th:each="f : ${page.content}">
-				<td style="font-weight: bold;" th:text="${f.id}"></td>
-				<td style="font-weight: bold;" th:text="${f.razaosocial}"></td>
-				<td style="font-weight: bold;" th:text="${f.telefone}"></td>
-				<td style="font-weight: bold;" th:text="${f.endereco}"></td>
-				<td><a
-					th:href="@{/fornecedor/editarfornecedor/{idfornecedor}(idfornecedor=${f.id})}"
-					class="btn btn-success"> <span> Editar</span>
-				</a></td>
-
-				
-				<td>
-					<button th:data-href="@{/fornecedor/visualizarfonecedor/{idFornecedor}(idFornecedor=${f.id})}"
-									type="button" class="btn-modal btn-success" data-toggle="modal"
-									data-target="#viewFornecedorModal" >Visualizar</button>
-				</td>
+			<tbody id="tableFornecedor">
+				<tr th:each="f : ${page.content}">
+					<td style="font-weight: bold;" th:text="${f.id}"></td>
+					<td style="font-weight: bold;" th:text="${f.razaosocial}"></td>
+					<td style="font-weight: bold;" th:text="${f.telefone}"></td>
+					<td style="font-weight: bold;" th:text="${f.endereco}"></td>
 
 
-			</tr>
+
+					<td align="right">
+						<button
+							th:data-href="@{/fornecedor/visualizarfonecedor/{idFornecedor}(idFornecedor=${f.id})}"
+							type="button" class="btn-modal btn-success btn-primary btn"
+							data-toggle="modal" data-target="#viewFornecedorModal">Visualizar</button>
+					</td>
+
+
+				</tr>
+			</tbody>
 		</table>
 
 		<div class="center pagination">
@@ -219,47 +242,64 @@
 
 
 	</div>
-	
-	<div class="modal fade " id="viewFornecedorModal" tabindex="-1"
-			role="dialog" aria-labelledby="viewFornecedorModal" aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
-				<div class="modal-content">
-					<div class="modal-header">Carregando Dados....</div>
-				</div>
-			</div>
 
+	<div class="modal fade " id="viewFornecedorModal" tabindex="-1"
+		role="dialog" aria-labelledby="viewFornecedorModal" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">Carregando Dados....</div>
+			</div>
 		</div>
+
+	</div>
 
 
 
 
 </div>
 
+<script>
+	$(document).ready(
+			function() {
+				$("#myInput").on(
+						"keyup",
+						function() {
+							var value = $(this).val().toLowerCase();
+							$("#tableFornecedor tr").filter(
+									function() {
+										$(this).toggle(
+												$(this).text().toLowerCase()
+														.indexOf(value) > -1)
+									});
+						});
+			});
+</script>
+
 
 
 <script>
-			$(function() {
+	$(function() {
 
-				$(".btn-modal").click(function() {
-					var link = $(this).attr('data-href');
-					var modal = $(this).attr('data-target');
-					$(modal).delay(50).queue(function() {
-						$(this).load(link).dequeue();
+		$(".btn-modal").click(function() {
+			var link = $(this).attr('data-href');
+			var modal = $(this).attr('data-target');
+			$(modal).delay(50).queue(function() {
+				$(this).load(link).dequeue();
 
-					});
-				});
-
-				$(".dropdown").hover(function() {
-					$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
-					$(this).toggleClass('open');
-					$('b', this).toggleClass("caret caret-up");
-				}, function() {
-					$('.dropdown-menu', this).stop(true, true).fadeOut("fast");
-					$(this).toggleClass('open');
-					$('b', this).toggleClass("caret caret-up");
-				});
 			});
-		</script>
+		});
+
+		$(".dropdown").hover(function() {
+			$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+			$(this).toggleClass('open');
+			$('b', this).toggleClass("caret caret-up");
+		}, function() {
+			$('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+			$(this).toggleClass('open');
+			$('b', this).toggleClass("caret caret-up");
+		});
+	});
+</script>
 
 
 

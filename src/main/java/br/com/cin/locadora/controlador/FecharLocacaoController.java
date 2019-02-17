@@ -88,7 +88,7 @@ public class FecharLocacaoController {
 			@RequestParam("banco") String banco,
 			@RequestParam("agencia") String agencia,
 			@RequestParam("conta") String conta) throws ParseException {
-		ModelAndView andView = new ModelAndView(Navegacao.ENTRAR_TELA_PAGAMENTO_LOCACAO);
+		ModelAndView andView = new ModelAndView(Navegacao.BUSCAR_LOCACAO_NOVO);
 		
 		Cartao cartao;
 		Cheque cheque;

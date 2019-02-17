@@ -36,6 +36,7 @@ import br.com.cin.locadora.controlador.util.Navegacao;
 
 import br.com.cin.locadora.model.Cliente;
 import br.com.cin.locadora.model.Dependente;
+import br.com.cin.locadora.model.Locacao;
 import br.com.cin.locadora.model.Usuario;
 import br.com.cin.locadora.model.repository.ClienteRepository;
 import br.com.cin.locadora.model.repository.DependenteRepository;
@@ -52,10 +53,13 @@ public class ClienteController {
 	static boolean DEPEPENDENTE_ATIVO = true;
 	static boolean DEPEPENDENTE_INATIVO = false;
 	
+	static int LOCACAO_ABERTA =1;
+	static int LOCACAO_FECHADA =2;
+	
 	
 
 	@Autowired
-	ClienteRepository repository;
+	ClienteRepository repositoryCliente;
 	@Autowired
 	DependenteRepository dependenteRepository;
 	
@@ -92,7 +96,7 @@ public class ClienteController {
 	public ModelAndView form() {
 		
 		ModelAndView andView = new ModelAndView(Navegacao.CADASTRAR_CLIENTE);
-		Iterable<Cliente> clientes = this.repository.findAll();
+		Iterable<Cliente> clientes = this.repositoryCliente.findAll();
 		andView.addObject("clientes", new ArrayList<>());
 		andView.addObject("cliente", new Cliente());
 		andView.addObject("msg", this.msg);
@@ -170,9 +174,9 @@ public class ClienteController {
 
 	@GetMapping("/removercliente/{idcliente}")
 	public ModelAndView excluir(@PathVariable("idcliente") Integer idcliente) {
-		this.repository.deleteById(idcliente);
+		this.repositoryCliente.deleteById(idcliente);
 		ModelAndView view = new ModelAndView(Navegacao.CADASTRAR_CLIENTE);
-		view.addObject("clientes", this.repository.findAll());
+		view.addObject("clientes", this.repositoryCliente.findAll());
 		view.addObject("cliente", new Cliente());
 		return this.form();
 	}
@@ -208,7 +212,7 @@ public class ClienteController {
 	@PostMapping("**/addDependeteCliente/{idcliente}")
 	public ModelAndView addDependente(Dependente dependente, @PathVariable("idcliente") Integer idCliente) {
 
-		Cliente cliente = this.repository.findById(idCliente).get();
+		Cliente cliente = this.repositoryCliente.findById(idCliente).get();
 
 		ModelAndView modelAndView = new ModelAndView(Navegacao.CADASTRO_DEPENDENTE);
 
@@ -258,6 +262,22 @@ public class ClienteController {
 		
 		Cliente cliente = this.clienteService.buscarPorId(idcliente);
 		
+		List<Locacao> listaLocacoes = cliente.getLocacaoList();
+		
+		if(!listaLocacoes.isEmpty()) {
+			for (Locacao locacao : listaLocacoes) {
+				if(locacao.getStatusLocacao().getIdStatusLocacao()==LOCACAO_ABERTA) {
+					this.messagensErro = new ArrayList<>();
+					this.messagensErro.add("Não foi possível desativar o cliente, pois foram encontradas locações com o status aberto");
+					
+					andView.addObject("messagensErro", this.messagensErro);
+					andView.addObject("clientes", this.clienteService.listarUsuarioAtivos() );
+					this.messagensErro = new ArrayList<>();
+					return andView;
+				}
+			}
+		}
+		
 		if(this.clienteService.desativarCliente(cliente)) {
 			cliente.setStatus(this.statusClienteRepository.findById(CLIENTE_INATIVO).get());
 			this.clienteService.destativarDepedentes(cliente.getDependentes());
@@ -278,6 +298,50 @@ public class ClienteController {
 		}
 		
 	}
+	
+	@GetMapping("**/entrarReativarCliente")
+	public ModelAndView entrarReativarCliente() {
+		ModelAndView andView = new ModelAndView(Navegacao.LISTAGEM_CLIENTES_REATIVAR);
+		
+		List<Cliente> listaClientes = this.clienteService.listarClientesInativos();
+		
+		andView.addObject("clientes", listaClientes);
+		
+		if(listaClientes.isEmpty()) {
+			this.messagensErro = new ArrayList<>();
+			this.messagensErro.add("Não há clientes inativos!");
+			andView.addObject("messagensErro", this.messagensErro);
+			this.messagensErro = new ArrayList<>();
+		}
+		
+		return andView;
+	
+	}
+	
+	@GetMapping("**/reativarCliente/{idcliente}")
+	public ModelAndView reativarCliente(@PathVariable("idcliente") Integer idcliente) {
+		ModelAndView andView = new ModelAndView(Navegacao.LISTAGEM_CLIENTES_REATIVAR);
+		
+		Cliente cliente = this.clienteService.buscarPorId(idcliente);
+		
+		  
+		
+		
+			cliente.setStatus(this.statusClienteRepository.findById(CLIENTE_ATIVO).get());
+			this.clienteService.reativarDepedentes(cliente.getDependentes());
+			this.clienteService.atualizar(cliente);
+			this.msg = new ArrayList<>();
+			this.msg.add("Cliente desativado com sucesso!");
+			andView.addObject("clientes", this.clienteService.listarClientesInativos());
+			andView.addObject("msg", this.msg);
+			this.msg = new ArrayList<>();
+			return andView;
+		
+			
+		
+	}
+	
+	
 
 	/****
 	 * 

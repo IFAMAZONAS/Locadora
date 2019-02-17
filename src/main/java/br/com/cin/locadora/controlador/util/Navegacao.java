@@ -5,6 +5,9 @@ public final class Navegacao {
 		public static final String LISTAGEM_CLIENTES = "cliente/list";
 		public static final String VISUALIZAR_CLIENTE = "cliente/view";
 		public static final String CADASTRO_DEPENDENTE = "cliente/dependentes";
+		public static final String REATIVAR_CLIENTE = "cliente/reativar";
+		public static final String LISTAGEM_CLIENTES_REATIVAR ="cliente/listreativar";
+		
 		
 		public static final String CADASTRO_USUARIO = "usuario/usuariocadastro";
 		public static final String CADASTRO_PERMISSOES = "usuario/permissoes";
@@ -22,6 +25,8 @@ public final class Navegacao {
 		public static final String VIEW_FILME_PUBLIC= "public";
 		public static final String LISTAGEM_FILMES = "filme/list";
 		
+		public static final String CONSULTA_PUBLICA ="public/view";
+		
 		public static final String INICIAR_LOCACAO = "locacao/form";
 		public static final String BUSCAR_LOCACAO_NOVO = "locacao/buscarlocacao";
 		public static final String BUSCAR_CLIENTE_LOCACAO = "locacao/buscarcliente";
@@ -37,8 +42,12 @@ public final class Navegacao {
 		
 		public static final String CADASTRAR_FORMA_PAGAMENTO = "formapagamento/form";
 		
+
 		public static final String ENTRAR_TELA_PAGAMENTO_LOCACAO = "pagamento/form";
 		public static final String VISUALIZAR_LOCACAO = "pagamento/resumolocacao";
 		
+
+		public static final String CADASTRAR_TIPO_MIDIA = "tipomidia/form";
+
 		
 }

@@ -1,3 +1,4 @@
+
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 
@@ -11,6 +12,43 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+#customers {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#customers td, #customers th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+#customers tr:nth-child(even) {
+	background-color: #e0e6e1;
+}
+
+#customers tr:hover {
+	background-color: #ddd;
+}
+
+#customers th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #909a91;
+	color: white;
+}
+
+.formaItem {
+	display: none;
+}
+
+.exibirFormaCheque #forma_cheque, .exibirFormaCartao #forma_cartao {
+	display: block;
+}
+</style>
 </head>
 
 
@@ -43,9 +81,28 @@
 
 		<br />
 
+
+
 		<div class="container">
-			<h1 align="left">Listagem de Clientes</h1>
-			<hr />
+
+			<h1 style="background-color: gray;" align="left">Listagem de Clientes</h1>
+
+			<div>
+				<table class="table table-hover">
+
+					<tr style="background-color: white;" colspan="1" align="right">
+
+						<td align="right"><a
+							th:href="@{/cliente/entrarReativarCliente}"
+							class="btn btn-danger btn-lg">Reativar Cliente</a> <a
+							th:href="@{/cliente/cadastrocliente}"
+							class="btn btn-success btn-lg">Novo Cliente</a></td>
+					</tr>
+
+
+				</table>
+
+			</div>
 
 			<div class="row">
 				<form>
@@ -63,50 +120,42 @@
 				</form>
 
 			</div>
-
-			<hr />
 			<div id="listaDeConvidados" style="width: 100%">
 
 
 
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th>Código</th>
-							<th>Nome</th>
-							<th>Email</th>
-							<th>Cpf</th>
-							<th>Celular</th>
-							<th>Situação</th>
+				<table class="table table-hover" align="right">
+					<thead align="right">
+						<tr align="right">
+							<th align="right">Nome</th>
+							<th align="right">Email</th>
 
-							<th></th>
-							<th></th>
-							<th></th>
+							<th colspan="6"></th>
+
+
 
 						</tr>
 					</thead>
 					<tbody id="myTable">
-						<tr th:each="cliente : ${clientes}">
-							<td><span style="font-weight: bold;" th:text="${cliente.id}"/></td>
-							<td><span style="font-weight: bold;" th:text="${cliente.nome}"/></td>
-							<td><span style="font-weight: bold;" th:text="${cliente.email}"/></td>
-							<td><span style="font-weight: bold;" th:text="${cliente.cpf}"/></td>
-							<td><span style="font-weight: bold;" th:text="${cliente.foneCelular}"/></td>
-							<td><span style="color: green; font-weight: bold;" th:text="${cliente.status.descricao}"/></td>
-							<td></td> 
+						<tr th:each="cliente : ${clientes}" align="right">
+
+							<td><span style="font-weight: bold;"
+								th:text="${cliente.nome}" /></td>
+							<td><span style="font-weight: bold;"
+								th:text="${cliente.email}" /></td>
 
 
-							<td><a
+
+							<td colspan="2"><a
 								th:href="@{/cliente/dependentes/{idcliente}(idcliente=${cliente.id})}"><span
-									class="btn btn-primary">Adicionar Dependente</span></a></td>
-									
-							<td><a
+									class="btn btn-primary">Dependente</span></a> <a
+								th:href="@{/locacao/iniciarLocacaoPorCliente/{idcliente}(idcliente=${cliente.id})}"><span
+									class="btn btn-success">Realizar Locação</span></a> <a
+								th:href="@{/locacao/visualizarClienteLocacao/{idcliente}(idcliente=${cliente.id})}"><span
+									class="btn btn-info">Buscar Locações</span></a> <a
 								th:href="@{/cliente/desativarcliente/{idcliente}(idcliente=${cliente.id})}"><span
-									class="btn btn-danger">Desativar</span></a></td>
-									
-				
-
-
+									class="btn btn-danger">Desativar</span></a>
+							<td>
 						</tr>
 					</tbody>
 

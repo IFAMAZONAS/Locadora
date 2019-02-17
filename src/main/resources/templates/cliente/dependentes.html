@@ -25,15 +25,17 @@
 			<br />
 			<div style="text-align: left;" th:each="m : ${msg}">
 
-				<span class="row" style="color: green; font-size: 16; font-weight: bold;" th:text="${m}">
-				</span>
+				<span class="row"
+					style="color: green; font-size: 16; font-weight: bold;"
+					th:text="${m}"> </span>
 			</div>
 
 			<br />
-			
+
 			<div style="text-align: left;" th:each="m : ${messagensErro}">
 
-				<span class="row" style="color: red; font-size: 16; font-weight: bold" th:text="${m}">
+				<span class="row"
+					style="color: red; font-size: 16; font-weight: bold" th:text="${m}">
 				</span>
 			</div>
 
@@ -118,7 +120,7 @@
 											<label class="control-label col-sm-4 text-right"
 												for="nascimento">Nascimento:</label>
 											<div class="col-sm-8">
-												<input type="date"  class="form-control" id="nascimento"
+												<input type="date" class="form-control" id="nascimento"
 													name="nascimento"
 													placeholder="Entre com a data de nascimento" />
 											</div>
@@ -128,7 +130,13 @@
 									</div>
 									<hr />
 									<div align="center">
-										<input type="submit" value="Adicionar" class="btn btn-primary">
+										<table class="table table-hover">
+											<tr style="background-color: white;" align="right">
+												<td><input type="submit" value="Adicionar Dependente"
+													class="btn btn-success"></td>
+											</tr>
+										</table>
+
 									</div>
 								</div>
 							</form>
@@ -141,6 +149,23 @@
 
 
 
+
+		</div>
+
+		<div class="row">
+			<form>
+				<div class="row">
+
+					<div class="form-group col-sm-12 col-md-12">
+						<label class="control-label col-sm-2 text-right">Pesquise
+							por Dependente</label>
+						<div class="col-sm-10">
+							<input class="form-control" id="myInput" type="text"
+								placeholder="Pesquise por nome, e-mail ou sexo......">
+						</div>
+					</div>
+				</div>
+			</form>
 
 		</div>
 
@@ -157,17 +182,21 @@
 
 						</tr>
 					</thead>
-					<tr th:each="d: ${dependentes}">
-						<td><span th:text="${d.nome}"></span></td>
-						<td><span th:text="${d.email}"></span></td>
-						<td><span th:text="${d.sexo}"></span></td>
-						<td><a href="#"><span class="glyphicon glyphicon-edit"></span></a></td>
-						<td><a
-							th:href="@{/cliente/removerdependenteCliente/{iddependente}(iddependente=${d.idDependente})}"><span
-								class="glyphicon glyphicon-trash"></span></a></td>
+
+					<tbody id="tableDependente">
+						<tr th:each="d: ${dependentes}">
+							<td><span th:text="${d.nome}"></span></td>
+							<td><span th:text="${d.email}"></span></td>
+							<td><span th:text="${d.sexo}"></span></td>
+
+							<td align="right"><a
+								th:href="@{/cliente/removerdependenteCliente/{iddependente}(iddependente=${d.idDependente})}"
+								class="btn btn-danger">Desativar Dependente</a></td>
 
 
-					</tr>
+						</tr>
+					</tbody >
+
 
 				</table>
 			</div>
@@ -176,6 +205,31 @@
 	</div>
 
 
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$("#myInput")
+									.on(
+											"keyup",
+											function() {
+												var value = $(this).val()
+														.toLowerCase();
+												$("#tableDependente tr")
+														.filter(
+																function() {
+																	$(this)
+																			.toggle(
+																					$(
+																							this)
+																							.text()
+																							.toLowerCase()
+																							.indexOf(
+																									value) > -1)
+																});
+											});
+						});
+	</script>
 
 
 	<script>
