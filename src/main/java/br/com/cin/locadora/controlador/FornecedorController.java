@@ -61,18 +61,17 @@ public class FornecedorController {
 	}
 	
 	@RequestMapping(value = "**/salvarfornecedor", method=RequestMethod.POST)
-	public ModelAndView salvar(@RequestParam("cnpj") String cnpj, @RequestParam("razaosocial") String razaosocial,
-			@RequestParam("endereco") String endereco, @RequestParam("telefone") String telefone,
-			@RequestParam("pessoacontato") String pessoacontato, @RequestParam("id") String id, @PageableDefault(size = 5) Pageable pageable) {
-		Fornecedor fornecedor = new Fornecedor();
+	public ModelAndView salvar(Fornecedor fornecedor, @PageableDefault(size = 5) Pageable pageable) {
+		//Fornecedor fornecedor = new Fornecedor();
 		ModelAndView andView = new ModelAndView(Navegacao.CADASTRAR_FORNECEDOR);
 		Iterable<Fornecedor> fornecedores = this.repository.findAll();
 		
 		
-		if(validadeFornecedor(cnpj, razaosocial, telefone, endereco,id)) {
+		if(validadeFornecedor(fornecedor.getCnpj(), fornecedor.getRazaosocial(), fornecedor.getTelefone(), fornecedor.getEndereco(),fornecedor.getId())) {
 			this.msg = new ArrayList<String>();
-			try {
-				int idFornecedor = Integer.valueOf(id);
+			
+			/**try {
+				int idFornecedor = Integer.valueOf(fornecedor.getId());
 				fornecedor.setId(idFornecedor);
 				
 			} catch (Exception e) {
@@ -83,7 +82,7 @@ public class FornecedorController {
 				Page<Fornecedor>page = this.fornecedorRepository.findAll(pageable);
 				andView.addObject("page", page);
 				return andView;
-			}
+			}**/
 			
 			
 			
@@ -93,7 +92,7 @@ public class FornecedorController {
 			this.msg.add("Operação realizada com sucesso!");
 			andView.addObject("fornecedores",fornecedores);
 			andView.addObject("fornecedor", new Fornecedor());
-			andView.addObject("mgs", this.msg);
+			andView.addObject("msg", this.msg);
 			this.msg = new ArrayList<>();
 			Page<Fornecedor>page = this.fornecedorRepository.findAll(pageable);
 			andView.addObject("page", page);
@@ -111,7 +110,7 @@ public class FornecedorController {
 
 	}
 	
-	private boolean validadeFornecedor(String cnpj, String razaosocial, String telefone, String endereco, String id) {
+	private boolean validadeFornecedor(String cnpj, String razaosocial, String telefone, String endereco, Integer id) {
 		boolean retorno = true;
 		this.msgErros = new ArrayList<>();
 		if(cnpj.isEmpty()) {
@@ -132,7 +131,7 @@ public class FornecedorController {
 		
 		Iterable<Fornecedor> forn = this.repository.findCNPJ(cnpj);
 		for(Fornecedor f: forn) {
-			if( f != null && id==null){
+			if( f != null){
 				this.msgErros.add("Este número de CNPJ já foi cadastrado!");
 			 }
 		}
